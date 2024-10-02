@@ -1,0 +1,53 @@
+{
+  "index.qmd": {
+    "index.html": "8a3abd31"
+  },
+  "intro.qmd": {
+    "intro.html": "55270c67"
+  },
+  "summary.qmd": {
+    "summary.html": "12f69232"
+  },
+  "references.qmd": {
+    "references.html": "d4b5525f"
+  },
+  "non-linear_regression.qmd": {
+    "non-linear_regression.html": "3c9b3ec3"
+  },
+  "simple_linear_regression.qmd": {
+    "simple_linear_regression.html": "80d2b4e6"
+  },
+  "appendix_1.qmd": {
+    "appendix_1.html": "1de84935"
+  },
+  "part_A.qmd": {
+    "part_A.html": "fa0f291c"
+  },
+  "part_B.qmd": {
+    "part_B.html": "2d3ec07d"
+  },
+  "correlation.qmd": {
+    "correlation.html": "c5f45bb8"
+  },
+  "polynomial_regression.qmd": {
+    "polynomial_regression.html": "eda5b07d"
+  },
+  "multiple_linear_regression.qmd": {
+    "multiple_linear_regression.html": "6f61c7db"
+  },
+  "generalised_linear_models.qmd": {
+    "generalised_linear_models.html": "1b7928b2"
+  },
+  "part_C.qmd": {
+    "part_C.html": "7a46f6b3"
+  },
+  "generalised_additive_models.qmd": {
+    "generalised_additive_models.html": "69958862"
+  },
+  "assumption_tests.qmd": {
+    "assumption_tests.html": "bd47bea2"
+  },
+  "regularisation.qmd": {
+    "regularisation.html": "401de5a3"
+  }
+}
