@@ -1,0 +1,39 @@
+---
+title: "HCl solution for acid wash"
+---
+
+Lab glassware should be washed in a 1% HCl solution (although some people use a 4% solution). You have a 37% HCl solution on hand. How would you prepare 1 liter of the 1% HCl solution?
+
+To prepare a 1% HCl solution from a 37% HCl solution, you can use the dilution formula:
+
+$C_1 V_1 = C_2 V_2$
+
+where:
+
+- $C_1$ is the concentration of the stock solution (37% HCl).
+- $V_1$ is the volume of the stock solution needed.
+- $C_2$ is the concentration of the desired solution (1% HCl).
+- $V_2$ is the final volume of the desired solution (1 liter or 1000 mL).
+
+First, convert the percentages to fractions:
+
+- 37% = 0.37
+- 1% = 0.01
+
+Using the formula:
+$0.37 V_1 = 0.01 \times 1000 \, \text{mL}$
+
+Solving for $V_1$:
+
+$V_1 = \frac{0.01 \times 1000 \, \text{mL}}{0.37}$
+
+$V_1 \approx 27.03 \, \text{mL}$
+
+So, you need to add approximately 27.03 mL of the 37% HCl solution to distilled water to make a total volume of 1 liter of 1% HCl solution. Here are the steps:
+
+1. Measure out 27.03 mL of the 37% HCl solution.
+2. Add this 27.03 mL of 37% HCl to a container.
+3. Add distilled water to the container until the total volume reaches 1 liter (1000 mL).
+
+Remember to always add acid to water, not water to acid, to ensure safety and prevent exothermic reactions that can cause splashing.
+

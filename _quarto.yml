@@ -1,0 +1,158 @@
+pdf-engine: lualatex
+
+project:
+  type: book
+  output-dir: _output
+
+book:
+  title: "The Biostatistics Book"
+  author: "AJ Smit"
+  date: "5/12/2024"
+  cover-image: logo.png
+  chapters:
+    - index.qmd
+    - intro.qmd
+    - part: part_A.qmd
+      chapters:
+        - correlation.qmd
+        - simple_linear_regression.qmd
+        - polynomial_regression.qmd
+        - multiple_linear_regression.qmd
+        - generalised_linear_models.qmd
+        - non-linear_regression.qmd
+        - regularisation.qmd
+    - part: part_B.qmd
+      chapters:
+        - assumption_tests.qmd
+    - part: part_C.qmd
+      chapters:
+        - generalised_additive_models.qmd
+    - summary.qmd
+    - references.qmd
+  appendices:
+    - appendix_1.qmd
+  navbar:
+    logo: logo.png
+    pinned: true
+  search: true
+  repo-actions: [edit]
+  downloads: [pdf, epub]
+  sharing: [twitter, facebook]
+
+comments:
+  hypothesis: true
+
+execute:
+  cache: false
+  freeze: false
+  error: false
+  warning: false
+
+bibliography: references.bib
+citation: true
+csl: marine-biology.csl
+copyright: AJ Smit
+df-print: default
+footnotes-hover: true
+# lang: en-GB
+
+format:
+  html:
+    anchor-sections: true
+    grid:
+      sidebar-width: 300px
+      body-width: 1000px
+      margin-width: 300px
+      gutter-width: 1.5rem
+    citations-hover: true
+    code-block-bg: true
+    code-copy: true
+    code-fold: false
+    code-overflow: scroll
+    code-line-numbers: true
+    code-link: true
+    code-tools: true
+    comments:
+      hypothesis: true
+    # df-print: kable
+    crossrefs-hover: true
+    embed-resources: false
+    fig-align: center
+    fig-height: 7.5
+    fig-width: 12
+    out-width: 300
+    fig-format: svg
+    fig-asp: 0.65
+    fig-cap-location: margin
+    fig-dpi: 300
+    fontsize: 1.1em
+    footnotes-hover: true
+    highlight-style: tango
+    html-math-method: katex
+    link-external-icon: false
+    mainfont: Palatino
+    monofont: Roboto Mono
+    number-depth: 2
+    number-sections: false
+    # page-layout: article
+    reference-location: margin
+    self-contained: false
+    standalone: true
+    smooth-scroll: true
+    tbl-cap-location: margin
+    theme: [cosmo, theme.scss]
+    toc: true
+    toc-depth: 2
+    toc-location: right
+    toc-title: "On this page"
+  pdf:
+    code-block-bg: "#f8f9fa"
+    colorlinks: true
+    citecolor: teal
+    documentclass: book
+    indent: false
+    fig-align: center
+    fig-asp: 0.65
+    fig-height: 4
+    fig-width: 6
+    fig-format: pdf
+    fig-pos: 't'
+    fontsize: "10"
+    geometry:
+      - heightrounded
+    highlight-style: arrow
+    include-in-header:
+      - text: |
+          \usepackage{amsmath}
+          \setmathfont{Lato Math}
+          \setmainfont{Lato}
+          \usepackage[version=4]{mhchem}
+          \usepackage{iftex}
+          \usepackage{makeidx}
+          \makeindex
+          \usepackage[dvipsnames]{xcolor}
+          \frenchspacing
+    include-after-body:
+      - text: |
+          \printindex
+    latex-tinytex: false
+    linkcolor: teal
+    lof: false
+    lot: false
+    # mainfont: Lato
+    # mathfont: Lato Math
+    monofont: FiraCode Nerd Font
+    monofontoptions:
+      - Scale=0.91
+    mathfontoptions:
+      - Scale=1.08
+    microtypeoptions: "final,tracking=true,factor=1100,stretch=10,shrink=10"
+    number-depth: 2
+    number-sections: true
+    papersize: a4
+    toc: true
+    toc-depth: 2
+    toccolor: teal
+    urlcolor: teal
+
+

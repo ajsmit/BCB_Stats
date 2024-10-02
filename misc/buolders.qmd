@@ -1,0 +1,109 @@
+---
+title: "GAM: The Intermediate Disturbance Data"
+author: "AJ Smit"
+---
+
+```{r}
+library(tidyverse)
+library(ggpubr)
+library(mgcv)
+```
+
+These data are from a sample collection designed to assess if the ecological structure of a rocky intertidal community is being maintained according to the intermediate disturbance hypothesis. The study was conducted in the intertidal zone along the Cape Peninsula, South Africa. The dataset is comprised of variables that record the boulder size (mm), the species richness (number of species), and the percent cover of the most abundant species. 
+
+```{r}
+# Read in the data
+dat <- read.csv2("Boulders_2012.csv") |> 
+  rename(boulder = 'Size..mm.',
+         richness = 'no.species',
+         cover = 'Dominant.specie....')
+```
+
+The hypothesis predicts that species richness will be maximised at intermediate levels of disturbance, whilst cover will follow the inverse response. 
+
+Unlike other approaches for solving the same problem, I will proceed here by fitting a Generalised Additive Model (GAM) to the data. This is a more flexible approach than linear models (not appropriate as seen in the expected response of the hypothesis) or ANOVAs based on binning the boulder sizes into size classes, which some people typically use.
+
+Let us proceed with fitting the GAM:
+
+```{r}
+# Fit the GAM models
+gam_richness <- gam(richness ~ s(boulder, k = 4), data = dat)
+summary(gam_richness)
+```
+
+The summary of the model shows that the model is significant at *p* <0.001 (*F* = 122.4; d.f. = 2). The model shows that the boulder size is a significant predictor of species richness, explaining 89.7% of the variation in species richness. This is an excellent fit.
+
+Before we can accept this model, we need to verify the assumptions. Like all regression models, this is done by examining the model's residuals.
+
+```{r}
+residuals(gam_richness)
+```
+
+More usefully, we can plot the residuals against the fitted values to check for any patterns. 
+
+```{r}
+# Plot the residuals
+plot(gam_richness, residuals = TRUE, pch = 16, cex = 0.5)
+```
+
+From here we can infer if the residuals are homoscedastic: they are! What about normality?
+
+```{r}
+# Check for normality
+qqnorm(residuals(gam_richness))
+```
+
+That looks good! Let's verify by using the Shapiro-Wilk test:
+
+```{r}
+shapiro.test(residuals(gam_richness))
+```
+
+Yes, not different from that of a normal distribution. At least for species richness, the model is a good fit.
+
+Let's proceed with the cover model:
+
+```{r}
+# Fit the model:
+gam_cover <- gam(cover ~ s(boulder, k = 4), data = dat)
+summary(gam_cover)
+
+# Plot the residuals
+plot(gam_cover, residuals = TRUE, pch = 16, cex = 0.5)
+
+# Check for normality
+qqnorm(residuals(gam_cover))
+
+# Shapiro-Wilk test
+shapiro.test(residuals(gam_cover))
+```
+
+The model diagnostics all check out (we see the residuals are normally distributed and the variance homoscedastic). The model is a good fit, with boulder size explaining 88.5% of the variation on percent cover of the dominant species (*p* < 0.001; *F* = 108.8; d.f. = 2).
+
+Let's plot the final models next to their respective data:
+
+```{r}
+# Plot for richness
+pltA <- ggplot(dat, aes(x = boulder, y = richness)) +
+  geom_point(shape = 1, size = 1.8) +
+  geom_smooth(method = "gam", formula = y ~ s(x, k = 4), se = TRUE,
+              colour = "indianred3", fill = "pink", linewidth = 0.4) +  
+  labs(title = "GAM Fit for Richness",
+       x = "Boulder (mm)",
+       y = "Richness") +
+  theme_bw()
+
+# Plot for cover
+pltB <- ggplot(dat, aes(x = boulder, y = cover)) +
+  geom_point(shape = 1, size = 1.8) +
+  geom_smooth(method = "gam", formula = y ~ s(x, k = 4), se = TRUE,
+              colour = "indianred3", fill = "pink", linewidth = 0.4) +
+  labs(title = "GAM Fit for Cover",
+       x = "Boulder (mm)",
+       y = "Cover (%)") +
+  theme_bw()
+
+ggarrange(pltA, pltB, nrow = 2)
+
+```
+

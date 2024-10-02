@@ -1,0 +1,14 @@
+# Generalised Linear Models (GLM) {#sec-generalised-linear-model}
+
+## Logistic Regression
+
+A logistic regression model is used when the dependent variable is binary (e.g., 0 or 1, yes or no). The logistic regression model is expressed as:
+
+$$\log\left(\frac{p}{1-p}\right) = \alpha + \beta_1 X_{i1} + \beta_2 X_{i2} + \ldots + \beta_k X_{ik}$$ {#eq-logit}
+
+Where:
+
+-   $p$ is the probability of the dependent variable being 1,
+-   $X_{i1}, X_{i2}, \ldots, X_{ik}$ are the $k$ predictor variables for the $i$-th observation,
+-   $\alpha$ is the intercept,
+-   $\beta_1, \beta_2, \ldots, \beta_k$ are the coefficients for the $k$ predictor variables.

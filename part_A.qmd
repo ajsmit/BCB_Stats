@@ -1,0 +1,5 @@
+---
+title: Parametric Methods
+---
+
+If the research question does not involve exploring the relationship between a response variable and predictor variables, then non-regression inferential statistical methods would be more appropriate. These include tests of means/medians, tests of proportions, correlation analysis, and nonparametric tests. These methods are suitable when the goal is to compare groups, assess central tendencies, test for differences, or measure the strength of association between two variables without explicitly modeling the relationship.

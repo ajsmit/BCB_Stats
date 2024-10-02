@@ -1,0 +1,102 @@
+---
+title: "Wind stress and wind stress curl"
+---
+
+## Relative Vorticity
+Relative vorticity is a measure of the rotation of fluid parcels relative to the Earth’s surface. It is a key concept in both meteorology and oceanography for describing the rotation of air or water masses. For a two-dimensional horizontal flow, the relative vorticity $\zeta$ is defined as:
+
+$$
+\zeta = \frac{\partial v}{\partial x} - \frac{\partial u}{\partial y}
+$$
+
+where:
+
+- $u$ and $v$ are the velocity components of the fluid in the x (east-west) and y (north-south) directions, respectively.
+- $\frac{\partial v}{\partial x}$ and $\frac{\partial u}{\partial y}$ are the partial derivatives of these components with respect to the spatial coordinates.
+
+Relative vorticity indicates how much the fluid is spinning or rotating at a point, excluding the rotation of the Earth (which would be included in absolute vorticity).
+
+## Wind Stress
+
+Wind stress ($\tau$) is the horizontal force exerted by wind on the ocean's surface, acting as a drag force per unit area. It is essentially the friction between the moving air and the water, driving ocean currents and influencing various marine processes.
+
+We can use the following equation to calculate surface wind stress for each grid point (lon, lat, time) wind value in a dataframe:
+
+$$\tau = \rho_{a}C_{d}U^{2}$$
+
+where:
+
+- $\rho_{a}$ is the air density (1.225 kg/m³),
+- $C_{d}$ is the drag coefficient (0.0012), a dimensionless quantity that depends on wind speed and sea state, and
+- $U$ is the wind speed (m/s) at the reference height.
+
+The zonal (east-west) and meridional (north-south) wind stress components are derived from the wind speed at a reference height (usually 10 meters above the sea surface) and a drag coefficient. Here are the equations:
+
+$$\tau_{x} = \tau \cos(\theta)$$
+
+$$\tau_{y} = \tau \sin(\theta)$$
+
+where:
+
+- $\theta$ is the angle of the wind direction relative to the east (0° for east winds, 90° for north winds, etc.),
+- $\tau_x$ is the zonal wind stress (force per unit area in the east-west direction), and
+- $\tau_y$ is the meridional wind stress (force per unit area in the north-south direction)
+
+::: callout-note
+## Sine and cosine functions
+
+In the above formulations of zonal and meridional wind stress components, $\tau_x$ uses the cosine function, and $\tau_y$ uses the sine function. This is for wind direction defined relative to the east. If the wind direction is defined relative to the north, the sine function would be used for $\tau_x$, and the cosine function would be used for $\tau_y$.
+:::
+
+## Wind stress curl
+
+'Curl' is a measure of the rotation of a vector field; therefore, wind stress curl is a measure of the rotation of the wind stress field. It is defined as the vertical component of the curl of the wind stress vector---since it is a vector quantity it has both magnitude and direction.
+
+Wind stress curl is computed using the following basic relation:
+
+$$\nabla \times \tau = \frac{\partial \tau_{y}}{\partial x} - \frac{\partial \tau_{x}}{\partial y}$$
+
+where:
+
+- $\nabla \times \tau$ is the wind stress curl,
+- $\frac{\partial \tau_{y}}{\partial x}$ is the derivative of the meridional wind stress with respect to the zonal direction, and
+- $\frac{\partial \tau_{x}}{\partial y}$ is the derivative of the zonal wind stress with respect to the meridional direction.
+
+
+
+The direction of the wind stress curl is parallel to the $z$-axis. By convention, it is typically perpendicular to Earth's surface. The Coriolis effect causes fluids (air and water) to deflect to the right in the Northern Hemisphere and to the left in the Southern Hemisphere due to the Earth's rotation. Therefore, the Coriolis effect indirectly influences the wind stress curl by affecting the wind patterns. 
+
+The relationship between wind stress curl and circulation patterns is as follows:
+
+* **Positive Wind Stress Curl:** Indicates cyclonic (counter-clockwise) circulation in the Northern Hemisphere and anticyclonic (clockwise) circulation in the Southern Hemisphere.
+* **Negative Wind Stress Curl:** Indicates anticyclonic (clockwise) circulation in the Northern Hemisphere and cyclonic (counter-clockwise) circulation in the Southern Hemisphere.
+
+Use the right-hand rule to visualise this relationship. If you curl the fingers of your right hand in the direction of the wind stress vectors, your thumb will point in the direction of the wind stress curl vector. If the wind stress curl vector points upwards (positive), the circulation is counter-clockwise in the Northern Hemisphere and clockwise in the Southern Hemisphere. If the wind stress curl vector points downwards (negative), the circulation is clockwise in the Northern Hemisphere and counter-clockwise in the Southern Hemisphere.
+
+Therefore, cyclones (low-pressure systems) in the Northern Hemisphere are associated with positive wind stress curl, while cyclones in the Southern Hemisphere are associated with negative wind stress curl. Conversely, anticyclones (high-pressure systems) in the Northern Hemisphere are associated with negative wind stress curl, while anticyclones in the Southern Hemisphere are associated with positive wind stress curl.
+
+### Implications of a Very Negative Wind Stress Curl in the Southern Hemisphere
+
+1. **Oceanographic Effects**:
+
+   - **Upwelling** and **Downwelling**:
+     - Wind stress curl is closely related to Ekman pumping.
+     - Upwelling occurs near the coast when the wind stress has an equatorward alongshore component or in the case of nearshore negative (in the Southern Hemisphere) wind stress curl.
+     - While wind stress curl is a significant driver of upwelling and downwelling, other factors like bathymetry (shape of the seafloor) and coastal geometry also play crucial roles.
+   - **Gyre Circulation**:
+     - In large-scale ocean circulation, negative wind stress curl is associated with anticyclonic gyres (e.g., subtropical gyres).
+     - These gyres are characterized by downwelling in the center, which results in a thicker and warmer water column.
+
+2. **Ecological Impact**:
+
+   - Downwelling regions typically have lower nutrient concentrations at the surface because nutrients are pushed downward with the sinking water.
+   - This can lead to reduced primary productivity and lower phytoplankton biomass, affecting the entire marine food web.
+   - In regions such as the Southern Ocean around the Antarctic Circumpolar Current, variations in wind stress curl can significantly impact the distribution of nutrients and biological productivity.
+
+3. **Climate and Weather**:
+
+   - Areas of persistent negative wind stress curl can influence local and regional climate patterns by affecting sea surface temperatures and heat distribution in the ocean.
+   - These areas may also impact weather patterns, such as the formation and intensity of cyclones and anticyclones.
+   - In the Southern Hemisphere, this can influence the climate dynamics of nearby landmasses, including southern parts of continents like South America, Africa, and Australia.
+
+A very negative wind stress curl in the Southern Hemisphere indicates a strong clockwise (anticyclonic) rotation of the wind stress field, leading to downwelling and associated oceanographic and ecological effects. This influences large-scale ocean circulation, nutrient distribution, primary productivity, and potentially local and regional climate and weather patterns. Understanding and monitoring wind stress curl is crucial for predicting ocean behavior and its broader environmental impacts, especially in the context of the Southern Hemisphere's unique oceanic and atmospheric dynamics.

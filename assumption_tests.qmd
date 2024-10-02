@@ -1,0 +1,35 @@
+# Testing Assumptions {#sec-assumption-tests}
+
+Assumption tests are a fundamental component of any statistical analysis workflow. They ensure the validity, reliability, and robustness of statistical analyses. Although these tests test assumptions about parametric statistical methods, they are generally non-parametric, meaning they do not assume a specific probability distribution for the data. 
+
+## Tests for Normality
+
+In biological research, it is often important to determine whether a normal distribution adequately represents the underlying population distribution. This assessment is relevant when applying statistical procedures that rely on the assumption of normality, such as many of those discussed in earlier chapters. However, note that not all biological data conform to a normal distribution. In fact, many natural processes will result in non-normal data.
+
+Assessing normality allows us to make informed decisions about appropriate statistical methods. If the data reasonably approximates a normal distribution, we can confidently apply parametric tests using probability calculations based on the normal curve. Conversely, if the data significantly deviates from normality, alternative non-parametric approaches may be more suitable.
+
+Beyond simply validating statistical assumptions, examining the distribution of biological data can offer valuable insights into the underlying mechanisms and processes shaping the population. Identifying deviations from normality can challenge existing hypotheses, reveal hidden patterns, or suggest the influence of unanticipated factors. Therefore, normality tests are not only a technical requirement but they may also offer a tool for understanding the biological phenomena under investigation.
+
+In this section, we will explore a range of graphical methods (e.g., histograms, Q-Q plots) and statistical tests (e.g., Shapiro-Wilk test, Kolmogorov-Smirnov test) to assess the goodness-of-fit of a normal distribution to our data.
+
+### Shapiro-Wilk Test
+
+### Kolmogorov-Smirnov Test
+
+### Anderson-Darling Test
+
+### Lilliefors Test
+
+### Jarque-Bera Test
+
+## Tests for Homoscedasticity
+
+### Breusch-Pagan Test
+
+### White's Test
+
+### Levene's Test
+
+### Bartlett's Test
+
+### Fligner-Killeen Test

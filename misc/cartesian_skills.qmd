@@ -1,0 +1,102 @@
+---
+title: "Skills Assessment: Cartesian Coordinates"
+author: Lisa Ziegler
+date: "2024-08-24"
+format:
+  html:
+    embed-resources: true
+---
+
+## Question
+
+You have been provided with two datasets, `Dataset_1` and `Dataset_2` (**Cartesian_Dataset_1.csv** and **Cartesian_Dataset_2.csv**), each containing points on a Cartesian axis (`X` and `Y` coordinates) and the variable `Object_ID` which uniquely identifies each point (1-50 in `Dataset_1` and 51-100 in `Dataset_2`).
+
+Your goal is to implement a process to move points from `Dataset_1` to `Dataset_2` under the following conditions:
+
+1. Calculate the Euclidean distance between each point in `Dataset_1` and the nearest point in `Dataset_2`.
+2. If the distance between a point in `Dataset_1` and its nearest point in `Dataset_2` is less than a user-defined threshold (which you can change), move the point from `Dataset_1` to `Dataset_2`.
+3. Repeat this process until no more points in `Dataset_1` can be moved within the threshold distance.
+
+## Answer
+
+Part 1 of the question requires constructing pairwise matrix of distances between points in `Dataset_1` and `Dataset_2`. I will use the **sf** package to accomplish this. Specifically, I'll call on the `st_distance()` function to calculate Euclidean distances between the points in `Dataset_1` and `Dataset_2`. This creates a square distance matrix where the rows represent the points in `Dataset_1` and the columns the points in `Dataset_2`. The Euclidean distances in the cells  therefore indicate the 'distance' between points in the two datasets, one value for each pair of sites.
+
+In Part 2, I will identify the points in `Dataset_1` that are within the threshold distance of 300 from `Dataset_2`. This involves identifying the minimum distance for each point in `Dataset_1` and checking if it is less than the threshold. If the condition is met, the point will be identified and moved from `Dataset_1` to `Dataset_2`.
+
+Part 3 of the question reads "*Repeat this process until no more points in `Dataset_1` can be moved within the threshold distance*." This implies that we need to develop a process to iteratively revisit `Dataset_1` until no more points below the threshold remain to be moved. Although not particularly efficient, we can use a control flow statement (a loop of kinds) to repeat the process until no more points below the threshold remain in `Dataset_1` that we should move.
+
+These steps are implemented as next.
+
+Load the packages we need:
+
+```{r}
+#| echo: true
+#| message: false
+
+library(tidyverse)
+library(sf)
+```
+
+Set an arbitrary threshold:
+
+```{r}
+threshold <- 300
+```
+
+Now implement the process:
+
+```{r}
+# Read in the datasets
+Dataset_1 <- read.csv("../data/Cartesian_Dataset_1.csv")
+Dataset_2 <- read.csv("../data/Cartesian_Dataset_2.csv")
+
+# Create copies of datasets to prevent overwriting the originals
+ds_1_update <- Dataset_1
+ds_2_update <- Dataset_2
+
+# Make an iteration counter
+iterations <- 0
+
+# Function to perform the iterative process
+repeat {
+  # Run the iteration counter
+  iterations <- iterations + 1
+  
+  # Create sf objects for each dataset
+  sf1 <- st_as_sf(ds_1_update, coords = c("X", "Y"))
+  sf2 <- st_as_sf(ds_2_update, coords = c("X", "Y"))
+  
+  # Calculate Euclidean distances between each point in ds_1_update
+  # and all points in ds_2_update (pair wise distances)
+  distances <- st_distance(sf1, sf2, which = "Euclidean")
+  
+  # Find the minimum distance for each point in ds_1_update
+  min_distances <- apply(distances, 1, min)
+  
+  # Identify indices of points in ds_1_update to be moved
+  # (i.e. where distance is less than threshold)
+  to_move <- which(min_distances < threshold)
+  
+  # Are there are any points to move?
+  # Exit loop when no points meet the criterion
+  if (length(to_move) == 0) {
+    break
+  }
+  
+  # Move the points from ds_1_update to ds_2_update
+  moved_points <- ds_1_update[to_move, ]
+  ds_2_update <- rbind(ds_2_update, moved_points)
+  ds_1_update <- ds_1_update[-to_move, ]
+}
+```
+
+```{r}
+cat("Number of iterations:", iterations, "\n")
+
+print("Remaining points in ds_1_update:")
+ds_1_update
+
+print("Points in ds_2_update after moving:")
+ds_2_update
+```
+

@@ -1,0 +1,20 @@
+# Generalised Additive Models {#sec-generalised-additive-models}
+
+GAMs utilise a sum of smooth functions, each of which may depend on different subsets of the predictors. This additive structure, with smooth functions modelling the nonlinear effects of different predictor variables, allows GAMs to capture complex, nonlinear relationships without the need for a single, global parametric form. GAMs are useful in areas where the data exhibit complex patterns that are not easily described by traditional parametric or even non-parametric models.
+
+Unlike polynomial regressions or specific nonlinear models that capture functional relationships with parameters directly linked to the system's mechanics, GAMs do not necessarily provide parameters that correspond to a mechanistic understanding. Instead, they offer flexibility and robustness in modelling, making them suitable for a wide range of applications where the relationship dynamics are complex and not well-defined by simpler models.
+
+In GAMs, the smooth functions are typically represented using regression splines (Figure A). Splines are piecewise polynomial functions that are flexible and can approximate complex nonlinear relationships. In GAMs, the smooth functions are estimated using various types of regression splines, such as Thin Plate Regression Splines, Cubic Regression Splines, and P-Splines (B-Splines). These spline functions are used to model the nonlinear effects of the predictor variables in a flexible and data-driven manner, without assuming any specific parametric form. A GAM can be expressed as:
+
+$$Y_i = \alpha + f_1(X_{i1}) + f_2(X_{i2}) + \ldots + f_p(X_{ip}) + \epsilon_i$$ {#eq-gam}
+
+Where:
+
+- $Y_i$ is the response variable for the $i$-th observation,
+- $\alpha$ is the intercept,
+- $f_j(X_{ij})$ are smooth functions of the predictor variables $X_{ij}$ (for $j = 1, 2, \ldots, p$), and
+- $\epsilon_i$ is the error term for the $i$-th observation.
+
+The degree of smoothness of the smooth functions $f_j$ is typically chosen based on the data and the modelling objectives, often using cross-validation or other model selection techniques.
+
+

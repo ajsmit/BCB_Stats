@@ -1,0 +1,1380 @@
+---
+knitr:
+  opts_chunk:
+    dev:
+      - svg
+      - pdf
+---
+
+```{r}
+#| echo: false
+#| messages: false
+#| warning: false
+#| include: true
+
+library(tidyverse)
+library(ggpubr)
+library(gt)
+library(nlme)
+library(mgcv)
+library(emmeans) # For post-hoc comparisons
+library(ggsci) # For color palettes
+library(latex2exp) # For figure titles with LaTeX expressions
+```
+
+# Nonlinear Models {#sec-nonlinear-regression}
+
+**In This Chapter**
+
+- [Nonlinear Regression](@sec-nonlinear-regression)
+
+**Elsewhere in the Book**
+
+- [Simple Linear Regression](@sec-simple-linear-regression)
+- [Polynomial Regression](@sec-polynomial-regression)
+- [Multiple Linear Regression](@sec-multiple-linear-regression)
+- [Generalised Linear Models](@sec-generalised-linear-models)
+- [Generalised Additive Models](@sec-generalised-additive-models)
+
+Nonlinear regression models\index{nonlinear regression} are used when the relationship between the response variable (dependent variable, $Y$) and the predictor variables (independent variables, $X$) is not linear. In other words, they are employed when a straight line is not an appropriate representation of the relationship between the variables.
+
+As we have seen in @sec-simple-linear-regression, polynomial regressions provide a nonlinear relationship between the response and predictor variables (as seen in the regression line fit to the data, @fig-plts A), but they are considered linear models because the parameters are estimated using linear least squares. Another type of nonlinear model is a semi-parametric model where the relationship between the response and predictor variables is described by a function that includes both parametric and non-parametric components. An example of a semi-parametric model is the generalised additive model (GAM) that includes a non-parametric component in the form of a spline function (@sec-generalised-additive-models; @fig-plts B).
+
+The type of nonlinear model I cover in this chapter is a parametric model where the relationship between the response and predictor variables is described by a specific nonlinear function (@fig-plts C). The model still assumes that the residuals are normally distributed and exhibit homoscedasticity. The model parameters are estimated by minimising the sum of squared differences between the observed and predicted values, a method commonly referred to as nonlinear least squares (NLS) regression. This is the term I will adopt.
+
+The primary purpose of nonlinear regression is to derive a formula (model), analyse data, and predict new values where the phenomenon exhibits a nonlinear causal\index{causal} pattern or behaviour. Nonlinear models include a variety of response forms, such as exponential growth models, logistic growth models, and other mechanistic models derived from physical, chemical, or biological processes. Examples of such models include trigonometric, logarithmic, and user-defined functions like the von Bertalanffy model or seasonal cycle represented by a sine curve (@fig-plts C). These models are explicitly nonlinear in both their form and parameters. Unlike polynomial regression, where only the terms of $X$ are transformed, nonlinear models involve an entirely nonlinear function relating $X$ and $Y$. They are often used when there is a theoretical basis for the specific form of the relationship, providing interpretable parameters that carry specific meanings based on the underlying theory, making them useful for detailed applications where the dynamics of the system are well-understood.
+
+A general formula for a nonlinear regression model is:
+
+$$Y_i = f(X_i; \theta) + \epsilon_i$$ {#eq-nonlin}
+
+Where:
+  
+- $Y_i$ is the response variable for the $i$-th observation,
+- $X_i$ is the predictor variable for the $i$-th observation,
+- $f(X_i; \theta)$ is a nonlinear function of $X_i$ parameterised by the vector $\theta$,
+- $\theta$ is the vector of parameters to be estimated, and
+- $\epsilon_i$ is the error term for the $i$-th observation and is assumed to be i.i.d. with a normal distribution.
+
+An example of a specific nonlinear regression model is the exponential growth model:
+  
+  $$Y_i = \alpha e^{\beta X_i} + \epsilon_i$$ {#eq-exp}
+
+Where:
+  
+- $\alpha$ and $\beta$ are the parameters to be estimated,
+- $e$ is the base of the natural logarithm, and
+- $\epsilon_i$ is the error term for the $i$-th observation.
+
+This model is nonlinear in the parameters $\alpha$ and $\beta$, and it describes an exponential relationship between the predictor $X$ and the response $Y$.
+
+```{r, fig.width=c(9,6),fig.asp=c(0.65,0.65),out.width=list("80%","12cm")}
+#| echo: false
+#| messages: false
+#| warning: false
+#| fig.cap: "Nonlinear regression models fitted to simulated data. A) a cubic polynomial model, B) a GAM with a thin plate regression spline, and C) a NLS sine curve as a seasonal cycle."
+#| label: fig-plts
+#| fig.align: center
+#| fig-pos: "t"
+
+# Load necessary libraries
+# Set seed for reproducibility
+set.seed(13)
+
+# Generate synthetic data for polynomial fit
+x <- seq(-10, 10, length.out = 30)
+y <- 1 - 2*x + 3*x^2 - 0.5*x^3 + rnorm(30, sd = 40)  # cubic equation with noise
+
+dat_poly <- data.frame(x, y)
+
+# Fit a cubic polynomial model
+mod_poly <- lm(y ~ poly(x, 3, raw = FALSE), data = dat_poly)
+
+# Create a data frame for predictions
+x_grid <- seq(min(x), max(x), length.out = 300)
+pred_poly <- data.frame(x = x_grid)
+pred_poly$y <- predict(mod_poly, newdata = pred_poly)
+
+# Plot the data and the fitted model
+plt_poly <- ggplot(dat_poly, aes(x, y)) +
+  geom_point(size = 2, shape = 1, colour = "royalblue") +
+  geom_line(data = pred_poly, aes(x, y), color = "black") +
+  xlab("Predictor, X") +
+  ylab("Response, Y")
+
+# Simulate data for a seasonal cycle
+x <- seq(0, 365, by = 7)  # Days of the year
+amplitude <- 6  # Amplitude (half the difference between longest and shortest day)
+offset <- 12   # Average day length
+y <- amplitude * sin(2 * pi * (x / 365 - 0.25)) + offset + rnorm(length(x), sd = 0.55)  # Sine curve with noise
+
+# Create data frame
+dat_sin <- data.frame(Day = x, DayLength = y)
+
+# Fit nonlinear regression model (using nls)
+mod_sin <- nls(DayLength ~ A * sin(2 * pi * (Day / 365 - phi)) + C, data = dat_sin, 
+             start = list(A = 6, phi = 0.25, C = 12))
+
+# Get predicted values
+dat_sin$Predicted <- predict(mod_sin)
+
+# Visualise results
+plt_sin <- ggplot(dat_sin, aes(x = Day)) +
+  geom_point(aes(y = DayLength), size = 2, shape = 1, color = "royalblue") +
+  geom_line(aes(y = Predicted), color = "black") +
+  labs(x = "Day of the Year", y = "Response, Y")
+
+# Parameters for the Michaelis-Menten model
+V_max <- 100  # maximum rate of the enzyme reaction
+K_m <- 25     # Michaelis constant
+
+# Generate substrate concentrations
+S <- seq(0, 100, length.out = 30)
+
+# Generate reaction rates using the Michaelis-Menten equation with added noise
+V <- (V_max * S) / (K_m + S) + rnorm(30, mean = 0, sd = 5)
+
+# Create a data frame
+dat_mm <- data.frame(S, V)
+
+# Fit the Michaelis-Menten model
+mod_mm <- nls(V ~ (V_max * S) / (K_m + S), data = dat_mm, start = list(V_max = 90, K_m = 40))
+
+# Create a grid for predictions
+S_grid <- seq(min(S), max(S), length.out = 300)
+pred_mm <- data.frame(S = S_grid)
+pred_mm$V <- predict(mod_mm, newdata = pred_mm)
+
+# Plot the data and the fitted model
+plt_mic <- ggplot(dat_mm, aes(S, V)) +
+  geom_point(size = 2, shape = 1, colour = "royalblue") +
+  geom_line(data = pred_mm, aes(S, V), color = "black") +
+  xlab("Substrate Concentration [S]") +
+  ylab("Uptake Rate V")
+
+# Generate synthetic data
+x <- seq(-3, 3, length.out = 30)
+y <- x^2 * sin(x) + rnorm(30, sd = 0.5)  # Complex nonlinear relationship
+
+dat_gam <- data.frame(x, y)
+
+# Fit a Generalized Additive Model using thin plate regression spline
+mod_gam <- gam(y ~ s(x, bs = "tp"), data = dat_gam)  # 'tp' specifies thin plate spline
+
+# Create a grid for predictions
+x_grid <- seq(min(x), max(x), length.out = 300)
+pred_gam <- data.frame(x = x_grid)
+pred_gam$y <- predict(mod_gam, newdata = pred_gam)
+
+# Plot the data and the fitted GAM
+plt_gam <- ggplot(dat_gam, aes(x, y)) +
+  geom_point(size = 2, shape = 1, colour = "royalblue") +
+  geom_line(data = pred_gam, aes(x, y), color = "black") +
+  xlab("Predictor, X") +
+  ylab("Response, Y")
+
+ggarrange(plt_poly, plt_gam, plt_sin, ncol = 2, nrow = 2,
+          labels = "AUTO")
+```
+
+
+## Extension of Nonlinear Models
+
+Like linear models, nonlinear models have also been extended to include multiple predictors, interactions, and other terms to capture complex relationships between the variables. The first type of more complex nonlinear models accommodates a wider range of data distributions by generalising to non-normal error distributions through link functions. These models are called generalised nonlinear models (GNLMs). The examples of GLMs in @sec-generalised-linear-model should prepare you sufficiently to handle nonlinear models too. The other type deals with hierarchical data structures and incorporates fixed and random effects. As such, you can also correctly model repeated measures and longitudinal, and nested (grouped) designs. These hierarchical models are called nonlinear mixed models (NLMMs). Examples of NLMMs are provided in @sec-mf-treatments and @sec-perturbation.
+
+
+## Considerations for Model Selection
+
+```{r, fig.width=c(6,5),fig.asp=0.5,out.width=c("80%","12cm")}
+#| echo: false
+#| messages: false
+#| warning: false
+#| fig.cap: "Plot of growth rate data fitted with a von Bertalanffy model, a first- (straight line), second- and third-order polynomial, and a GAM."
+#| label: fig-combo
+#| fig.align: center
+#| fig-pos: "t"
+
+set.seed(13)
+
+# Parameters for the von Bertalanffy model
+L_inf <- 100  # theoretical maximum length
+k <- 0.2      # growth rate
+t0 <- -1      # hypothetical age at length zero
+
+# Generate time points
+t <- 0:20
+
+# Generate lengths using the von Bertalanffy equation with some added noise
+L_t <- L_inf * (1 - exp(-k * (t - t0))) + rnorm(21, mean = 0, sd = 5)
+
+# Create a data frame
+dat_vb <- data.frame(t, L_t)
+
+# Fit the von Bertalanffy model
+mod_vb <- nls(L_t ~ L_inf * (1 - exp(-k * (t - t0))), data = dat_vb, start = list(L_inf = 80, k = 0.1, t0 = 0))
+
+# Fit polynomial model2
+mod_poly1 <- lm(L_t ~ poly(t, 1, raw = FALSE), data = dat_vb)
+mod_poly2 <- lm(L_t ~ poly(t, 2, raw = FALSE), data = dat_vb)
+mod_poly3 <- lm(L_t ~ poly(t, 3, raw = FALSE), data = dat_vb)
+
+# Fit the GAM
+mod_gam <- gam(L_t ~ s(t), data = dat_vb)
+
+# Create a grid for predictions
+t_grid <- seq(min(t), max(t), length.out = 21)
+pred_vb <- data.frame(t = t_grid)
+L_t_pred <- predict(mod_vb, newdata = pred_vb)
+y1_pred <- predict(mod_poly1, newdata = pred_vb)
+y2_pred <- predict(mod_poly2, newdata = pred_vb)
+y3_pred <- predict(mod_poly3, newdata = pred_vb)
+y_gam_pred <- predict(mod_gam, newdata = pred_vb)
+dat_vb <- cbind(dat_vb, L_t_pred, y1_pred, y2_pred, y3_pred, y_gam_pred)
+
+# Combine the original data and predictions for consistent aes mapping
+plot_data <- data.frame(
+  t = rep(t_grid, 5),
+  Length = c(dat_vb$L_t_pred, dat_vb$y1_pred, dat_vb$y2_pred, dat_vb$y3_pred, dat_vb$y_gam_pred),
+  Model = rep(c("von Bertalanffy", "poly1", "poly2", "poly3", "GAM"), each = length(t_grid))
+)
+
+# Plot the data and the fitted model
+ggplot(dat_vb, aes(t, L_t)) +
+  geom_point(size = 2, shape = 1, colour = "royalblue") +
+  geom_line(data = plot_data, aes(t, Length, colour = Model), alpha = 0.6) +
+  scale_color_manual(name = "Model",
+                     values = c("von Bertalanffy" = "black", "poly1" = "coral3", "poly2" = "deepskyblue3", "poly3" = "deeppink3", "GAM" = "seagreen3")) +
+  xlab("Time (years)") +
+  ylab("Length (cm)") +
+  theme(legend.position = "right")
+```
+
+There are a few practical considerations to keep in mind when choosing a suitable nonlinear (in shape) model. Sometimes different models can provide similar fits to the same data, but they may have different implications for the interpretation of the relationship between the variables. See for example @fig-combo. The plot shows growth rate data fitted with a first-, second- and third-order polynomial, a GAM, and a NLS von Bertalanffy model. To the untrained eye and inexperienced biologist, all models seem to provide a good fit to the data, but they do differ subtly in the shape of the fitted curve. The von Bertalanffy model is a saturating growth model (it reaches a plateau), while the polynomial models and the GAM are more flexible and can capture a wider range of shapes. The choice of model should be guided by the underlying biological or physical processes that generated the data and the research question you are trying to answer.
+
+Since you will often have to decide among polynomial regressions, nonlinear models, and GAMs, I'll outline some general guidelines to help you make an informed decision.
+
+-   **Linearity vs. Nonlinearity:** If the relationship between the variables is linear or can be adequately approximated by a polynomial function, polynomial regression is a suitable choice. Nonlinear models or GAMs may be more appropriate if the relationship is nonlinear and does not follow a specific polynomial form. In @fig-combo, it is obvious that the straight line model is not a good fit for the data, but the second- and third-order polynomial models, the GAM, and the von Bertalanffy model all provide better fits.
+
+-   **Complexity of the Relationship:** Polynomial regression is limited in its ability to capture complex nonlinear relationships, especially those with more bends, peaks, or valleys than a polynomial of order <3 (or even 4 at a push) can capture. Another consideration is the process the data represent: if it is inherently nonlinear according to a known function such as exponential growth or decay, seasonal sinusoidal patterns, or logistic growth, then nonlinear models or GAMs are more flexible and can capture a wider range of nonlinear responses. In @fig-combo, the von Bertalanffy model is a saturating growth model, which is a known biological process that can be captured by a nonlinear model. The 3rd-order polynomial model also seems to capture a saturating growth pattern, but it also somewhat influenced by the dip in the raw data around 12.5 years (in addition to some other nuances), but this is likely due to some random variation and is not part of the growth response.
+
+-   **Interpretability vs. Flexibility:** Polynomial regression provides coefficients that relate to the powers of the predictor variables, but the interpretation of the $\beta$ parameters is not as intuitive as in a linear model of order 1. In contrast, nonlinear models and GAMs offer greater flexibility in capturing complex patterns. GAMs may lack direct interpretability of the coefficients, but the nonlinear model offers coefficients that can be interpreted in the context of the model's structure. In @fig-combo, the von Bertalanffy model has a clear biological interpretation (see @sec-vonbertalanffy), while the 3rd-order polynomial model and the GAM are more flexible and can capture a wider range of shapes (it follows the dips and peaks in the raw data closer). The 2nd-order polynomial does not fit the data as well at very low ages at 20 year, but it is still a better fit than the linear model.
+
+-   **Overfitting Concerns:** Polynomial regression with high-degree polynomials can lead to overfitting, especially when the model complexity exceeds the underlying data patterns. Nonlinear models and GAMs can also overfit if not properly regularised or constrained. These insights can be seen when we examine the summaries of the regression fits, and can be formally assessed using cross-validation or information criteria. In @fig-combo, the 3rd-order polynomial model seems to capture some of the random variation in the data, which may be an indication of overfitting. The GAM also seems to capture some of the random variation, but it is less pronounced than in the 3rd-order polynomial model.
+
+-   **Data Size and Complexity:** For small to moderate-sized datasets with complex nonlinear relationships, GAMs may be more suitable due to their flexibility and ability to capture intricate patterns. For simpler relationships or when interpretability is important, nonlinear regression (with mechanistically-informed parameters) may be preferred. These are not of concern in @fig-combo.
+
+-   **Model Complexity and Assumptions:** Polynomial regression assumes a specific polynomial form for the relationship, which may not hold in practice. Nonlinear models and GAMs are more flexible and do not always impose strict parametric assumptions (see @sec-assumptions), making them more robust to deviations from the assumed form. A detailed assessment of the model assumptions and the complexity of the relationship can help guide the choice of model. We need to add to this our biologist specialist knowledge to make the best choice.
+
+-   **Computational Considerations:** Polynomial regression is relatively simple to implement and computationally efficient, especially for low-degree polynomials. Nonlinear models and GAMs may require more computational resources, especially for large datasets or complex models. Not a concern for the models represented in @fig-combo.
+
+## Requirements and Assumptions {#sec-assumptions}
+
+Polynomial regression, nonlinear regression, and GAMs are built upon the principles of linear regression; therefore, the fundamental assumptions of normality and homoscedasticity of residuals usually still apply. Specifically, these models assume that the residuals are independent and identically distributed (i.i.d.), which implies that they are normally distributed with a constant variance (homoscedasticity). However, the specifics can vary depending on the model and the distribution of the response variable. Of course, there is also the requirement for the response variable to be continuous and independent. These assumptions help ensure that the error terms (residuals) in the model are well-behaved so that reliable inference and predictions can be obtained.
+
+Nuances:
+
+-   **Polynomial Regression:** While a type of nonlinear regression,
+    polynomial models are still linear in their parameters. This means
+    that they are more bound to the classic regression assumptions and
+    can be more sensitive to violations.
+-   **GAMs:** Offer more flexibility in handling nonlinear
+    relationships. Depending on the distributions used for the outcome
+    variable and the link functions employed, GAMs can potentially relax
+    some of the strict normality assumptions.
+-   **Nonlinear Models in General:** Some truly nonlinear models (like
+    those based on exponential or logarithmic functions) may have
+    inherently different error structures and may not strictly require
+    the same assumptions of normality and homoscedasticity. However,
+    these models come with their own set of assumptions and
+    considerations.
+
+Important considerations:
+
+-   **Diagnostic Checks:** Regardless of the model type, it's
+    *essential* to perform residual diagnostics to assess if assumptions
+    are met. Visualisations (e.g., histograms, Q-Q plots, residuals vs.
+    fitted plots) are well-known tools.
+-   **Transformations:** If violations of assumptions
+    are found, data transformation techniques (e.g., Box-Cox, log)
+    could be considered to improve model validity.
+-   **Generalised Linear Models (GLMs):** An important class of models
+    designed to handle various non-normal responses (e.g., count,
+    binary) while extending the linear modeling framework. GLMs are good alternative to both polynomial regression and GAMs in
+    certain contexts.
+-   **Mixed models:** Linear Mixed Models (LLMs), Generalised Linear Mixed Models (GLMMs), and Generalised Nonlinear Models (GNLMs) can be used to account for dependencies in the data, such as repeated measures or hierarchical
+    structures. GAMs also accommodate mixed data structures.
+
+The rest of this chapter will focus on the practical aspects of fitting
+polynomial regression models and nonlinear regressions in R. GAMs will
+be covered in a separate chapter due to their unique characteristics and
+implementation details.
+
+## R Functions and Packages
+
+### Polynomial Regression
+
+To fit a polynomial model in R, use the simple linear regression function `lm()` to fit the model. The purpose of `poly()` is to generate polynomial terms of a specified degree. The basic form is:
+
+```{r}
+#| eval: FALSE
+#| echo: TRUE
+
+poly_model <- lm(y ~ poly(x, degree = 2), data = data)
+```
+
+GLMs are a generalisation of ordinary linear regression that allows for the response variable to have
+non-Gaussian error distributions such as one of the exponential family
+distributions (e.g., binomial, Poisson, gamma). These distributions are
+accommodated via so-called link functions within the GLM framework. The
+most common R function for fitting GLMs is `glm()`.
+
+Mixed models that include random and fixed effects (see box 'Fixed and
+Random Effects') are also available. These are necessary for the
+analysis of data that have correlations within groups or hierarchies
+(e.g., repeated measures[^2] or the inclusion of grouped variables).
+Commonly used are `lmer()` for LLMs and `glmer()` for GLMMs. Both functions are in the
+**lme4** package. Another package that accommodates LLMs is **nlme** and
+its `lme()` function. It has somewhat different capabilities and syntax
+compared to **lme4**.
+
+[^2]: Repeated measures are multiple observations taken on the same
+    subject or unit over time or under different conditions. Sometimes
+    this is called longitudinal data.
+
+::: callout-note
+## Fixed and Random Effects
+
+Random effects and fixed effects are used in regression models to
+account for different sources of variation in the data.
+
+*Fixed effects* are variables or factors that represent
+sources of variation that are of primary interest in the study or that
+have a finite and fixed number of levels or categories. These effects
+are assumed to have an influence on the mean response.
+Examples of fixed effects include:
+
+-   Treatment groups in an experiment (e.g., fertiliser A, fertiliser B, control)
+-   Categorical variables (e.g., sex, age group, species)
+-   Continuous variables (e.g., time, temperature, concentration)
+
+The coefficients associated with fixed effects are estimated and
+interpreted as the primary effects of interest in the model.
+
+*Random effects* are variables or factors that represent
+sources of variation that are not of primary interest but need to be
+accounted for in the model. These effects are assumed to be randomly
+sampled from a larger population, and their levels are theoretically
+infinite or too numerous to be modeled as fixed effects. Examples of
+random effects include:
+
+-   Subjects or individuals in a study (e.g., individual plants or animals)
+-   Clusters or groups (e.g., plots, aquaria, transects)
+-   Repeated measures or time points within subjects
+
+Random effects are used to model the correlation or dependence among
+observations within the same cluster, subject, or time series. They allow for
+subject-specific or cluster-specific adjustments to the overall model,
+accounting for the fact that observations within the same group are more
+similar than observations from different groups.
+
+In LMMs and GLMMs, both fixed and random effects are included. The fixed
+effects represent the primary effects of interest and the random
+effects account for the correlation or dependence within clusters or
+subjects.
+:::
+
+### Nonlinear Regression
+
+In R, nonlinear regressions can be performed using the `nls()` function
+in the **base** package. It uses iterative algorithms to minimise the
+residual sum of squares and find the best-fit parameters for the
+user-specified nonlinear model.
+
+The `nls()` function is most frequently used to fit user-specified
+nonlinear functions. The basic syntax is:
+
+```{r}
+#| eval: FALSE
+#| echo: TRUE
+
+nls_model <- nls(y ~ f(x, theta1, theta2, ...), data = data,
+                 start = list(theta1 = value1, theta2 = value2, ...))
+```
+
+GNLMs extend nonlinear models by
+allowing the response variable to follow one of the exponential family
+distributions, such as binomial, Poisson, or gamma, etc. This is done
+through a link function that relates the mean of the distribution to the
+predictors through the nonlinear model. GNLMs are fit using maximum
+likelihood estimation, which is flexible enough to handle various types
+of error distribution and link functions. The **gnm** package rovides
+the `gnm()` function designed for this purpose.
+
+For data with dependencies within groups or hierarchies (such as in
+longitudinal studies), NLMMs are available
+within `nlme()`. NLMMs incorporate fixed effects (associated with the
+nonlinear terms) and random effects (to account for correlation and
+variation within groups).
+
+## Example: Algal Nutrient Uptake Kinetcis {#sec-ex1}
+
+We can measure algal nutrient uptake rates using two types of experiments: multiple flask experiments and perturbation experiments. The fundamental concept underlying both methods is to introduce a known quantity of nutrients (termed the substrate) into a flask or a series of flasks and then measure the rate of nutrient uptake ($V$) at different substrate concentrations ($[S]$). We calculate the nutrient uptake rate as the change in nutrient concentration in the flask over a predefined time interval ($V = \Delta [S]/\Delta t$). Consequently, both experiments generate data that relate the nutrient uptake rate to the corresponding substrate concentration. The primary difference between the two methods lies in the experimental setup and the data analysis.
+
+In the **multiple flask method**, we prepare a series of flasks, each containing a different initial concentration of the substrate nutrient to span the range typically encountered by the specimen in its natural environment. We then measure the nutrient uptake rate in *each individual flask* over a specific time period, for example by taking measurements at the start ($t=0$) and end ($t=30$ minutes) of the incubation. We calculate the change in substrate concentration over this time interval in each flask to determine the corresponding nutrient uptake rate. The resulting data from this method therefore consists of the different initial substrate concentrations used in each flask, paired with their respective measured nutrient uptake rates over the incubation period.
+
+<!-- ChatGPT query to simulate data for the experiment -->
+
+<!-- Please refer to the above text about the multiple flask experiment. Develop R code that will simulate data for seven replicate flasks participating in a multiple flask experiment. These are the conditions per each set of multiple flasks: -->
+
+<!--   - the concentrations of nutrient at $t=0$ are 50, 40, 30, 25, 20, 15, 12.5, 10, 7.5, 5, 2.5, and 0 $\mu M$ nitrate -->
+<!--   - the disappearance of nitrate is measured at $t=0$ and $t=30$ minutes -->
+<!--   - there is ~1.5 g of seaweed per 150 ml incubation medium per flask -->
+<!--   - there are 7 replicate flasks per each concentration of nutrients -->
+
+<!-- Produce R code to simulate random data from the Michaelis-Menten relationship with a $V_{max} = 35.0 \pm 1.8 \, \mu \text{M} \, N \, g^{-1} \, hr^{-1}$ and a $K_m = 5.6 \pm 1.3 \mu \text{M} N$. The data should be normally distributed. Present this data in a table of $[S]$, which is the nutrient concentration at $t=0$ and the corresponding $V$. -->
+
+```{r}
+#| echo: false
+#| messages: false
+#| warning: false
+
+# Define the model function
+mm_fun <- function(S, Vmax, Km) {
+  Vmax * S / (Km + S)
+}
+
+generate_data <- function(n_trt, n_rep, conc_vec, Km_vec,
+                          Vmax_vec, Km_vec_sd, Vmax_vec_sd) {
+  # Define the substrate concentrations
+  concentrations <- conc_vec
+  
+  # Create a dataframe with the specified structure
+  data <- expand.grid(
+    trt = paste("Treatment", 1:n_trt),
+    S = concentrations,
+    rep = 1:n_rep
+  ) |> 
+    arrange(trt, S, rep)
+  
+  # Add Km and Vmax values
+  set.seed(13)
+  data <- data |> 
+    group_by(trt)  |> 
+    mutate(
+      Km = rnorm(n(), mean = Km_vec[as.numeric(str_extract(trt, "\\d+"))], 
+                 sd = Km_vec_sd[as.numeric(str_extract(trt, "\\d+"))]),
+      Vmax = rnorm(n(), mean = Vmax_vec[as.numeric(str_extract(trt, "\\d+"))], 
+                   sd = Vmax_vec_sd[as.numeric(str_extract(trt, "\\d+"))])
+    ) |> 
+    ungroup() |> 
+    mutate(V = mm_fun(S, Vmax, Km),
+           rep = as.factor(rep),
+           trt = as.factor(trt)) |> 
+    select(-Km, -Vmax)
+  
+  return(data)
+}
+
+# Example usage
+conc_vec <- c(0, 0.1, 0.5, 2, 5, 7.5, 10, 12.5, 15, 17.5, 20, 25, 30)
+n_trt <- 3  # Number of treatment levels
+n_rep <- 5  # Number of replicates per treatment
+Km_vec <- c(10, 8, 7)  # Km means for each treatment
+Vmax_vec <- c(50, 40, 20)  # Vmax means for each treatment
+Km_vec_sd <- c(1.2, 1.3, 1.2)  # Km SD for each treatment
+Vmax_vec_sd <- c(0.7, 1.3, 0.9)  # Vmax SD for each treatment
+
+# Generate the data for one treatment
+mf_data <- generate_data(n_trt = 1, n_rep, conc_vec, Km_vec,
+                         Vmax_vec, Km_vec_sd, Vmax_vec_sd)
+```
+
+The **perturbation method** uses a single flask to which we add a high initial concentration of the substrate nutrient, set at a level that is ecologically meaningful and relevant to the study system. Instead of using multiple flasks, we measure the change in the remaining substrate concentration at multiple time points within this *same flask*, for example by taking samples every 10 or 20 minutes until all the substrate is depleted, say at 120 minutes. We calculate the change in substrate concentration between each successive time point to determine the corresponding nutrient uptake rate over that time interval. The resulting data, therefore, consist of a time series of substrate concentrations at each measurement time point, paired with the nutrient uptake rates calculated over the periods between those time points.
+
+The important differences between the multiple flask and perturbation experiments are summarised in @tbl-diffs.
+
+| Feature            | Multiple Flask Experiments                 | Perturbation Experiments                       |
+|--------------------|--------------------------------------------|------------------------------------------------|
+| Experimental Setup | Multiple flasks, each with different $[S]$ | Single flask with initial high $[S]$           |
+| Data Independence  | Data points are independent                | Data points are correlated (repeated measures) |
+| Analysis           | Nonlinear least squares regression (NLS)  | Nonlinear mixed model (NLMM)                  |
+| R Function         | `nls()`                                    | `nlme::nlme()`                                 |
+
+: Key differences between multiple flask and perturbation experiments. {#tbl-diffs}
+
+Our choice between multiple flask and perturbation experiments depends on our research questions and experimental constraints. In both methods, we must consider all sources of error and variability, such as measurement error, the type of nutrient, the physiological state of the alga, the light intensity, the experimental temperature, and other variables that might affect the uptake response.
+
+We apply the Michaelis-Menten model (@eq-mm) to data from multiple flask and perturbation experiments to characterise nutrient uptake. Applied to algae, this model assumes an irreversible uptake process that saturates at high substrate concentrations. It effectively quantifies key characteristics of the nutrient uptake system, including the maximum uptake rate and the algae's affinity for the nutrient.
+
+We use the `nls()` function to fit the Michaelis-Menten model to the data from multiple flask experiments. For the perturbation experiment, things are a bit more complicated. This method includes dependent data points because the measurements are taken from the same flask at different times, introducing a correlation between observations. This violates the independence assumption required for standard regression models. To accurately analyse these data, I recommend a *nonlinear mixed-effects model* implemented in the `nlme()` function. Mixed-effects models account for fixed effects (overall trends across all observations) and random effects (variations specific to individual experimental units, in this case, time points within the same flask). This helps handle the correlation between repeated measures and produces reliable estimates of the uptake dynamics within the flask. 
+
+The Michaelis-Menten equation is given by:
+
+$$V_i = \frac{V_{max} \cdot [S_i]}{K_m + [S_i]} + \epsilon_i$$ {#eq-mm}
+
+Where:
+
+-   $V_i$ is the uptake rate at the $i$-th observation,
+-   $V_{max}$ is the maximum nutrient uptake rate achieved,
+-   $[S_i]$ is the substrate concentration at the $i$-th observation,
+-   $K_m$ is the Michaelis constant, which represents the substrate concentration at which the uptake rate is half of $V_{max}$, and
+-   $\epsilon_i$ is the error term at the $i$-th observation. and
+
+The two parameters of the Michaelis-Menten model are rooted in theory and have ecophysiological interpretations. $K_m$ is a measure of the alga's affinity for the nutrient and is determined by the kinetic constants governing the formation and dissociation of the enzyme-substrate complex responsible for taking up the nutrient; lower values indicate a higher affinity. $V_{max}$ represents the maximum capacity of the alga to utilise the nutrient.
+
+### Hypothesis Testing and the Michaelis-Menten Model
+
+#### Linear vs. Michaelis-Menten Model {#sec-linear-vs-mm}
+
+Often, we aim to understand the relationship between two variables but we may not yet know which model best describes this relationship. For instance, in algal nutrient uptake kinetics, both a linear model and a nonlinear Michaelis-Menten model can be used to describe the relationship between nutrient uptake rate and substrate concentration. Both models are valid but they have different interpretations and unique ecophysiological implications. The choice between the two models depends on the biological system.
+
+- **Linear models** indicate that the uptake process is inherently unsaturated, such as with the uptake of ammonium. In this case, the uptake rate continues to increase linearly with substrate concentration.
+- The **Michaelis-Menten model** suggests that the uptake rate eventually saturates as the substrate concentration increases, which is often the case with nitrate.
+
+The key question is: How do we decide which model fits our data best?
+
+The simplest way is to visually inspect the scatter of points on a plot of the $V$ vs. $[S]$ data, which would be part of any exploratory data analysis. If the data exhibit a clear saturation pattern, where the uptake rate levels off at high substrate concentrations, the Michaelis-Menten model is likely to provide a better fit. Conversely, if the data show a linear relationship over the observed range of substrate concentrations, the linear model may be more appropriate.
+
+It is also important to consider the biological plausibility of the models. If there is prior knowledge or theoretical reasons to expect a saturating relationship between the uptake rate and substrate concentration, the Michaelis-Menten model may be more appropriate, even if both models provide a similar fit to the data.
+
+Confirmation can be obtained by fitting both models to our data and comparing their performance using statistical measures such as the sum of squared residuals (SSR), Akaike Information Criterion (AIC), Bayesian Information Criterion (BIC), or log-likelihood test.
+
+To proceed with the statistical approach, we must first set hypotheses such as these to compare the models:
+
+**$H_0$:** The Michaelis-Menten model does not provide a better fit to the data than a simple linear model.
+
+In other words, we suggest with the null hypothesis that the relationship between nutrient uptake rate and the substrate concentration is adequately described by a linear model rather than the Michaelis-Menten nonlinear model. The implication is that the uptake rate increases linearly with substrate concentration, without saturation.
+
+**$H_a$:** The Michaelis-Menten model provides a significantly better fit to the data than a simple linear model.
+
+With the alternative hypothesis we propose that the relationship between the nutrient uptake rate and the substrate concentration is best described by the nonlinear Michaelis-Menten model, so the uptake rate initially increases with substrate concentration but eventually levels off, indicating saturation.
+
+To test these hypotheses, we can:
+
+1. Fit both the Michaelis-Menten model and a linear model to the data.
+2. Compare the goodness-of-fit of both models using statistical measures such as the SSR, AIC, or BIC.
+3. Perform a model comparison test (such as an *F*-test or likelihood ratio test) to determine if the improvement in fit provided by the Michaelis-Menten model is statistically significant compared to the linear model.
+
+In the above scenario, which is to decide among the linear and Michaelis-Menten models, hypotheses concerning the parameters of the models are not directly tested as they are not really of interest (except for estimating their magnitude, perhaps). Instead, the focus is on the overall goodness-of-fit of the models to the data.
+
+#### Comparing Two Michaelis-Menten Models {#sec-mm-comparison}
+
+Here, we may be interested in testing whether the parameters $V_\text{max}$ and $K_m$ differ from some hypothesised values or across different experimental conditions.
+
+In the first instance, we can set up the hypotheses as follows:
+
+**$H_0:$** $V_\text{max} = V_\text{max}^*$ and $K_m = K_m^*$
+
+where $V_\text{max}^*$ and $K_m^*$ are the hypothesised values (or values from a reference condition) for the maximum uptake rate and Michaelis constant, respectively.
+
+**$H_a:$** $V_\text{max} \neq V_\text{max}^*$ or $K_m \neq K_m^*$
+
+This alternative hypothesis states that at least one of the parameters ($V_\text{max}$ or $K_m$) differs from the hypothesised value.
+
+If the experiment involves different experimental conditions or treatments, we can modify the hypotheses accordingly. For example, if we want to test whether the parameters differ between two experimental conditions (A and B), the hypotheses could be:
+
+$H_0: V_\text{max}^A = V_\text{max}^B$ and $K_m^A = K_m^B$
+
+$H_a: V_\text{max}^A \neq V_\text{max}^B$ or $K_m^A \neq K_m^B$
+
+In this case, the null hypothesis states that the maximum uptake rate and Michaelis constant are the same for both experimental conditions, while the alternative hypothesis states that at least one of the parameters differs between the two conditions.
+
+After fitting the Michaelis-Menten model to the data using the `nls()` or `nlme()` functions in R, appropriate statistical tests (e.g., likelihood ratio tests, Wald tests, or other model comparison techniques) can be performed to evaluate the hypotheses and determine whether the parameter estimates significantly differ from the hypothesised values or across experimental conditions.
+
+### Multiple Flask Experiment
+
+#### Fitting a single model (NLS) {#sec-mf-single}
+
+To demonstrate fitting a nonlinear model to $V$ vs $[S]$ data produced from a multiple flask experiment, I simulate data across a range of substrate concentrations. We then fit the model to the data using the `nls()` function in R. The dataset consists of five replicate flask sets ($n=5$) for each of 13 substrate concentrations. Each set therefore results in independently estimated uptake rates for the initial nutrient concentrations. The dataset is shown in @tbl-mf1, and a plot of $V$ as a function of $[S]$ is shown in @fig-mf1. 
+
+```{r}
+#| echo: false
+#| messages: false
+#| warning: false
+#| tbl-cap: "Simulated data for a multiple flask experiment on an alga (showing only the top and bottom three rows)."
+#| label: tbl-mf1
+
+mf_data |> 
+  select(rep, S, V) |>
+  mutate(V = round(V, 2)) |>
+  filter(row_number() <= 3 | row_number() > n() - 3) |> 
+  gt() |> 
+  cols_align(
+    align = "center",
+    columns = "rep") |> 
+  cols_label(rep = html("Replicate flask"),
+             S = html("[S]"),
+             V = html("V"))
+```
+
+<!-- ```{r} -->
+<!-- #| echo: true -->
+
+<!-- # html only -->
+<!-- DT::datatable(mf_data, rownames = FALSE, options = list(pageLength = 5)) -->
+<!-- ``` -->
+
+```{r, fig.width=c(6,5),fig.asp=0.65,out.width=c("80%","12cm")}
+#| echo: false
+#| messages: false
+#| warning: false
+#| fig.cap: "Plot of $V$ as a function of $[S]$ for a multiple flask experiment involving seven replicate flask sets."
+#| label: fig-mf1
+#| fig.align: center
+#| fig-pos: "t"
+
+ggplot(mf_data, aes(x = S, y = V, group = rep)) +
+  geom_jitter(size = 2, shape = 1, colour = "royalblue", width = 0.08) +
+  labs(x = TeX("S [$\\mu$M]"),
+       y = TeX("V [$\\mu$M $g^{-1}_{dry}$ $h^{-1}$]")) +
+  theme(legend.position = "none")
+```
+
+In @fig-mf1, there is a clear indication that the uptake rates plateau at higher substrate concentrations, suggesting that fitting a Michaelis-Menten model is advisable. Later, I will compare this with a linear model for completeness. A central feature of this dataset is that the data were collected independently, with each flask set representing a separate experimental unit. There is no correlation between flasks within a set, and no correlation across the initial substrate concentrations. Consequently, the assumption of independence is fully met, allowing the simplest expression of the `nls()` function to be used to fit the Michaelis-Menten model to the data.
+
+The Michaelis-Menten model is fit to the data using the `nls()` function in R. It is specified as:
+
+```{r}
+#| echo: true
+#| messages: false
+#| warning: false
+
+# Define the model function
+mm_fun <- function(S, Vmax, Km) {
+  Vmax * S / (Km + S)
+}
+
+# Fit the nonlinear model Michaelis-Menten model
+nls_mod <- nls(V ~ mm_fun(S, Vmax, Km), # <1>
+            data = mf_data,
+            start = c(Vmax = 30, Km = 5)) # <2>
+```
+1. The model formula specifies the Michaelis-Menten equation, with `V` as the dependent variable on the left-hand side and `S` as the independent variable on the right. The model parameters `Vmax` and `Km` will be estimated when fitting the model.
+2. The `start` argument provides initial values for the model parameters. The `Vmax` and `Km` parameters are estimated by minimising the sum of squared residuals between the observed and predicted values of `V`. The `nls()` function uses an iterative process to find the best-fitting values for these parameters, and the starting values improve the success of model convergence.
+
+Here is the model summary:
+
+```{r}
+summary(nls_mod)
+```
+
+The above output provides the estimates for $V_{\max}$ and $K_m$, along with their standard errors, *t*-values, and *p*-values:
+
+-   The estimated maximum uptake rate ($V_{\max}$) is approximately 49.24 $\mu M N g^{-1} hr^{-1}$ and the small standard error associated with this parameter (0.89) indicates a precise estimate. The *t*-value (55.18) is very high, and the corresponding *p*-value is extremely small (<0.0001), indicating that $V_{\max}$ is highly significantly different from zero.
+-   The estimated Michaelis constant ($K_m$) is approximately 9.50 $\mu M$ and its standard error (0.45) is also small, suggesting a precise estimate. The *t*-value (21.22) and the very small *p*-value (<0.0001) indicate that $K_m$ is also highly significantly different from zero.
+-   The residual standard error is 1.10 on 63 degrees of freedom, indicating the average deviation of the observed uptake rates from the fitted model values.
+-   The model converged in 4 iterations with a very small convergence tolerance, indicating a good fit and stability of the model.
+
+::: {.callout-tip}
+## Results
+
+The Michaelis-Menten parameters, maximum uptake rate ($V_{\max}$) and half-saturation constant ($K_m$), were estimated using nonlinear regression (@fig-mf2). The estimated $V_{\max}$ was 49.24 $\mu$M N g$^{-1}$ hr$^{-1}$ (SE = 0.89, $t = 55.18$, $p < 0.0001$), and the estimated $K_m$ was 9.50 $\mu$M (SE = 0.45, $t = 21.22$, $p < 0.0001$). Both parameters were significantly different from zero. The model fit was good, converging in 3 iterations with a residual standard error of 1.10 (63 degrees of freedom).
+:::
+
+```{r, fig.width=c(6,5),fig.asp=0.65,out.width=c("80%","12cm")}
+#| echo: false
+#| messages: false
+#| warning: false
+#| fig.cap: "Plot of the Michaelis-Menten model fitted to the data in @fig-mf1. The vertical and horizontal dashed lines indicate the estimated $K_m$ and $V_{max}$ values, respectively."
+#| label: fig-mf2
+#| fig-align: center
+
+# Extract coefficients
+coefficients <- coef(nls_mod)
+Vmax_est <- coefficients["Vmax"]
+Km_est <- coefficients["Km"]
+
+# Creating a sequence for smooth curve
+conc_seq <- seq(min(mf_data$S), max(mf_data$S), length.out = 100)
+predicted_V <- (Vmax_est * conc_seq) / (Km_est + conc_seq)
+
+# Plot
+ggplot(mf_data, aes(x = S, y = V)) +
+  geom_jitter(aes(colour = "Data Points", width = 0.08),
+    shape = 1, size = 2, colour = "royalblue") +
+  geom_line(aes(x = conc_seq, y = predicted_V),
+            data = data.frame(S = conc_seq, V = predicted_V),
+            color = "black", size = 0.8) +
+  geom_vline(xintercept = Km_est, linetype = "dashed",
+             color = "hotpink1", size = 0.4, show.legend = TRUE) +
+  geom_hline(yintercept = Vmax_est, linetype = "dashed",
+             color = "hotpink1", size = 0.4, show.legend = TRUE) +
+  labs(x = TeX("S [$\\mu$M]"),
+       y = TeX("V [$\\mu$M $g^{-1}_{dry}$ $h^{-1}$]")) +
+  # theme_minimal() +
+  theme(legend.position = "none")
+```
+
+The text is clear and concise, but here are a few minor changes for improved readability and precision:
+
+**Assumption tests** Since these data are simulated and drawn from a normal distribution with equal variances across the range of substrate concentrations, the assumptions of homoscedasticity and normality of residuals are inherently met. In this example, we fit the model solely to obtain estimates of the Michaelis-Menten parameters, rather than to make predictions, inferences, or calculate confidence intervals. Therefore, assumption tests are not critical at this stage. We will formally test assumptions in @sec-mf-treatments when comparing the effects of experimental treatments on kinetic parameters.
+
+#### Is the Michaelis-Menten model a better fit than a linear model?
+
+In @sec-linear-vs-mm, we pose a hypothesis that requires comparing a linear model to a Michaelis-Menten model fitted to the same data. @fig-mf2 indicates the nonlinear model indeed provides a very good fit but in some situations this distinction may be less clear and require verification. Let us fit a linear model to the above data and compare it to the Michaelis-Menten model.
+
+```{r}
+#| echo: true
+#| messages: false
+#| warning: false
+
+# Fit the linear model
+lm_mod <- lm(V ~ S, data = mf_data)
+
+summary(lm_mod)
+```
+
+The linear model summary shows that the slope and intercept are significantly different from zero, indicating a good fit. The $R^2$ value is 0.86, which is very high, suggesting that the linear model explains 86% of the variance in the data. The residual standard error is 5.13, which is higher than the Michaelis-Menten model, indicating a worse fit. We can test the difference between the models formally by examining the AIC, BIC, or SSR, and the likelihood ratio test.
+
+```{r}
+#| echo: true
+#| messages: false
+#| warning: false
+
+AIC(lm_mod, nls_mod)
+```
+
+```{r}
+#| echo: true
+#| messages: false
+#| warning: false
+
+BIC(lm_mod, nls_mod)
+```
+
+```{r}
+#| echo: true
+#| messages: false
+#| warning: false
+
+# Calculate the sum of squared residuals (SSR)
+sum(residuals(lm_mod)^2)
+sum(residuals(nls_mod)^2)
+```
+
+```{r}
+#| echo: true
+#| messages: false
+#| warning: false
+
+anova(lm_mod, nls_mod)
+```
+
+The AIC, BIC, and SSR values for the Michaelis-Menten model are lower than those for the linear model. Low is good, and we conclude that the Michaelis-Menten model is a better fit. The likelihood ratio test also shows that the Michaelis-Menten model is significantly better than the linear model (d.f. = 1, $F=375.43$, $p<0.0001$). Therefore, we can conclude that the Michaelis-Menten model is the most appropriate model for these data and that the rate of nutrient uptake by the seaweed (in this example) is saturated at high nutrient concentrations.
+
+#### Comparing treatment effects (NLS and NLMM) {#sec-mf-treatments}
+
+Experiments are seldom as simple as the one above. To develop our example further, consider an experiment designed to assess whether an experimental treatment, such as light intensity or seawater temperature, affects the nutrient uptake rate of a seaweed. It is biologically plausible to expect that each treatment will result in unique $V_{max}$ and/or $K_m$ values. For example, we know that the uptake rate of nitrate (\ce{NO3-}) might increase at higher light intensities and higher temperatures. Therefore, our hypothesis for this experiment is that the nutrient uptake kinetics of the seaweed is influenced by the treatment, as more formally stated in @sec-mm-comparison. To test this hypothesis, we fit a Michaelis-Menten model so that it allows estimates of $V_{max}$ and $K_m$ to vary among treatment groups.
+
+The data for a multiple flask experiment with a treatment effect comprised of three levels are provided in @tbl-mf2. Except for a new variable (treatment), the data are in all other respects identical to those in @sec-mf-single. 
+
+```{r}
+#| echo: false
+#| messages: false
+#| warning: false
+#| tbl-cap: "Simulated data with three treatment levels for a multiple flask experiment on a seaweed species."
+#| label: tbl-mf2
+
+set.seed(13)
+mf_data2 <- generate_data(n_trt = 3, n_rep, conc_vec, Km_vec,
+                          Vmax_vec, Km_vec_sd, Vmax_vec_sd)
+
+mf_data2 |> 
+  select(trt, rep, S, V) |>
+  mutate(V = round(V, 2)) |>
+  filter(row_number() <= 3 | row_number() > n() - 3) |> 
+  gt() |> 
+  cols_align(
+    align = "center",
+    columns = c("trt", "rep")) |> 
+  cols_label(trt = html("Treatment"),
+             S = html("[S]"),
+             rep = html("Replicate flask"),
+             V = html("V"))
+```
+
+**Option 1** The `nls()` function in R does not handle factor variables directly, which means we cannot include the treatment variable as a factor in the model formula. To address this limitation, we fit the `nls()` model separately for each treatment group. This approach allows each treatment to have its own $V_{\max}$ and $K_m$ values, effectively accommodating the variability in the Michaelis-Menten parameters across treatments.
+
+In addition to fitting separate models for each treatment, we also fit a global model (a null model) to all the data. The global model assumes that the effect of the experimental treatment is negligible, meaning that all treatments share the same $V_{\max}$ and $K_m$. This global fit serves as a baseline for comparison.
+
+To determine whether the Michaelis-Menten parameters significantly differ among the treatment groups, we perform a likelihood ratio test. The likelihood ratio test compares the fit of the global model (where parameters are shared across treatments) to the combined fit of the separate models (where parameters vary by treatment). The test statistic is the difference in the log-likelihoods of the two models, which follows a $\chi^2$ distribution with degrees of freedom equal to the difference in the number of parameters between the two models.
+
+```{r}
+#| echo: true
+#| messages: false
+#| warning: false
+
+# Fit separate models
+separate_models <- mf_data2 |>
+  group_by(trt) |>
+  nest() |>
+  mutate(model = map(data, ~nls(V ~ mm_fun(S, Vmax, Km),
+                                data = .x,
+                                start = list(Vmax = 40, Km = 10))))
+
+# Extract model summaries of separate models
+model_summaries <- separate_models|>
+  mutate(summary = map(model, broom::tidy))
+
+# Display summaries of separate models
+model_summaries |>
+  select(trt, summary) |>
+  unnest(summary)
+
+# Fit the global model
+global_model <- nls(V ~ mm_fun(S, Vmax, Km),
+                    data = mf_data2,
+                    start = list(Vmax = 45, Km = 9))
+
+# Extract log-likelihoods and degrees of freedom
+logLik_global <- logLik(global_model)
+df_global <- attr(logLik_global, "df")
+
+# Combined log-likelihoods and degrees of freedom
+logLik_separate <- sum(sapply(separate_models$model, logLik))
+df_separate <- sum(sapply(separate_models$model,
+                          function(m) attr(logLik(m), "df")))
+
+# Perform the likelihood ratio test
+lrt_stat <- 2 * (logLik_separate - logLik_global)
+p_value <- pchisq(lrt_stat, df = df_separate - df_global,
+                  lower.tail = FALSE)
+
+# Display results
+cat("Global model log-likelihood:", logLik_global, "\n")
+cat("Separate models log-likelihood:", logLik_separate, "\n")
+cat("Degree of freedom:", df_separate - df_global, "\n")
+cat("Likelihood ratio test statistic:", lrt_stat, "\n")
+cat("p-value:", p_value, "\n")
+```
+
+The results of the likelihood ratio test indicate whether the variation in $V_{\max}$ and $K_m$ among the treatments is statistically significant. If the test is significant, it suggests that the Michaelis-Menten parameters differ across treatments. We interpret the results as follows:
+
+- The log-likelihood value (-620.7498) for the global model, indicating the fit of the model with shared parameters.
+- The combined log-likelihood value (-313.1862) for the separate models, indicating the fit of the models with parameters varying by treatment.
+- The calculated test statistic (615.1273) for the likelihood ratio test on 6 degrees of freedom.
+- The *p*-value of the test is less than 0.0001 and provides strong evidence that $V_{\max}$ and $K_m$ differ significantly among the treatment groups.
+
+::: {.callout-tip}
+## Results
+
+The analysis aimed to determine if the Michaelis-Menten parameters $V_{\max}$ and $K_m$ significantly differed among the three experimental treatments. This was evaluated by fitting a global model with shared $V_{\max}$ and $K_m$ values across all treatments and comparing it to a model allowing separate $V_{\max}$ and $K_m$ estimates for each treatment. The log-likelihood value for the global model, which assumes shared $V_{\max}$ and $K_m$ values across all treatments, was -620.75, indicating the fit of the model with common parameters. In contrast, the combined log-likelihood value for the separate models, which allow $V_{\max}$ and $K_m$ to vary by treatment, was -313.19, indicating the fit of the models with treatment-specific parameters. The calculated test statistic for the likelihood ratio test was 615.13 (d.f. = 6, *p* < 0.001), providing strong evidence that the Michaelis-Menten parameters $V_{\max}$ and $K_m$ differ significantly among the treatment groups. Consequently we estimate a $V_{max}$ of 49.2 ± 0.96, 39.4 ± 0.87 $\mu$M N g$^{-1}$ hr$^{-1}$ and 18.9 ± 0.65 and a $K_m$ of 9.55 ± 0.48, 7.54 ± 0.48 and 5.50 ± 0.64 $\mu$M for treatments 1, 2 and 3 respectively.
+:::
+
+**Option 2** If Option 1 seems cumbersome, we can fit a NLMM using the **nlme** package instead. This package allows us to fit a mixed model with random effects for each treatment group. In this model, the fixed effects are the Michaelis-Menten parameters $V_{\max}$ and $K_m$, which vary by treatment, while the random effects are the replicate-specific intercepts. Thus, the cumbersome `nls()` formulation is replaced by the compact but more fiddly `nlme()` model specification. Pick your poison. The model is specified as follows:
+
+```{r}
+#| echo: true
+#| messages: false
+#| warning: false
+
+# Fit the model with the same parameters for both treatments
+# Starting values for Vmax and Km
+start_vals <- c(Vmax = 50, Km = 10)
+global_model <- nlme(
+  V ~ mm_fun(S, Vmax, Km),
+  data = mf_data2,
+  fixed = Vmax + Km ~ 1, # <1>
+  random = Vmax ~ 1 | trt/rep, # <2>
+  start = start_vals
+)
+
+# Fit the model with parameters varying by treatment
+# Starting values for Vmax and Km for each treatment
+start_vals <- c(Vmax1 = 50, Vmax2 = 40, Vmax3 = 30,
+                Km1 = 10, Km2 = 10, Km3 = 5) # <3>
+separate_models <- nlme(
+  V ~ mm_fun(S, Vmax, Km),
+  data = mf_data2,
+  fixed = list(Vmax ~ trt, Km ~ trt), # <4>
+  random = Vmax ~ 1 | trt/rep,
+  start = start_vals
+)
+```
+1. The fixed effects indicate that both $V_{\max}$ and $K_m$ are fixed (do not vary) across treatments.
+2. The random effects indicate that the $V_{\max}$ parameter varies by treatment and replicate.
+3. The starting values for the $V_{\max}$ and $K_m$ parameters are specified for each treatment group. Because we are now fitting a separate model for each treatment, we need to provide starting values for each treatment.
+4. The fixed effects now indicate that both $V_{\max}$ and $K_m$ vary by treatment.
+
+The estimated parameters for the global model and the separate models can be extracted using the `summary()` function:
+
+```{r}
+#| echo: true
+#| messages: false
+#| warning: false
+
+# Extract the estimated parameters (abbreviated output)
+# summary(global_model) # for verbose output
+summary(global_model)$tTable
+```
+
+```{r}
+#| echo: true
+#| messages: false
+#| warning: false
+
+# Extract the estimated parameters (abbreviated output)
+# summary(separate_models) # for verbose output
+summary(separate_models)$tTable
+```
+
+The log-likelihood ratio test can then easily be performed using the `anova()` function, which compares the global model with the separate models:
+
+```{r}
+#| echo: true
+#| messages: false
+#| warning: false
+
+anova(global_model, separate_models)
+```
+
+Again, the results of the likelihood ratio test indicate that the variation in $V_{\max}$ and $K_m$ among the treatments is statistically significant (log-likelihood = 45.20, *p* < 0.0001). The AIC values can also be used to compare the models, with lower AIC values indicating a better fit. In this case, the separate models have a lower AIC value (644.28), suggesting that they provide a better fit to the data than the global model (681.479). The data fitted with the global and separate models is presented in @fig-mf3.
+
+**Assumption tests** To complete our example comparing the Michaelis-Menten parameters among treatments, let's confirm the assumptions by examining the residuals. Residuals in nonlinear regression models have the same interpretation as in linear models, and therefore, the assumption tests available for linear models can be applied here as well. For instance, we can use the `shapiro.test()` function to check the normality of residuals, as shown below, and the `hist()` and `plot()` functions for diagnostic plots. In real-world data, it is advised to verify these assumptions before accepting the analysis and drawing conclusions from the nonlinear regression model. Let's check the normality of residuals for each treatment and plot the residuals to check for normality and homoscedasticity (@fig-mf-assump).
+
+```{r}
+#| echo: true
+#| eval: true
+#| messages: false
+#| warning: false
+
+# Add residuals and fitted information to the data frame
+mf_data2$residuals_separate <- residuals(separate_models)
+mf_data2$fitted_values_separate <- fitted(separate_models)
+
+# Perform the Shapiro-Wilk test for each treatment
+shapiro.test(mf_data2$residuals_separate[mf_data2$trt == "Treatment 1"])
+shapiro.test(mf_data2$residuals_separate[mf_data2$trt == "Treatment 2"])
+shapiro.test(mf_data2$residuals_separate[mf_data2$trt == "Treatment 3"])
+```
+
+```{r, fig.width=c(6,5),fig.asp=0.65,out.width=c("80%","12cm")}
+#| echo: false
+#| eval: true
+#| messages: false
+#| warning: false
+#| fig.cap: "Histograms (A) of residuals and plots of residuals vs. the fitted values (B) for residuals for the three treatments in the multiple-flask experiment."
+#| label: fig-mf-assump
+#| fig-align: center
+
+# Make histograms with frequency polygons overlain
+# for visual comfirmation (optional)
+plt1 <- ggplot(mf_data2, aes(x = residuals_separate)) +
+  geom_histogram(aes(y = ..density..), bins = 10,
+                 fill = "lightblue", colour = "lightblue") +
+  geom_density(alpha = 0.5) +
+  facet_wrap(~ trt) +
+  labs(x = "Residuals", y = "Density")
+
+plt2 <- ggplot(mf_data2, aes(x = fitted_values_separate, y = residuals_separate)) +
+  geom_point(colour = "royalblue", shape = 1) +
+  geom_smooth(method = "gam", se = FALSE,
+              linewidth = 0.6, colour = "indianred") +
+  facet_wrap(~trt) +
+  theme(legend.position = "none") +  # Turn off the legend
+  labs(x = "Fitted Values",
+       y = "Residuals")
+
+ggarrange(plt1, plt2, nrow = 2, labels = c("A", "B"))
+```
+
+The Shapiro-Wilk test results indicate that the residuals are normally distributed for Treatments 1 and 2 (*p* > 0.05) but not for Treatment 3 (*p* < 0.05). However, the histograms in @fig-mf-assump show that the residuals are approximately normally distributed for all treatment groups, with the median roughly in the middle of the distribution in each case. This apparent discrepancy can be explained by the sensitivity of the Shapiro-Wilk test to sample size. With large sample sizes, even minor deviations from normality can be detected as statistically significant. In situations such as this one, I suggest that it is important to consider the sample size and visual inspection of the data when interpreting the results of normality tests. Here, given the relatively large sample size and the visual assessment of the histograms, we can reasonably conclude that the residuals are approximately normally distributed for all treatment groups. 
+
+Another normality tests such as the Kolmogorov-Smirnov (K-S) test might be less sensitive to sample size and could be considered for comparison. The K-S test is a non-parametric statistical test that is used to determine if a sample comes from a specific probability distribution. Here I use it to test if a sample follows a normal distribution (`pnorm`), but it can also be used to test against other theoretical distributions or to compare two empirical distributions. The K-S test can be performed using the `ks.test()`, as shown below.
+
+```{r}
+#| echo: true
+#| eval: true
+#| messages: false
+#| warning: false
+
+perform_ks_test <- function(data, treatment) {
+  ks.test(data$residuals_separate[data$trt == treatment], "pnorm", 
+          mean = mean(data$residuals_separate[data$trt == treatment]), 
+          sd = sd(data$residuals_separate[data$trt == treatment]))
+}
+
+# Perform the test for each treatment group
+perform_ks_test(mf_data2, "Treatment 1")
+perform_ks_test(mf_data2, "Treatment 2")
+perform_ks_test(mf_data2, "Treatment 3")
+```
+
+We see that the K-S test indicates that the residuals are normally distributed for all treatment groups (*p* > 0.05). As already noted, this test is less sensitive to sample size than the Shapiro-Wilk test, and the results are consistent with the visual assessment of the histograms.
+
+We should also check for homoscedasticity (here I use the Levene test) and a plot of residuals versus fitted values. 
+
+```{r}
+#| echo: true
+#| eval: true
+#| messages: false
+#| warning: false
+
+# Perform the Levene test
+car::leveneTest(residuals_separate ~ trt, data = mf_data2)
+```
+
+The Levene test shows that the variances are the same across the three treatments and this is confirmed by the plot of residuals against the fitted values in @fig-mf-assump. 
+
+::: {.callout-tip}
+## Results
+
+Michaelis-Menten models were fitted to nutrient uptake data across three experimental treatments to investigate the effects of the treatments on seaweed nutrient kinetics. A global model, assuming shared kinetic parameters ($V_{max}$ and $K_m$) across all treatments, was compared to a model with separate parameters for each treatment. The model allowing treatment-specific parameters (AIC = 644.3) provided a significantly better fit to the data than the global model (AIC = 681.5), a finding confirmed by the log-likelihood test (log-likelihood ratio = 45.20, d.f. = 4, *p* < 0.0001). As the assumption tests do not indicate any cause for concern regarding the distribution of residuals, we conclude that the experimental treatments significantly influenced the nutrient uptake kinetics of the seaweed (@fig-mf3).
+
+Specifically, all three treatments exhibited unique combinations of $V_{max}$ and $K_m$ values (Treatment 1: $V_{max}$ = 49.2, $K_m$ = 9.5; Treatment 2: $V_{max}$ = 39.3, $K_m$ = 7.5; Treatment 3: $V_{max}$ = 19.0, $K_m$ = 5.5). These findings support the hypothesis that nutrient uptake kinetics in this seaweed species are sensitive to environmental perturbations.
+:::
+
+```{r, fig.width=c(6,5),fig.asp=0.5,out.width=c("80%","12cm")}
+#| echo: false
+#| messages: false
+#| warning: false
+#| fig.cap: "Plot of the Michaelis-Menten model fitted to the data in @tbl-mf2. Fits are provided for the separate models and the global model."
+#| label: fig-mf3
+#| fig-align: center
+#| fig-pos: "t"
+
+# Extract coefficients for shared model
+Vmax_est_shared <- global_model$coefficients$fixed["Vmax"]
+Km_est_shared <- global_model$coefficients$fixed["Km"]
+
+# Extract coefficients for separate models
+coeffs <- separate_models$coefficients$fixed
+Vmax_est_separate <- coeffs["Vmax.(Intercept)"] +
+  c(0, coeffs[paste0("Vmax.trtTreatment ", 2:3)])
+Km_est_separate <- coeffs["Km.(Intercept)"] +
+  c(0, coeffs[paste0("Km.trtTreatment ", 2:3)])
+
+# Assign individual variables for clarity
+Vmax_est_separate_1 <- Vmax_est_separate[1]
+Vmax_est_separate_2 <- Vmax_est_separate[2]
+Vmax_est_separate_3 <- Vmax_est_separate[3]
+Km_est_separate_1 <- Km_est_separate[1]
+Km_est_separate_2 <- Km_est_separate[2]
+Km_est_separate_3 <- Km_est_separate[3]
+
+# Creating a sequence for smooth curve
+conc_seq <- seq(min(mf_data2$S), max(mf_data2$S), length.out = 100)
+
+# Predicting V values for shared and separate models
+predicted_V <- lapply(
+  list(shared = list(Vmax = Vmax_est_shared, Km = Km_est_shared),
+       trt1 = list(Vmax = Vmax_est_separate_1, Km = Km_est_separate_1),
+       trt2 = list(Vmax = Vmax_est_separate_2, Km = Km_est_separate_2),
+       trt3 = list(Vmax = Vmax_est_separate_3, Km = Km_est_separate_3)),
+  function(params) {
+    (params$Vmax * conc_seq) / (params$Km + conc_seq)
+  }
+)
+
+# Creating the dataframe
+pred_df <- data.frame(
+  S = rep(conc_seq, 4),
+  V = unlist(predicted_V),
+  trt = rep(c("Global", "Treatment 1", "Treatment 2", "Treatment 3"),
+            each = 100)
+)
+
+# Plot the data and model fits
+mf_data2 %>%
+  ggplot(aes(x = S, y = V, colour = trt)) +
+  geom_jitter(shape = 1, width = 0.08) +
+  geom_line(data = pred_df, aes(y = V, colour = trt, linewidth = trt)) +
+  scale_colour_manual(values = c("#804145", "#51728E",
+                                 "#5D995C", "#EE915C"),
+                      name = NULL) +
+  scale_linewidth_manual(values = c(1.0, 0.6, 0.6, 0.6)) +
+  labs(x = "Substrate Concentration",
+       y = "Reaction Velocity") +
+  labs(x = TeX("S [$\\mu$M]"),
+       y = TeX("V [$\\mu$M $g^{-1}_{dry}$ $h^{-1}$]")) +
+  guides(linewidth = "none")
+```
+
+### The Perturbation Method (NLMM) {#sec-perturbation}
+
+```{r}
+#| eval: TRUE
+#| echo: FALSE
+#| messages: false
+#| warning: false
+
+mm_data <- read.csv("data/flow_rates.txt", sep = "")
+
+mm_data <- mm_data|>
+  mutate(flask = as.factor(rep(c(1, 2, 3), 44)),
+         trt = as.factor(trt))
+```
+
+The data for this example is by @smit2002nitrogen. A perturbation experiment was conducted to determine the nutrient uptake rate versus nutrient concentration of the red seaweed, \textit{Gracilaria} sp. The experiment involved flasks, initially enriched to approximately 55 μM nitrate, sampled 16 times over approximately 2.5 hours. The uptake rates were measured under three rates of water movement (treatments): low, medium, and high. Each treatment had three replicate flasks (@tbl-mm1). The primary objective was to determine if the Michaelis-Menten parameters significantly differ among the three levels of water movement, and we must state a hypothesis similar to those in @sec-mm-comparison.
+
+```{r}
+#| echo: false
+#| messages: false
+#| warning: false
+#| tbl-cap: "Simulated data for a multiple flask experiment on an alga (showing only the top and bottom three rows)."
+#| label: tbl-mm1
+
+mm_data |> 
+  filter(row_number() <= 3 | row_number() > n() - 3) |> 
+  gt() |> 
+  cols_align(
+    align = "center",
+    columns = c("flask", "trt")) |> 
+  cols_label(flask = html("Replicate flask"),
+             trt = html("Treatment"),
+             V = html("V"),
+             S = html("[S]"))
+```
+
+For the reasons discussed in @sec-ex1, we will use a nonlinear mixed effects model, `nlme()`, to analyse these data. Models such as these can be quite challenging to fit. There are several things we have to deal with. First and most obviously is the fact that the data are repeated measures, and the residuals may be correlated. Second, the flasks are nested within the treatment levels, and we need to account for this in the model. Finally, we need to account for the possibility that the Michaelis-Menten parameters may vary among the treatment levels---in fact, we want to test this! Here is the model:
+
+```{r}
+#| echo: true
+#| messages: false
+#| warning: false
+
+# Determine the number of levels in the factor 'trt'
+num_levels <- length(levels(mm_data$trt))
+
+# Starting values for the fixed parameters
+# (one set for each level of 'trt')
+start_vals <- list(fixed = c(Vmax = rep(max(mm_data$V), num_levels),
+                             Km = rep(median(mm_data$S), num_levels)))
+
+nlme_mod2 <- nlme(V ~ mm_fun(S, Vmax, Km),
+                  data = mm_data,
+                  fixed = Vmax + Km ~ trt, # <1>
+                  random = Vmax + Km ~ 1 | flask, # <2>
+                  start = start_vals,
+                  method = "REML")
+```
+
+1. The `fixed` argument specifies that the Michaelis-Menten parameters `Vmax` and `Km` are fixed effects that vary among the treatment levels, and a grouping variable (`trt`) is used to specify the levels of the treatment factor.
+2. The `random` argument specifies that the Michaelis-Menten parameters `Vmax` and `Km` are random effects that vary among the replicate flasks.
+
+This model brings us closer to our goal, but there are some notable omissions. The specification allows the Michaelis-Menten parameters to vary among the treatment levels, which is central to our hypothesis. We have also accounted for the replication structure of the data, recognising that random variations may arise not due to the treatment levels but due to the replicate flasks. 
+
+However, we have not accounted for the central feature of a perturbation experiment, which is the correlation structure of the residuals. We must deal with the fact that the residuals may be correlated due to the repeated measures nature of the data. Additionally, we have omitted the nesting of the flasks within the treatment levels. 
+
+Let's update our model accordingly:
+
+```{r}
+#| echo: true
+#| messages: false
+#| warning: false
+
+nlme_mod3 <- nlme(V ~ mm_fun(S, Vmax, Km),
+                  data = mm_data,
+                  fixed = list(Vmax ~ trt, Km ~ trt),
+                  random = Vmax ~ 1 | trt/flask, # <1>
+                  groups = ~ trt/flask, # <2>
+                  correlation = corAR1(form = ~ 1 | trt/flask), # <3>
+                  start = start_vals,
+                  method = "REML")
+```
+1. The `random` argument specifies that the Michaelis-Menten parameter `Vmax` is a random effect that varies among the replicate flasks nested within the treatment levels.
+2. The `groups` argument specifies that the replicate flasks are nested within the treatment levels.
+3. The `correlation` argument specifies that the residuals have a first-order autoregressive correlation structure. This structure assumes that the correlation between residuals decreases exponentially with the time lag between observations.
+
+If we are not convinced that `nlme_mod3` is the best model, we can compare it to `nlme_mod2` using a likelihood ratio test. It is used to compare the fit of two models, where one model is a special case of the other. The test statistic is the difference in the log-likelihoods of the two models, and the null hypothesis is that the simpler model is the best fit. 
+
+```{r}
+#| echo: true
+#| messages: false
+#| warning: false
+#| eval: true
+
+anova(nlme_mod2, nlme_mod3)
+
+# Likelihood ratio test
+lrt_stat <- -2 * (logLik(nlme_mod2) - logLik(nlme_mod3))
+
+# Determine degrees of freedom and p-value
+df_diff <- attr(logLik(nlme_mod3), "df") - attr(logLik(nlme_mod2), "df") 
+p_value <- pchisq(lrt_stat, df = df_diff, lower.tail = FALSE) 
+
+print(paste("LRT statistic:", lrt_stat))
+print(paste("Degrees of freedom:", df_diff))
+print(paste("P-value:", p_value))
+```
+
+The likelihood ratio test indicates that `nlme_mod3` is a better fit than `nlme_mod2` (p < 0.001). This result suggests that the Michaelis-Menten parameters vary among the treatment levels, and the residuals have a first-order autoregressive correlation structure.
+
+```{r}
+summary(nlme_mod3)
+```
+
+
+## Example: The Growth Rate of Fish (NLMM) {#sec-vonbertalanffy}
+
+The von Bertalanffy model (@eq-vb) is used to describe the growth patterns of animals over time. For example, in a fish growth study, we measure the length of individual fish at regular intervals as the fish age. By fitting the von Bertalanffy model to these length-at-age data, we can estimate growth parameters specific to the fish species. 
+
+The model is given by:
+
+$$L(t) = L_{\infty} \left(1 - e^{-k(t-t_0)}\right)$$ {#eq-vb}
+
+Where:
+
+- $L(t)$ is the length of the fish at time $t$.
+- $L_{\infty}$ is the asymptotic length, representing the theoretical maximum length that the individual would reach if it grew indefinitely.
+- $k$ is the growth coefficient, indicating the rate at which the growth of the fish approaches its maximum size. A higher $k$ value means it reaches its asymptotic length more quickly.
+- $t_0$ is the hypothetical age at which the individual's length would be zero according to the model.
+
+$L_{\infty}$ (the asymptotic length) represents the length towards which the individual grows as time ($t$) approaches infinity. The concept behind $L_{\infty}$ is that as the fish ages, its growth rate slows down and eventually approaches zero, with its length nearing the asymptotic value $L_{\infty}$. $k$ (the growth rate coefficient) determines how quickly the fish reaches its asymptotic length. Physiologically, $k$ reflects the metabolic rates and general fitness of the fish, while ecologically, it can be influenced by environmental factors such as food availability and temperature. Lastly, $t_0$ (the theoretical age at zero length) is not directly observable in practice but provides a useful way to shift the growth curve along the time axis to provide a better fit to the data, especially in the early developmental stages.
+
+Consider a study where the lengths of 30 Atlantic Cod, *Gadus morua*, in captivity are measured twice a year from hatching to 15 years. This creates a longitudinal dataset with repeated length measurements for each fish over time. In this experiment, we will focus on the growth patterns of individual fish, assuming they were raised under identical conditions. This allows us to attribute any growth differences to inherent biological variation among the fish. Apart from the repeated measures on individual fish, we will assume that the data are independent in all other respects.
+
+The longitudinal nature of the data requires that we use appropriate statistical methods that account for the correlation among the repeated measures. We will use a nonlinear mixed-effects regression for the data in Table 1. 
+
+```{r}
+#| echo: false
+#| messages: true
+#| warning: true
+
+# Set up parameters for the von Bertalanffy growth model
+set.seed(13)
+
+# Define parameters
+n_fish <- 30
+n_years <- 15
+n_measurements_per_year <- 2
+total_measurements <- n_years * n_measurements_per_year
+ages <- seq(0, n_years, by = 1/n_measurements_per_year)
+
+# Initial lengths at hatching (small variation)
+initial_lengths <- rnorm(n_fish, mean = 5, sd = 0.5)
+
+# von Bertalanffy growth parameters
+L_inf <- 120  # Asymptotic length
+L_inf_sd <- 1
+k_mean <- 0.2
+k_sd <- 0.01
+
+# Generate growth curves for each fish
+vb_data <- data.frame()
+for (i in 1:n_fish) {
+  k <- rnorm(1, mean = k_mean, sd = k_sd)
+  L_inf <- rnorm(1, mean = L_inf, sd = L_inf_sd)
+  length_at_age <- L_inf * (1 - exp(-k * ages))
+  length_at_age <- initial_lengths[i] + (length_at_age - min(length_at_age))
+  
+  fish_data <- data.frame(
+    Fish_ID = as.factor(rep(i, length(ages))),
+    Age = ages,
+    Length = round(length_at_age, 1)
+  )
+  
+  vb_data <- bind_rows(vb_data, fish_data)
+}
+```
+
+```{r}
+#| echo: false
+#| messages: false
+#| warning: false
+#| tbl-cap: "The Atlantic Cod data set with 30 fish and 15 years of growth data (showing only the top and bottom three rows)."
+
+vb_data |> 
+  filter(row_number() <= 3 | row_number() > n() - 3) |> 
+  gt() |> 
+    cols_align(
+    align = "center",
+    columns = c("Age", "Length")) |> 
+  cols_label(
+    Fish_ID = html("Fish ID"),
+    Age = html("Age (yr)"),
+    Length = html("Length (cm)")
+  )
+```
+
+A plot of the data is shown in @fig-vb1; here, each line represents the growth trajectory of an individual fish over time.
+
+```{r, fig.width=c(6,5),fig.asp=0.65,out.width=c("80%","12cm")}
+#| echo: false
+#| messages: false
+#| warning: false
+#| fig.cap: "Plot of growth data measured in 30 Atlantic cod, *Gadus morua*."
+#| label: fig-vb1
+#| fig.align: center
+
+# Plot the simulated data
+ggplot(vb_data, aes(x = Age, y = Length, group = Fish_ID)) +
+  geom_jitter(alpha = 0.6, size = 2, shape = 1,
+              colour = "royalblue", width = 0.08) +
+  geom_line(alpha = 0.2, linesize = 0.2, colour = "grey50") +
+  labs(x = "Age (years)",
+       y = "Length (cm)")
+  theme(legend.position = "none")
+```
+
+We will fit the von Bertalanffy growth model to the data using `nlme::nlme()` as follows, and the output is provided: 
+
+```{r}
+#| messages: false
+#| warning: false
+
+# von Bertalanffy growth function
+vb_growth <- function(age, L_inf, k, t0) {
+  L_inf * (1 - exp(-k * (age - t0)))
+}
+
+# Define the nonlinear mixed-effects model
+nlme_model <- nlme(Length ~ vb_growth(Age, L_inf, k, t0),
+                   data = vb_data,
+                   fixed = L_inf + k + t0 ~ 1, # <1>
+                   random = L_inf + k ~ 1 | Fish_ID, # <2>
+                   groups = ~ Fish_ID, # <3>
+                   correlation = corAR1(form = ~ 1), # <4>
+                   start = c(L_inf = 100, k = 0.2, t0 = -0.5))
+
+# Print the summary of the model
+summary(nlme_model)
+```
+1. The fixed effects are the parameters of the von Bertalanffy growth model which are invariant among fish.
+2. The random effects are the asymptotic length and growth rate to account for the intrinsic differences among fish.
+3. The grouping variable is the fish ID.
+4. The correlation structure is autoregressive of order 1 to account for the correlation among repeated measures within the same fish, the `~ 1` indicates that the order of the observations in the data must be used along which measurements are serially correlated, and since no grouping variable is provided, all fish will have the same correlation structure.
+
+
+```{r, fig.width=c(6,5),fig.asp=0.65,out.width=c("80%","12cm")}
+#| echo: false
+#| messages: false
+#| warning: false
+#| fig.cap: "Fit of the von Bertalanffy model to experimental data obtained from 30 Atlantic Cod individuals."
+#| label: fig-vb2
+#| fig.align: center
+
+# Extract fixed effect coefficients
+coef_fixed <- fixed.effects(nlme_model)
+
+# Generate fitted values for the plot
+vb_data$Fitted_Length <- vb_growth(vb_data$Age, coef_fixed["L_inf"], coef_fixed["k"], coef_fixed["t0"])
+
+# Create the plot
+ggplot(vb_data, aes(x = Age, y = Length, group = Fish_ID)) +
+  geom_jitter(size = 2, shape = 1, colour = "royalblue", alpha = 0.4, width = 0.08) +
+  geom_line(aes(y = Fitted_Length), colour = "indianred", linewidth = 0.8) +
+  labs(x = "Age (years)",
+       y = "Length (cm)")
+```
+
+
+## Scrathpad
+
+### To include in the article
+
+-   **Use Cases:** Mentioning use cases like trend analysis in time-series data or other applications where the relationship between variables might be expected to follow a polynomial form (e.g., growth rates, trajectories) can provide practical context.
+-   **Assumptions:** Not necessary for simply estimating model parameters, but if the model is used for prediction or inference, it is important to state the assumptions of the model (e.g., linearity, homoscedasticity, independence of residuals) and test them.
+-   **i.i.d.:** The residuals are assumed to be independent and identically distributed (i.i.d.), which is a common assumption in linear regression models.
+-   **Homoscedasticity:**
+-   **i.i.d:** The residuals are assumed to be independent and identically distributed (i.i.d.), which is a common assumption in linear regression models. For a normal distribution, this is written as $\epsilon_i \sim N(0, \sigma^2)$, where $\sigma^2$ is the variance of the residuals.
+
+
+### Contuinuing the MM model
+
+
+
+
+
+
+

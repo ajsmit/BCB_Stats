@@ -1,0 +1,297 @@
+---
+title: "Scratch"
+---
+
+
+To consider:
+
+Nomenclature...
+Glossary...
+
+**To include...**
+
+Key considerations for each method::
+
+* **R Functions and Packages:** To provide the R functions and packages that can be used to perform the statistical analysis.
+* **Data Type:** The type of your outcome variable (continuous, categorical, count, etc.) is crucial for selecting the appropriate model.
+* **Research Question:** Are you interested in prediction, hypothesis testing, or both?
+* **Sample Size:** The size of your sample can influence the choice of statistical method.
+* **Examples:** Real-world, locally-relevant examples to demonstrate how to apply statistical methods to data.
+* **Assumptions:**  Each statistical method has underlying assumptions that should be checked before applying the model.
+* **Alternatives:** If the assumptions of a parametric method are violated, consider non-parametric alternatives.
+* **Model Complexity:** Choose a model that is sufficiently complex to capture the relationships in your data but not so complex that it overfits the data.
+
+**To cover in some detail in Chapters**
+
+* **Confidence Regions and Confidence Intervals**
+
+**Chapters**
+
+* t-tests
+* ANOVA
+* MANCOVA
+* Z-test
+* Comparison test?
+* ANCOVA
+* Chi-square
+* Wilcoxon's test
+* Mann-Whitney U test
+* Kruskal-Wallis test
+* Kolmogorov-Smirnov test
+* Kendall's W test
+* Friedman test
+* Fisher's test
+* Sign test
+* Binomial test
+* McNemar test
+* Correlations (Pearson's, Spearmans's Kendal tau)
+* Regression (linear, logistic, Poisson, beta)
+* Non-linear regression
+* Hierarchical models
+* Mixed models
+* Assumption tests
+    - Normality
+    - etc.
+
+
+
+
+
+## Introduction
+
+If the research question involves understanding, quantifying, or predicting the relationship between a response variable and one or more predictor variables, then regression-based methods would be more appropriate. Regression models allow for estimating the effect of predictors on the response variable, assessing the strength and significance of the relationships, making predictions or forecasts based on the predictor values, and exploring linear and non-linear relationships while handling different types of response variables.
+
+## Regression decision diagram
+
+### 1. Start with the Research Question and Data Characteristics
+
+* What is the nature of your response/dependent variable?
+    - Continuous: Proceed to Linear Models (Section 2) or Non-Linear Models (Section 5) if linearity assumption is violated.
+    - Binary (Yes/No): Consider Logistic Regression (Section 3).
+    - Count data: Explore Generalized Linear Models (GLMs) (Section 4).
+    - Proportions or percentages: Consider Beta Regression (Section 4).
+* Are you interested in prediction, explanation, or simply assessing the strength of a relationship?
+    - Prediction: Linear, generalised linear, and non-linear models are suitable.
+    - Explanation: Consider models that allow for interpretation of coefficients and relationships.
+    - Strength of relationship: Correlation (Section 7), linear, and generalised linear models can be used.
+
+### 2. Linear Models for Continuous Outcomes
+
+Linear models assume a linear relationship between the predictors and the continuous response variable.
+
+#### 2.1. Simple Linear Regression (SLR)
+
+- **R Function:** `lm()`
+- **Data Requirements:** Continuous outcome, one continuous predictor.
+- **Assumptions:** Normality, homoscedasticity of residuals, linearity.
+- **Diagnostics:** Check residual plots, normality of residuals, and leverage/influence points.
+- **If Assumptions Fail:** Transformations (e.g., log, square root), robust regression (`rlm()` in MASS package), or consider non-linear models (Section 5).
+
+The following aspects to be included:
+
+**Model Validation and Selection:** Introduce techniques for model validation, such as cross-validation or bootstrapping, to assess how well the model generalizes to new data. Discuss criteria for model selection, like adjusted R-squared or information criteria (AIC, BIC), to compare different models and choose the most appropriate one.
+
+**Outliers and Influential Points:** Explain how to identify outliers and influential points using diagnostic plots (e.g., Cook's distance) or statistical tests. Discuss strategies for dealing with these points, such as robust regression or data transformation, and the potential impact on model results.
+
+**Practical Considerations:** Provide guidance on experimental design for simple linear regression, including sample size determination, choice of predictor variables, and potential confounding factors. Discuss the importance of domain knowledge in interpreting regression results and making informed decisions based on the model.
+
+**Extensions and Limitations:** Briefly mention extensions of simple linear regression, such as weighted least squares for heteroscedasticity or segmented regression for non-linear relationships. Discuss the limitations of simple linear regression, emphasizing the importance of checking assumptions and considering alternative models when necessary.
+
+
+#### 2.2. Multiple Linear Regression (MLR)
+
+- **R Function:** `lm()`
+- **Data Requirements:** Continuous outcome, multiple predictors (continuous or categorical).
+- **Assumptions:** Same as SLR, plus no multicollinearity.
+- **Diagnostics:** Same as SLR, plus check for multicollinearity (e.g., VIF).
+- **If Assumptions Fail:** Same as SLR. Consider interactions or polynomial terms.
+- **Model Selection:** Stepwise regression, regularization techniques (e.g., LASSO, Ridge), information criteria (AIC, BIC).
+
+Additional Information to Include
+
+2. **Categorical Predictors with More Than Two Levels**:
+   - Expand the discussion of categorical predictors to cover those with multiple levels (using dummy variables or effect coding).
+   - Explain how to interpret the coefficients for different coding schemes.
+
+3. **Model Selection Criteria**:
+   - Discuss alternative approaches to forward selection, such as backward elimination or stepwise regression.
+   - **AIC (Akaike Information Criterion)**: Introduce AIC and explain how it's used in model selection.
+   - **BIC (Bayesian Information Criterion)**: Compare AIC with BIC and discuss their use.
+   - **Adjusted R-squared**: Explain the adjusted R-squared and how it differs from the R-squared.
+   - Introduce the concept of cross-validation for assessing model performance and avoiding overfitting.
+
+4. **Dealing with Outliers and Influential Points**:
+   - **Robust Regression**: Provide an overview of robust regression techniques as an alternative to handle outliers.
+
+5. **Predictive Modelling**:
+   - Dedicate a section to using the fitted model for prediction.
+   - Explain how to calculate confidence and prediction intervals for new observations.
+   - Discuss the importance of validating the model's predictive performance on new data.
+
+7. **Advanced Topics**:
+   - **Hierarchical Linear Models**: Briefly introduce hierarchical linear models (HLM) for nested data structures.
+
+General Suggestions
+
+1. **Visual Aids**: Use diagrams and flowcharts to explain complex concepts like multicollinearity, interaction effects, and model selection processes.
+2. **Examples and Exercises**: Provide plenty of examples and exercises at the end of each section to reinforce learning and allow readers to practice.
+3. **Summary and Key Takeaways**: Include a summary and key takeaways at the end of each chapter to reinforce the main points.
+4. **Glossary**: Create a glossary of terms used in the chapter to help readers understand and reference key concepts.
+5. **References and Further Reading**: Provide references and suggestions for further reading to allow interested readers to delve deeper into specific topics.
+
+Outline with Additional Sections
+
+1. **About the Data**
+2. **Simple Linear Models**
+3. **Multiple Linear Regression**
+   - Definition and Explanation
+   - Hypothesis Testing
+   - Assumptions of MLR
+4. **Dealing with Multicollinearity**
+   - Explanation
+   - VIF Analysis
+   - Regularization Techniques
+5. **Forward Selection**
+   - Purpose and Explanation
+   - Using `stepAIC()`
+6. **Interpreting Coefficients in MLR**
+   - Continuous Predictors
+   - Categorical Predictors
+   - Interaction Terms
+7. **Added-Variable Plots (Partial Regression Plots)**
+   - What They Are
+   - How to Use Them
+8. **Understanding the Model Fit**
+   - Interpreting `summary()`
+   - Interpreting `anova()`
+   - Model Selection Criteria
+9. **Model Diagnostics**
+   - Component Plus Residual Plots
+   - Diagnostic Plots of Final Model
+   - Dealing with Outliers and Influential Points
+10. **Model Validation and Cross-Validation**
+    - Train-Test Split
+    - k-Fold Cross-Validation
+11. **Consider the Effect of Bioregional Classification**
+    - Including Categorical Predictors
+12. **Practical Applications and Case Studies**
+    - Real-World Examples
+13. **Summary and Key Takeaways**
+14. **Glossary**
+15. **References and Further Reading**
+
+#### 2.3. Polynomial Regression
+
+- **R Function:** `lm()` (include polynomial terms as predictors)
+- **Data Requirements:** Continuous outcome, continuous predictor.
+- **Assumptions:** Same as SLR.
+- **Diagnostics:** Same as SLR.
+- **If Assumptions Fail:** Higher-order polynomial terms, splines, or consider non-linear models (Section 5).
+
+#### 2.x Regularisation
+
+### Suggestions for Improving Chapter 8 on Regularisation Techniques
+
+6. **Examples and Exercises:**
+
+   - **Additional Examples**: Add more examples that cover a variety of datasets and scenarios, including both synthetic and real-world data.
+   - **Exercises**: Include exercises at the end of the chapter for students to practice implementing regularisation techniques, complete with solutions and explanations.
+
+#### 2.4. Analysis of Covariance (ANCOVA)
+
+- **R Function:** `lm()`, use a categorical predictor for group and a continuous predictor for the covariate.
+- **Data Requirements:** Continuous outcome, categorical grouping variable, continuous covariate.
+- **Assumptions:** Same as MLR.
+- **Diagnostics:** Same as MLR.
+- **If Assumptions Fail:** Same as MLR.
+
+### 3. Logistic Regression for Binary Outcomes
+
+- **R Function:** `glm(..., family = binomial)`
+- **Data Requirements:** Binary outcome, continuous or categorical predictors.
+- **Assumptions:** Linear relationship between the log-odds of the outcome and predictors.
+- **Diagnostics:** Check for influential observations, multicollinearity, and overall model fit.
+- **If Assumptions Fail:** Consider interactions, alternative link functions (probit, complementary log-log) in `glm()`, or non-linear logistic regression.
+- **Model Selection:** Stepwise regression, regularization techniques, information criteria (AIC, BIC).
+
+### 4. Generalised Linear Models (GLMs)
+
+GLMs extend linear models to handle non-normal response distributions using link functions and exponential family distributions.
+
+#### 4.1. Poisson Regression
+
+- **R Function:** `glm(..., family = poisson)`
+- **Data Requirements:** Count outcome, continuous or categorical predictors.
+- **Assumptions:** Equidispersion (variance equals the mean).
+- **Diagnostics:** Check for overdispersion, excess zeros, and overall model fit.
+- **If Assumptions Fail:** Negative binomial regression (`glm.nb()` in MASS package, overdispersion), zero-inflated models (`zeroinfl()` in pscl package, excess zeros).
+
+#### 4.2. Beta Regression
+
+- **R Function:** `betareg()` in betareg package
+- **Data Requirements:** Proportional outcome (0 < y < 1), continuous or categorical predictors.
+- **Assumptions:** Outcome values within (0,1), potentially non-constant variance.
+- **Diagnostics:** Check for overall model fit, influential observations, and residual analysis.
+- **If Assumptions Fail:** Transformations, consider alternative link functions, or zero/one-inflated beta regression.
+
+### 5. Non-Linear Models
+
+If the assumptions of linear or generalized linear models are violated and transformations or alternative link functions do not resolve the issues, consider non-linear models such as:
+
+#### 5.1. Non-Linear Least Squares (NLS)
+
+- **R Function:** `nls()` (for non-linear regression models with user-specified functions)
+- **Data Requirements:** Continuous outcome, continuous predictors.
+- **Assumptions:** Appropriate functional form, normality, and homoscedasticity of residuals.
+- **Diagnostics:** Check residual plots, normality of residuals, and leverage/influence points.
+
+#### 5.2. Non-Linear Mixed-Effects Models (NLMEs)
+
+- **R Function:** `nlme()` in nlme package (for non-linear mixed-effects models with user-specified functions)
+- **Data Requirements:** Continuous outcome, continuous predictors, potentially with nested or hierarchical data structures.
+- **Assumptions:** Appropriate functional form, normality, and homoscedasticity of residuals, correct specification of random effects structure.
+- **Diagnostics:** Check residual plots, normality of residuals, and leverage/influence points, assess random effects structure.
+
+#### 5.3. Regression Trees and Random Forests
+
+- **R Packages:** rpart, randomForest
+- **Data Requirements:** Continuous, binary, or categorical outcome, continuous or categorical predictors.
+- **Advantages:** Automatically handles non-linear relationships, variable interactions, and missing data.
+- **Limitations:** Interpretability can be challenging, potential overfitting.
+
+#### 5.4. Generalized Additive Models (GAMs) and Generalized Additive Mixed Models (GAMMs)
+
+- **R Packages:** mgcv, gamm4
+- **Data Requirements:** Continuous, binary, or categorical outcome, continuous or categorical predictors, potentially with nested or hierarchical data structures.
+- **Advantages:** Flexible modeling of non-linear relationships using smoothing functions, can handle mixed-effects structures.
+- **Limitations:** Interpretation can be challenging, potential overfitting.
+
+#### 5.5. Neural Networks
+
+- **R Packages:** nnet, keras, tensorflow
+- **Data Requirements:** Continuous, binary, or categorical outcome, continuous or categorical predictors.
+- **Advantages:** Powerful for capturing complex non-linear relationships, can handle large datasets.
+- **Limitations:** Interpretability is limited, can be computationally intensive, prone to overfitting.
+
+#### 5.6. Support Vector Machines (SVMs)
+
+- **R Packages:** e1071, kernlab
+- **Data Requirements:** Continuous or binary outcome, continuous or categorical predictors.
+- **Advantages:** Effective for high-dimensional data, can handle non-linear relationships through kernel functions.
+- **Limitations:** Interpretability is limited, sensitive to parameter tuning.
+
+### 6. Additional Considerations
+
+- **Mixed-Effects Models:** For hierarchical or nested data structures (e.g., repeated measures, clustered data), consider mixed-effects models (linear mixed models, generalized linear mixed models) using `lme4` package or `nlme` package for non-linear mixed-effects models.
+- **Time Series Models:** For data collected over time, explore time series models (e.g., ARIMA, exponential smoothing, state-space models).
+- **Survival Analysis Models:** For modeling time-to-event data or censored data, consider survival analysis techniques (e.g., Cox proportional hazards model, accelerated failure time models).
+
+### 7. Correlation
+
+- **R Functions:** `cor()`, `cor.test()` (for significance testing)
+- **Data Requirements:** Two continuous variables.
+- **Types:** Pearson's (parametric), Spearman's rank (non-parametric), Kendall's tau (non-parametric).
+- **Interpretation:**
+  - Pearson's: Linear relationship, assumes normality and homoscedasticity.
+  - Spearman's: Monotonic relationship, robust to outliers.
+  - Kendall's: Monotonic relationship, robust to outliers and tied ranks.

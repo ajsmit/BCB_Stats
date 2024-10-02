@@ -1,0 +1,400 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+  letterpaper,
+  DIV=11,
+  numbers=noendperiod]{scrartcl}
+
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else  
+    % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+% Make \paragraph and \subparagraph free-standing
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+\KOMAoption{captions}{tableheading}
+\makeatletter
+\@ifpackageloaded{tcolorbox}{}{\usepackage[skins,breakable]{tcolorbox}}
+\@ifpackageloaded{fontawesome5}{}{\usepackage{fontawesome5}}
+\definecolor{quarto-callout-color}{HTML}{909090}
+\definecolor{quarto-callout-note-color}{HTML}{0758E5}
+\definecolor{quarto-callout-important-color}{HTML}{CC1914}
+\definecolor{quarto-callout-warning-color}{HTML}{EB9113}
+\definecolor{quarto-callout-tip-color}{HTML}{00A047}
+\definecolor{quarto-callout-caution-color}{HTML}{FC5300}
+\definecolor{quarto-callout-color-frame}{HTML}{acacac}
+\definecolor{quarto-callout-note-color-frame}{HTML}{4582ec}
+\definecolor{quarto-callout-important-color-frame}{HTML}{d9534f}
+\definecolor{quarto-callout-warning-color-frame}{HTML}{f0ad4e}
+\definecolor{quarto-callout-tip-color-frame}{HTML}{02b875}
+\definecolor{quarto-callout-caution-color-frame}{HTML}{fd7e14}
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Table of contents}
+\else
+  \newcommand\contentsname{Table of contents}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{List of Figures}
+\else
+  \newcommand\listfigurename{List of Figures}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{List of Tables}
+\else
+  \newcommand\listtablename{List of Tables}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Figure}
+\else
+  \newcommand\figurename{Figure}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Table}
+\else
+  \newcommand\tablename{Table}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listing}
+\newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage{bookmark}
+
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={Wind stress and wind stress curl},
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Wind stress and wind stress curl}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\subsection{Relative Vorticity}\label{relative-vorticity}
+
+Relative vorticity is a measure of the rotation of fluid parcels
+relative to the Earth's surface. It is a key concept in both meteorology
+and oceanography for describing the rotation of air or water masses. For
+a two-dimensional horizontal flow, the relative vorticity \(\zeta\) is
+defined as:
+
+\[
+\zeta = \frac{\partial v}{\partial x} - \frac{\partial u}{\partial y}
+\]
+
+where:
+
+\begin{itemize}
+\tightlist
+\item
+  \(u\) and \(v\) are the velocity components of the fluid in the x
+  (east-west) and y (north-south) directions, respectively.
+\item
+  \(\frac{\partial v}{\partial x}\) and
+  \(\frac{\partial u}{\partial y}\) are the partial derivatives of these
+  components with respect to the spatial coordinates.
+\end{itemize}
+
+Relative vorticity indicates how much the fluid is spinning or rotating
+at a point, excluding the rotation of the Earth (which would be included
+in absolute vorticity).
+
+\subsection{Wind Stress}\label{wind-stress}
+
+Wind stress (\(\tau\)) is the horizontal force exerted by wind on the
+ocean's surface, acting as a drag force per unit area. It is essentially
+the friction between the moving air and the water, driving ocean
+currents and influencing various marine processes.
+
+We can use the following equation to calculate surface wind stress for
+each grid point (lon, lat, time) wind value in a dataframe:
+
+\[\tau = \rho_{a}C_{d}U^{2}\]
+
+where:
+
+\begin{itemize}
+\tightlist
+\item
+  \(\rho_{a}\) is the air density (1.225 kg/m³),
+\item
+  \(C_{d}\) is the drag coefficient (0.0012), a dimensionless quantity
+  that depends on wind speed and sea state, and
+\item
+  \(U\) is the wind speed (m/s) at the reference height.
+\end{itemize}
+
+The zonal (east-west) and meridional (north-south) wind stress
+components are derived from the wind speed at a reference height
+(usually 10 meters above the sea surface) and a drag coefficient. Here
+are the equations:
+
+\[\tau_{x} = \tau \cos(\theta)\]
+
+\[\tau_{y} = \tau \sin(\theta)\]
+
+where:
+
+\begin{itemize}
+\tightlist
+\item
+  \(\theta\) is the angle of the wind direction relative to the east (0°
+  for east winds, 90° for north winds, etc.),
+\item
+  \(\tau_x\) is the zonal wind stress (force per unit area in the
+  east-west direction), and
+\item
+  \(\tau_y\) is the meridional wind stress (force per unit area in the
+  north-south direction)
+\end{itemize}
+
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, rightrule=.15mm, opacityback=0, opacitybacktitle=0.6, colback=white, coltitle=black, arc=.35mm, left=2mm, leftrule=.75mm, toptitle=1mm, breakable, colframe=quarto-callout-note-color-frame, bottomtitle=1mm, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Sine and cosine functions}, bottomrule=.15mm]
+
+In the above formulations of zonal and meridional wind stress
+components, \(\tau_x\) uses the cosine function, and \(\tau_y\) uses the
+sine function. This is for wind direction defined relative to the east.
+If the wind direction is defined relative to the north, the sine
+function would be used for \(\tau_x\), and the cosine function would be
+used for \(\tau_y\).
+
+\end{tcolorbox}
+
+\subsection{Wind stress curl}\label{wind-stress-curl}
+
+`Curl' is a measure of the rotation of a vector field; therefore, wind
+stress curl is a measure of the rotation of the wind stress field. It is
+defined as the vertical component of the curl of the wind stress
+vector---since it is a vector quantity it has both magnitude and
+direction.
+
+Wind stress curl is computed using the following basic relation:
+
+\[\nabla \times \tau = \frac{\partial \tau_{y}}{\partial x} - \frac{\partial \tau_{x}}{\partial y}\]
+
+where:
+
+\begin{itemize}
+\tightlist
+\item
+  \(\nabla \times \tau\) is the wind stress curl,
+\item
+  \(\frac{\partial \tau_{y}}{\partial x}\) is the derivative of the
+  meridional wind stress with respect to the zonal direction, and
+\item
+  \(\frac{\partial \tau_{x}}{\partial y}\) is the derivative of the
+  zonal wind stress with respect to the meridional direction.
+\end{itemize}
+
+The direction of the wind stress curl is parallel to the \(z\)-axis. By
+convention, it is typically perpendicular to Earth's surface. Wind
+stress curl is influenced by the Coriolis effect, which causes fluids
+(air and water) to deflect to the right in the Northern Hemisphere and
+to the left in the Southern Hemisphere due to the Earth's rotation.
+
+The relationship between wind stress curl and circulation patterns is as
+follows:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Positive Wind Stress Curl:} Indicates cyclonic
+  (counter-clockwise) circulation in the Northern Hemisphere and
+  anticyclonic (clockwise) circulation in the Southern Hemisphere.
+\item
+  \textbf{Negative Wind Stress Curl:} Indicates anticyclonic (clockwise)
+  circulation in the Northern Hemisphere and cyclonic
+  (counter-clockwise) circulation in the Southern Hemisphere.
+\end{itemize}
+
+Use the right-hand rule to visualise this relationship. If you curl the
+fingers of your right hand in the direction of the wind stress vectors,
+your thumb will point in the direction of the wind stress curl vector.
+If the wind stress curl vector points upwards (positive), the
+circulation is counter-clockwise in the Northern Hemisphere and
+clockwise in the Southern Hemisphere. If the wind stress curl vector
+points downwards (negative), the circulation is clockwise in the
+Northern Hemisphere and counter-clockwise in the Southern Hemisphere.
+
+Therefore, cyclones (low-pressure systems) in the Northern Hemisphere
+are associated with positive wind stress curl, while cyclones in the
+Southern Hemisphere are associated with negative wind stress curl.
+Conversely, anticyclones (high-pressure systems) in the Northern
+Hemisphere are associated with negative wind stress curl, while
+anticyclones in the Southern Hemisphere are associated with positive
+wind stress curl.
+
+\subsubsection{Implications of a Very Negative Wind Stress Curl in the
+Southern
+Hemisphere}\label{implications-of-a-very-negative-wind-stress-curl-in-the-southern-hemisphere}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{Oceanographic Effects}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Upwelling} and \textbf{Downwelling}:
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Wind stress curl is closely related to Ekman pumping.
+    \item
+      Upwelling occurs near the coast when the wind stress has an
+      equatorward alongshore component or in the case of nearshore
+      negative (in the Southern Hemisphere) wind stress curl.
+    \end{itemize}
+  \item
+    \textbf{Gyre Circulation}:
+
+    \begin{itemize}
+    \tightlist
+    \item
+      In large-scale ocean circulation, negative wind stress curl is
+      associated with anticyclonic gyres (e.g., subtropical gyres).
+    \item
+      These gyres are characterized by downwelling in the center, which
+      results in a thicker and warmer water column.
+    \end{itemize}
+  \end{itemize}
+\item
+  \textbf{Ecological Impact}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Downwelling regions typically have lower nutrient concentrations at
+    the surface because nutrients are pushed downward with the sinking
+    water.
+  \item
+    This can lead to reduced primary productivity and lower
+    phytoplankton biomass, affecting the entire marine food web.
+  \item
+    In regions such as the Southern Ocean around the Antarctic
+    Circumpolar Current, variations in wind stress curl can
+    significantly impact the distribution of nutrients and biological
+    productivity.
+  \end{itemize}
+\item
+  \textbf{Climate and Weather}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Areas of persistent negative wind stress curl can influence local
+    and regional climate patterns by affecting sea surface temperatures
+    and heat distribution in the ocean.
+  \item
+    These areas may also impact weather patterns, such as the formation
+    and intensity of cyclones and anticyclones.
+  \item
+    In the Southern Hemisphere, this can influence the climate dynamics
+    of nearby landmasses, including southern parts of continents like
+    South America, Africa, and Australia.
+  \end{itemize}
+\end{enumerate}
+
+A very negative wind stress curl in the Southern Hemisphere indicates a
+strong clockwise (anticyclonic) rotation of the wind stress field,
+leading to downwelling and associated oceanographic and ecological
+effects. This influences large-scale ocean circulation, nutrient
+distribution, primary productivity, and potentially local and regional
+climate and weather patterns. Understanding and monitoring wind stress
+curl is crucial for predicting ocean behavior and its broader
+environmental impacts, especially in the context of the Southern
+Hemisphere's unique oceanic and atmospheric dynamics.
+
+
+
+\end{document}

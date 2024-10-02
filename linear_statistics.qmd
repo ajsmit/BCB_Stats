@@ -1,0 +1,57 @@
+# Linear Statistics {#sec-correlation}
+
+Statisticians often use the term 'linear statistics' to include statistical methods and models that rely on 'linear assumptions.' Typically, they involve relationships that can be expressed in terms of linear equations. 
+
+::: callout-note
+## Properties of Linear Statistics
+
+- **Assumptions**: Linear statistical methods generally assume that relationships between variables are linear, residuals are normally distributed, homoscedasticity (constant variance), and that data are independent.
+- **Interpretability**: Linear models are often preferred for their simplicity and interpretability, allowing for straightforward insights into relationships between variables.
+- **Computational Efficiency**: Linear models are computationally efficient and have well-established solutions, making them suitable for large datasets.
+:::
+
+The statistical methods that fall under linear statistics include:
+
+1. **Linear Regression**:
+
+   **Simple Linear Regression**: Models the relationship between two variables by fitting a straight line to the data. The equation is typically expressed as $y = \beta_0 + \beta_1 x + \epsilon$, where $y$ is the dependent variable, $x$ is the independent variable, $\beta_0$ and $\beta_1$ are coefficients, and $\epsilon$ is the error term.
+   **Multiple Linear Regression**: Extends simple linear regression to include multiple independent variables, expressed as $y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \ldots + \beta_n x_n + \epsilon$.
+
+2. **Analysis of Variance (ANOVA)**:
+
+   **One-way ANOVA**: Tests for significant differences between the means of three or more independent groups.
+   **Two-way ANOVA**: Tests the effect of two different categorical independent variables on a continuous dependent variable, including interaction effects.
+
+3. **Analysis of Covariance (ANCOVA)**:
+
+   Combines ANOVA and regression by adjusting the dependent variable for the effect of one or more covariates before testing for mean differences between groups.
+
+4. **General Linear Model (GLM)**:
+
+   A flexible generalization of ordinary linear regression that allows for multiple predictors and can include interaction effects and polynomial terms.
+
+5. **Linear Mixed-Effects Models**:
+
+   Extend linear models by incorporating both fixed effects and random effects, allowing for correlation and non-independence within data.
+
+6. **Principal Component Analysis (PCA)**:
+
+   A linear dimensionality reduction technique that transforms data into a set of linearly uncorrelated variables called principal components, capturing the most variance in the data.
+
+7. **Discriminant Analysis**:
+
+   A method for classifying a set of observations into predefined classes based on linear combinations of predictor variables.
+
+8. **Multivariate Analysis of Variance (MANOVA)**:
+
+   An extension of ANOVA that allows for the testing of differences in multiple dependent variables simultaneously.
+
+9. **Linear Time Series Models**:
+
+   Includes models like Autoregressive (AR), Moving Average (MA), and Autoregressive Integrated Moving Average (ARIMA) when applied with linear assumptions.
+
+10. **Canonical Correlation Analysis**:
+
+    A method for examining the relationships between two sets of variables through linear combinations.
+
+Many of these methods can be extended or adapted to accommodate non-linear relationships, either by transforming variables or using more complex models such as Generalized Linear Models (GLMs) or non-linear regression.
