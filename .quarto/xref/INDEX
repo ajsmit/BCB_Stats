@@ -1,53 +1,56 @@
 {
+  "non-linear_regression.qmd": {
+    "non-linear_regression.html": "f931ee4b"
+  },
   "index.qmd": {
-    "index.html": "8a3abd31"
+    "index.html": "a5cc5ca8"
   },
   "intro.qmd": {
-    "intro.html": "55270c67"
-  },
-  "summary.qmd": {
-    "summary.html": "12f69232"
-  },
-  "references.qmd": {
-    "references.html": "d4b5525f"
-  },
-  "non-linear_regression.qmd": {
-    "non-linear_regression.html": "3c9b3ec3"
-  },
-  "simple_linear_regression.qmd": {
-    "simple_linear_regression.html": "80d2b4e6"
-  },
-  "appendix_1.qmd": {
-    "appendix_1.html": "1de84935"
+    "intro.html": "4eb4278c"
   },
   "part_A.qmd": {
-    "part_A.html": "fa0f291c"
-  },
-  "part_B.qmd": {
-    "part_B.html": "2d3ec07d"
+    "part_A.html": "a2be90c5"
   },
   "correlation.qmd": {
-    "correlation.html": "c5f45bb8"
+    "correlation.html": "9774e2b8"
+  },
+  "simple_linear_regression.qmd": {
+    "simple_linear_regression.html": "f965ca83"
   },
   "polynomial_regression.qmd": {
-    "polynomial_regression.html": "eda5b07d"
+    "polynomial_regression.html": "d65bce17"
   },
   "multiple_linear_regression.qmd": {
-    "multiple_linear_regression.html": "6f61c7db"
+    "multiple_linear_regression.html": "e444a8a5"
   },
   "generalised_linear_models.qmd": {
-    "generalised_linear_models.html": "1b7928b2"
-  },
-  "part_C.qmd": {
-    "part_C.html": "7a46f6b3"
-  },
-  "generalised_additive_models.qmd": {
-    "generalised_additive_models.html": "69958862"
-  },
-  "assumption_tests.qmd": {
-    "assumption_tests.html": "bd47bea2"
+    "generalised_linear_models.html": "e0b38fc2"
   },
   "regularisation.qmd": {
-    "regularisation.html": "401de5a3"
+    "regularisation.html": "3b7a2c91"
+  },
+  "part_B.qmd": {
+    "part_B.html": "3162baf3"
+  },
+  "assumption_tests.qmd": {
+    "assumption_tests.html": "dbcd2d52"
+  },
+  "part_C.qmd": {
+    "part_C.html": "4b5e27eb"
+  },
+  "generalised_additive_models.qmd": {
+    "generalised_additive_models.html": "04fec2ed"
+  },
+  "summary.qmd": {
+    "summary.html": "52e0630f"
+  },
+  "references.qmd": {
+    "references.html": "9e592b3a"
+  },
+  "appendix_1.qmd": {
+    "appendix_1.html": "c8c2e48d"
+  },
+  "quantile_regression.qmd": {
+    "quantile_regression.html": "0d8fe649"
   }
 }

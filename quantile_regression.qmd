@@ -1,0 +1,180 @@
+---
+knitr:
+  opts_chunk:
+    dev:
+      - svg
+      - pdf
+---
+
+# Quantile Regression
+
+In traditional quantile regression, we model the conditional quantiles of the response variable given the predictor variables. However, when you want to study how different quantiles of the predictor variable (e.g., wind stress curl) affect the response variable (e.g., SST and upwelling metrics), you need to employ methods that can capture these dynamics.
+
+## Understanding the Challenge
+
+- **Standard Quantile Regression:** Models the relationship between predictor variables and specific quantiles of the response variable.
+- **Your Objective:** To understand how different quantiles of the predictor variable influence the response variable.
+
+## Possible Approaches
+
+1. **Quantile-on-Quantile Regression (QQR):**
+
+   - **Concept:**
+     - QQR extends traditional quantile regression by examining how quantiles of the predictor variable affect quantiles of the response variable.
+     - It provides a more comprehensive picture of the dependence structure between the two variables across their entire distributions.
+
+   - **Implementation Steps:**
+     1. **Estimate Conditional Quantiles of the Predictor Variable:**
+        - For each quantile $\tau$ of the predictor variable (wind stress curl), calculate the quantile values.
+     2. **Model Response Quantiles Conditional on Predictor Quantiles:**
+        - For each quantile $\theta$ of the response variable (SST), model it as a function of the predictor variable's quantiles.
+        - The model can be specified as:
+          $$Q_{\theta}(SST \mid Q_{\tau}(\text{Wind Stress Curl})) = \beta_0(\theta, \tau) + \beta_1(\theta, \tau) \times Q_{\tau}(\text{Wind Stress Curl})$$
+     3. **Interpretation:**
+        - The coefficients $\beta_1(\theta, \tau)$ show how the $\tau$-th quantile of the wind stress curl affects the $\theta$-th quantile of SST.
+        - By varying $\theta$ and $\tau$, you can map out the entire dependence structure.
+
+   - **Advantages:**
+     - Captures non-linear and asymmetric relationships between the variables.
+     - Allows for interactions between different parts of the distributions.
+
+   - **Considerations:**
+     - **Computational Complexity:** Estimating the model for all combinations of $\theta$ and $\tau$ can be computationally intensive.
+     - **Data Requirements:** Requires a large dataset to obtain reliable estimates across quantiles.
+
+2. **Binning the Predictor Variable:**
+
+   - **Concept:**
+     - Divide the predictor variable into bins based on its quantiles (e.g., quartiles or deciles).
+     - Within each bin, analyse the relationship between the predictor and response variable.
+
+   - **Implementation Steps:**
+     1. **Quantile Binning:**
+        - Divide wind stress curl data into quantile-based bins.
+     2. **Within-Bin Analysis:**
+        - For each bin, perform regression analysis to see how variations within that bin affect SST.
+     3. **Comparative Analysis:**
+        - Compare the regression coefficients across bins to see if the effect of wind stress curl on SST changes across its distribution.
+
+   - **Advantages:**
+     - Simpler to implement and interpret.
+     - Highlights non-linear relationships and threshold effects.
+
+   - **Considerations:**
+     - **Loss of Information:** Binning can lead to loss of information due to grouping continuous data.
+     - **Boundary Issues:** Care must be taken at the edges of bins to ensure continuity.
+
+3. **Interaction Terms and Non-Linear Models:**
+
+   - **Concept:**
+     - Introduce interaction terms or non-linear transformations to allow the effect of wind stress curl to vary across its own distribution.
+
+   - **Implementation Steps:**
+     1. **Create Interaction Terms:**
+        - Include terms like $\text{Wind Stress Curl} \times I(\text{Wind Stress Curl} > Q_{\tau})$, where $I$ is an indicator function, and $Q_{\tau}$ is the $\tau$-th quantile.
+     2. **Non-Linear Models:**
+        - Use models like Generalised Additive Models (GAMs) to allow for non-linear relationships.
+     3. **Quantile Regression with Interactions:**
+        - Combine quantile regression with interaction terms to see how the effect changes at different levels of the predictor variable.
+
+   - **Advantages:**
+     - Flexible modelling of relationships.
+     - Can capture threshold effects and non-linearities.
+
+   - **Considerations:**
+     - **Model Complexity:** More complex models require careful interpretation and validation.
+     - **Overfitting Risk:** Including too many interactions can lead to overfitting, especially with limited data.
+
+4. **Copula-Based Approaches:**
+
+   - **Concept:**
+     - Use copulas to model the joint distribution of the predictor and response variables, allowing for dependence in their marginal distributions.
+
+   - **Implementation Steps:**
+     1. **Estimate Marginal Distributions:**
+        - Determine the marginal distributions of wind stress curl and SST.
+     2. **Select Appropriate Copula:**
+        - Choose a copula function that captures the dependence structure (e.g., Clayton, Gumbel).
+     3. **Model the Joint Distribution:**
+        - Use the copula to model the joint behaviour, focusing on the tails of the distributions.
+
+   - **Advantages:**
+     - Captures complex dependence structures.
+     - Particularly useful for modelling tail dependencies.
+
+   - **Considerations:**
+     - **Statistical Expertise Required:** Copula models can be mathematically complex.
+     - **Data Demands:** Requires large datasets for reliable estimation.
+
+## Applying Quantile-on-Quantile Regression to the Upwelling Problem
+
+Let's focus on Quantile-on-Quantile Regression as it seems most relevant to our situation and requirement.
+
+- **Model Estimation:**
+  - For each chosen quantile $\tau$ of wind stress curl (e.g., 10th, 25th, 50th, 75th, 90th percentiles), extract the corresponding values.
+  - For each chosen quantile $\theta$ of SST, perform quantile regression using the extracted wind stress curl quantile as the predictor.
+
+- **Analysis:**
+  - Examine the estimated coefficients $\beta_1(\theta, \tau)$ across different combinations of $\theta$ and $\tau$.
+  - Identify patterns where certain quantiles of wind stress curl have a stronger or weaker effect on specific quantiles of SST.
+  - For example, you may find that extreme high values (e.g., 90th percentile) of wind stress curl significantly affect the lower quantiles (e.g., 10th percentile) of SST, indicating strong upwelling events.
+
+- **Visualisation:**
+  - Create heatmaps or surface plots to visualize the coefficient values across the $(\theta, \tau)$ grid.
+  - Plot the estimated relationships to interpret the effects intuitively.
+
+- **Robustness Checks:**
+  - Perform bootstrapping to assess the stability of your estimates.
+  - Test for statistical significance of the coefficients.
+
+## Alternative Approaches
+
+If quantile-on-quantile regression proves too complex or data-intensive, consider the following simplified methods:
+
+- **Conditional Mean Regression with Binned Predictors:**
+  - Bin wind stress curl into quantiles and use these as categorical predictors in a standard regression model.
+  - This approach simplifies the analysis while still providing insights into how different levels of wind stress curl affect SST.
+
+- **Threshold Regression Models:**
+  - Use models that allow for different regression regimes based on the value of the predictor variable.
+  - For example, a piecewise linear model where the slope changes when wind stress curl exceeds certain quantiles.
+
+## Recommendations
+
+- **Data Exploration:**
+  - Before modeling, thoroughly explore your data to understand the distributions and potential relationships.
+  - Use scatter plots, quantile plots, and correlation analyses.
+
+- **Model Selection:**
+  - Start with simpler models to establish baseline relationships.
+  - Gradually incorporate complexity as needed, based on initial findings.
+
+- **Validation:**
+  - Use cross-validation techniques to assess the predictive performance of your models.
+  - Compare models using appropriate metrics (e.g., Akaike Information Criterion for model selection).
+
+- **Expert Consultation:**
+  - Collaborate with a statistician experienced in advanced regression techniques.
+  - This can help ensure that your models are correctly specified and interpreted.
+
+## Conclusion
+
+Studying which quantiles of the predictor variable affect the response variable adds a layer of complexity but can yield valuable insights into the dynamics of upwelling events. Quantile-on-Quantile Regression offers a direct method to explore these relationships comprehensively. However, it's essential to balance methodological rigour with practical considerations like data availability and computational feasibility.
+
+By carefully selecting your approach and thoroughly validating your models, you can enhance your understanding of how wind stress curl influences SST and upwelling metrics across different conditions. This, in turn, can contribute significantly to the field by providing a more detailed characterization of upwelling dynamics and their drivers.
+
+## Additional Resources
+
+- **Literature on Quantile-on-Quantile Regression:**
+  - Hao, L., & Naiman, D. Q. (2007). *Quantile Regression*. Sage Publications.
+  - Sim, N., Zhou, H., & Goh, T. (2019). Quantile-on-Quantile Regression Approach to Analyzing the Impact of Oil Price Changes on Stock Returns. *Energy Economics*, 80, 297-309.
+
+- **Statistical Software:**
+  - **R Packages:**
+    - `quantreg`: For quantile regression.
+    - `qgam`: For quantile generalized additive models.
+    - Custom scripts may be needed for quantile-on-quantile regression.
+
+## Final Thoughts
+
+Your inquiry demonstrates a deep engagement with the methodological aspects of your research. By extending your analysis to consider how different quantiles of wind stress curl affect SST and upwelling metrics, you are likely to uncover nuanced relationships that can advance understanding in this area. Don't hesitate to reach out to experts in statistical modeling to support this aspect of your work.

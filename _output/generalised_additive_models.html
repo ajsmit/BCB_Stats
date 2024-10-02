@@ -296,6 +296,11 @@ window.Quarto = {
   <a href="./assumption_tests.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Testing Assumptions</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./quantile_regression.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quantile Regression</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -374,7 +379,7 @@ window.Quarto = {
 <p>GAMs utilise a sum of smooth functions, each of which may depend on different subsets of the predictors. This additive structure, with smooth functions modelling the nonlinear effects of different predictor variables, allows GAMs to capture complex, nonlinear relationships without the need for a single, global parametric form. GAMs are useful in areas where the data exhibit complex patterns that are not easily described by traditional parametric or even non-parametric models.</p>
 <p>Unlike polynomial regressions or specific nonlinear models that capture functional relationships with parameters directly linked to the system’s mechanics, GAMs do not necessarily provide parameters that correspond to a mechanistic understanding. Instead, they offer flexibility and robustness in modelling, making them suitable for a wide range of applications where the relationship dynamics are complex and not well-defined by simpler models.</p>
 <p>In GAMs, the smooth functions are typically represented using regression splines (Figure A). Splines are piecewise polynomial functions that are flexible and can approximate complex nonlinear relationships. In GAMs, the smooth functions are estimated using various types of regression splines, such as Thin Plate Regression Splines, Cubic Regression Splines, and P-Splines (B-Splines). These spline functions are used to model the nonlinear effects of the predictor variables in a flexible and data-driven manner, without assuming any specific parametric form. A GAM can be expressed as:</p>
-<p><span id="eq-gam"><span class="math display">Y_i = \alpha + f_1(X_{i1}) + f_2(X_{i2}) + \ldots + f_p(X_{ip}) + \epsilon_i \tag{10.1}</span></span></p>
+<p><span id="eq-gam"><span class="math display">Y_i = \alpha + f_1(X_{i1}) + f_2(X_{i2}) + \ldots + f_p(X_{ip}) + \epsilon_i \tag{11.1}</span></span></p>
 <p>Where:</p>
 <ul>
 <li><span class="math inline">Y_i</span> is the response variable for the <span class="math inline">i</span>-th observation,</li>

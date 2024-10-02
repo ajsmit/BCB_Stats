@@ -24,6 +24,7 @@ book:
     - part: part_B.qmd
       chapters:
         - assumption_tests.qmd
+        - quantile_regression.qmd
     - part: part_C.qmd
       chapters:
         - generalised_additive_models.qmd

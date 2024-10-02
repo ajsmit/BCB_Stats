@@ -296,6 +296,11 @@ window.Quarto = {
   <a href="./assumption_tests.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Testing Assumptions</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./quantile_regression.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Quantile Regression</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -498,23 +503,23 @@ The residuals, <span class="math inline">\epsilon_i</span>
 <figure class="quarto-float quarto-float-tbl figure page-columns page-full">
 <div aria-describedby="tbl-penguins-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="gdpmgqhxxj" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#gdpmgqhxxj table {
+<div id="vcegzezjqo" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#vcegzezjqo table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#gdpmgqhxxj thead, #gdpmgqhxxj tbody, #gdpmgqhxxj tfoot, #gdpmgqhxxj tr, #gdpmgqhxxj td, #gdpmgqhxxj th {
+#vcegzezjqo thead, #vcegzezjqo tbody, #vcegzezjqo tfoot, #vcegzezjqo tr, #vcegzezjqo td, #vcegzezjqo th {
   border-style: none;
 }
 
-#gdpmgqhxxj p {
+#vcegzezjqo p {
   margin: 0;
   padding: 0;
 }
 
-#gdpmgqhxxj .gt_table {
+#vcegzezjqo .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -540,12 +545,12 @@ The residuals, <span class="math inline">\epsilon_i</span>
   border-left-color: #D3D3D3;
 }
 
-#gdpmgqhxxj .gt_caption {
+#vcegzezjqo .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#gdpmgqhxxj .gt_title {
+#vcegzezjqo .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -557,7 +562,7 @@ The residuals, <span class="math inline">\epsilon_i</span>
   border-bottom-width: 0;
 }
 
-#gdpmgqhxxj .gt_subtitle {
+#vcegzezjqo .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -569,7 +574,7 @@ The residuals, <span class="math inline">\epsilon_i</span>
   border-top-width: 0;
 }
 
-#gdpmgqhxxj .gt_heading {
+#vcegzezjqo .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -581,13 +586,13 @@ The residuals, <span class="math inline">\epsilon_i</span>
   border-right-color: #D3D3D3;
 }
 
-#gdpmgqhxxj .gt_bottom_border {
+#vcegzezjqo .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#gdpmgqhxxj .gt_col_headings {
+#vcegzezjqo .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -602,7 +607,7 @@ The residuals, <span class="math inline">\epsilon_i</span>
   border-right-color: #D3D3D3;
 }
 
-#gdpmgqhxxj .gt_col_heading {
+#vcegzezjqo .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -622,7 +627,7 @@ The residuals, <span class="math inline">\epsilon_i</span>
   overflow-x: hidden;
 }
 
-#gdpmgqhxxj .gt_column_spanner_outer {
+#vcegzezjqo .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -634,15 +639,15 @@ The residuals, <span class="math inline">\epsilon_i</span>
   padding-right: 4px;
 }
 
-#gdpmgqhxxj .gt_column_spanner_outer:first-child {
+#vcegzezjqo .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#gdpmgqhxxj .gt_column_spanner_outer:last-child {
+#vcegzezjqo .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#gdpmgqhxxj .gt_column_spanner {
+#vcegzezjqo .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -654,11 +659,11 @@ The residuals, <span class="math inline">\epsilon_i</span>
   width: 100%;
 }
 
-#gdpmgqhxxj .gt_spanner_row {
+#vcegzezjqo .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#gdpmgqhxxj .gt_group_heading {
+#vcegzezjqo .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -684,7 +689,7 @@ The residuals, <span class="math inline">\epsilon_i</span>
   text-align: left;
 }
 
-#gdpmgqhxxj .gt_empty_group_heading {
+#vcegzezjqo .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -699,15 +704,15 @@ The residuals, <span class="math inline">\epsilon_i</span>
   vertical-align: middle;
 }
 
-#gdpmgqhxxj .gt_from_md > :first-child {
+#vcegzezjqo .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#gdpmgqhxxj .gt_from_md > :last-child {
+#vcegzezjqo .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#gdpmgqhxxj .gt_row {
+#vcegzezjqo .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -726,7 +731,7 @@ The residuals, <span class="math inline">\epsilon_i</span>
   overflow-x: hidden;
 }
 
-#gdpmgqhxxj .gt_stub {
+#vcegzezjqo .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -739,7 +744,7 @@ The residuals, <span class="math inline">\epsilon_i</span>
   padding-right: 5px;
 }
 
-#gdpmgqhxxj .gt_stub_row_group {
+#vcegzezjqo .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -753,15 +758,15 @@ The residuals, <span class="math inline">\epsilon_i</span>
   vertical-align: top;
 }
 
-#gdpmgqhxxj .gt_row_group_first td {
+#vcegzezjqo .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#gdpmgqhxxj .gt_row_group_first th {
+#vcegzezjqo .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#gdpmgqhxxj .gt_summary_row {
+#vcegzezjqo .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -771,16 +776,16 @@ The residuals, <span class="math inline">\epsilon_i</span>
   padding-right: 5px;
 }
 
-#gdpmgqhxxj .gt_first_summary_row {
+#vcegzezjqo .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#gdpmgqhxxj .gt_first_summary_row.thick {
+#vcegzezjqo .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#gdpmgqhxxj .gt_last_summary_row {
+#vcegzezjqo .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -790,7 +795,7 @@ The residuals, <span class="math inline">\epsilon_i</span>
   border-bottom-color: #D3D3D3;
 }
 
-#gdpmgqhxxj .gt_grand_summary_row {
+#vcegzezjqo .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -800,7 +805,7 @@ The residuals, <span class="math inline">\epsilon_i</span>
   padding-right: 5px;
 }
 
-#gdpmgqhxxj .gt_first_grand_summary_row {
+#vcegzezjqo .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -810,7 +815,7 @@ The residuals, <span class="math inline">\epsilon_i</span>
   border-top-color: #D3D3D3;
 }
 
-#gdpmgqhxxj .gt_last_grand_summary_row_top {
+#vcegzezjqo .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -820,11 +825,11 @@ The residuals, <span class="math inline">\epsilon_i</span>
   border-bottom-color: #D3D3D3;
 }
 
-#gdpmgqhxxj .gt_striped {
+#vcegzezjqo .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#gdpmgqhxxj .gt_table_body {
+#vcegzezjqo .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -833,7 +838,7 @@ The residuals, <span class="math inline">\epsilon_i</span>
   border-bottom-color: #D3D3D3;
 }
 
-#gdpmgqhxxj .gt_footnotes {
+#vcegzezjqo .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -847,7 +852,7 @@ The residuals, <span class="math inline">\epsilon_i</span>
   border-right-color: #D3D3D3;
 }
 
-#gdpmgqhxxj .gt_footnote {
+#vcegzezjqo .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -856,7 +861,7 @@ The residuals, <span class="math inline">\epsilon_i</span>
   padding-right: 5px;
 }
 
-#gdpmgqhxxj .gt_sourcenotes {
+#vcegzezjqo .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -870,7 +875,7 @@ The residuals, <span class="math inline">\epsilon_i</span>
   border-right-color: #D3D3D3;
 }
 
-#gdpmgqhxxj .gt_sourcenote {
+#vcegzezjqo .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -878,72 +883,72 @@ The residuals, <span class="math inline">\epsilon_i</span>
   padding-right: 5px;
 }
 
-#gdpmgqhxxj .gt_left {
+#vcegzezjqo .gt_left {
   text-align: left;
 }
 
-#gdpmgqhxxj .gt_center {
+#vcegzezjqo .gt_center {
   text-align: center;
 }
 
-#gdpmgqhxxj .gt_right {
+#vcegzezjqo .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#gdpmgqhxxj .gt_font_normal {
+#vcegzezjqo .gt_font_normal {
   font-weight: normal;
 }
 
-#gdpmgqhxxj .gt_font_bold {
+#vcegzezjqo .gt_font_bold {
   font-weight: bold;
 }
 
-#gdpmgqhxxj .gt_font_italic {
+#vcegzezjqo .gt_font_italic {
   font-style: italic;
 }
 
-#gdpmgqhxxj .gt_super {
+#vcegzezjqo .gt_super {
   font-size: 65%;
 }
 
-#gdpmgqhxxj .gt_footnote_marks {
+#vcegzezjqo .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#gdpmgqhxxj .gt_asterisk {
+#vcegzezjqo .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#gdpmgqhxxj .gt_indent_1 {
+#vcegzezjqo .gt_indent_1 {
   text-indent: 5px;
 }
 
-#gdpmgqhxxj .gt_indent_2 {
+#vcegzezjqo .gt_indent_2 {
   text-indent: 10px;
 }
 
-#gdpmgqhxxj .gt_indent_3 {
+#vcegzezjqo .gt_indent_3 {
   text-indent: 15px;
 }
 
-#gdpmgqhxxj .gt_indent_4 {
+#vcegzezjqo .gt_indent_4 {
   text-indent: 20px;
 }
 
-#gdpmgqhxxj .gt_indent_5 {
+#vcegzezjqo .gt_indent_5 {
   text-indent: 25px;
 }
 
-#gdpmgqhxxj .katex-display {
+#vcegzezjqo .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#gdpmgqhxxj div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#vcegzezjqo div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
