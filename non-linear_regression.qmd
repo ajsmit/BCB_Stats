@@ -97,7 +97,7 @@ pred_poly$y <- predict(mod_poly, newdata = pred_poly)
 
 # Plot the data and the fitted model
 plt_poly <- ggplot(dat_poly, aes(x, y)) +
-  geom_point(size = 2, shape = 1, colour = "royalblue") +
+  geom_point(size = 2, shape = 1, colour = "royalblue2") +
   geom_line(data = pred_poly, aes(x, y), color = "black") +
   xlab("Predictor, X") +
   ylab("Response, Y")
@@ -120,7 +120,7 @@ dat_sin$Predicted <- predict(mod_sin)
 
 # Visualise results
 plt_sin <- ggplot(dat_sin, aes(x = Day)) +
-  geom_point(aes(y = DayLength), size = 2, shape = 1, color = "royalblue") +
+  geom_point(aes(y = DayLength), size = 2, shape = 1, color = "royalblue2") +
   geom_line(aes(y = Predicted), color = "black") +
   labs(x = "Day of the Year", y = "Response, Y")
 
@@ -147,7 +147,7 @@ pred_mm$V <- predict(mod_mm, newdata = pred_mm)
 
 # Plot the data and the fitted model
 plt_mic <- ggplot(dat_mm, aes(S, V)) +
-  geom_point(size = 2, shape = 1, colour = "royalblue") +
+  geom_point(size = 2, shape = 1, colour = "royalblue2") +
   geom_line(data = pred_mm, aes(S, V), color = "black") +
   xlab("Substrate Concentration [S]") +
   ylab("Uptake Rate V")
@@ -168,7 +168,7 @@ pred_gam$y <- predict(mod_gam, newdata = pred_gam)
 
 # Plot the data and the fitted GAM
 plt_gam <- ggplot(dat_gam, aes(x, y)) +
-  geom_point(size = 2, shape = 1, colour = "royalblue") +
+  geom_point(size = 2, shape = 1, colour = "royalblue2") +
   geom_line(data = pred_gam, aes(x, y), color = "black") +
   xlab("Predictor, X") +
   ylab("Response, Y")
@@ -240,7 +240,7 @@ plot_data <- data.frame(
 
 # Plot the data and the fitted model
 ggplot(dat_vb, aes(t, L_t)) +
-  geom_point(size = 2, shape = 1, colour = "royalblue") +
+  geom_point(size = 2, shape = 1, colour = "royalblue2") +
   geom_line(data = plot_data, aes(t, Length, colour = Model), alpha = 0.6) +
   scale_color_manual(name = "Model",
                      values = c("von Bertalanffy" = "black", "poly1" = "coral3", "poly2" = "deepskyblue3", "poly3" = "deeppink3", "GAM" = "seagreen3")) +
@@ -624,7 +624,7 @@ mf_data |>
 #| fig-pos: "t"
 
 ggplot(mf_data, aes(x = S, y = V, group = rep)) +
-  geom_jitter(size = 2, shape = 1, colour = "royalblue", width = 0.08) +
+  geom_jitter(size = 2, shape = 1, colour = "royalblue2", width = 0.08) +
   labs(x = TeX("S [$\\mu$M]"),
        y = TeX("V [$\\mu$M $g^{-1}_{dry}$ $h^{-1}$]")) +
   theme(legend.position = "none")
@@ -691,7 +691,7 @@ predicted_V <- (Vmax_est * conc_seq) / (Km_est + conc_seq)
 # Plot
 ggplot(mf_data, aes(x = S, y = V)) +
   geom_jitter(aes(colour = "Data Points", width = 0.08),
-    shape = 1, size = 2, colour = "royalblue") +
+    shape = 1, size = 2, colour = "royalblue2") +
   geom_line(aes(x = conc_seq, y = predicted_V),
             data = data.frame(S = conc_seq, V = predicted_V),
             color = "black", size = 0.8) +
@@ -967,9 +967,9 @@ plt1 <- ggplot(mf_data2, aes(x = residuals_separate)) +
   labs(x = "Residuals", y = "Density")
 
 plt2 <- ggplot(mf_data2, aes(x = fitted_values_separate, y = residuals_separate)) +
-  geom_point(colour = "royalblue", shape = 1) +
+  geom_point(colour = "royalblue2", shape = 1) +
   geom_smooth(method = "gam", se = FALSE,
-              linewidth = 0.6, colour = "indianred") +
+              linewidth = 0.6, colour = "indianred2") +
   facet_wrap(~trt) +
   theme(legend.position = "none") +  # Turn off the legend
   labs(x = "Fitted Values",
@@ -1300,7 +1300,7 @@ A plot of the data is shown in @fig-vb1; here, each line represents the growth t
 # Plot the simulated data
 ggplot(vb_data, aes(x = Age, y = Length, group = Fish_ID)) +
   geom_jitter(alpha = 0.6, size = 2, shape = 1,
-              colour = "royalblue", width = 0.08) +
+              colour = "royalblue2", width = 0.08) +
   geom_line(alpha = 0.2, linesize = 0.2, colour = "grey50") +
   labs(x = "Age (years)",
        y = "Length (cm)")
@@ -1352,8 +1352,8 @@ vb_data$Fitted_Length <- vb_growth(vb_data$Age, coef_fixed["L_inf"], coef_fixed[
 
 # Create the plot
 ggplot(vb_data, aes(x = Age, y = Length, group = Fish_ID)) +
-  geom_jitter(size = 2, shape = 1, colour = "royalblue", alpha = 0.4, width = 0.08) +
-  geom_line(aes(y = Fitted_Length), colour = "indianred", linewidth = 0.8) +
+  geom_jitter(size = 2, shape = 1, colour = "royalblue2", alpha = 0.4, width = 0.08) +
+  geom_line(aes(y = Fitted_Length), colour = "indianred2", linewidth = 0.8) +
   labs(x = "Age (years)",
        y = "Length (cm)")
 ```
