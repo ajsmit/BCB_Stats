@@ -1,9 +1,11 @@
 # Preface {.unnumbered}
 
-This is a Quarto book.
+This book is a work in progress. It is a collection of expanding lecture notes on statistics as used by biologists such as botanists, zoologists, and ecologists. It is intended to be a resource for students and researchers who are interested in learning more about the subject and applying it to their data. The material is presented in a way that is accessible to those with a thorough understanding of biology and a willingness and interest to learn the application of statistical analyses to their data.
 
-To learn more about Quarto books visit <https://quarto.org/docs/books>.
+Although the book is primarily aimed at biologists, it is also suitable for students and researchers in other fields who require subjecting their data to inferential statistical analyses. The material is presented in a way that is accessible to those with a good understanding of biology, but who might not necessarily have a deep interest of background in mathematics or statistics.
 
-```{r}
-1 + 1
-```
+The examples in this book require that the reader already possesses a good working knowledge of the R programming language. If you are not familiar with R, I recommend that you take a look at the excellent book [R for Data Science](https://r4ds.had.co.nz/) by Hadley Wickham and Garrett Grolemund. Or, study the material provided on [The Tangled Bank](https://tangledbank.netlify.app) website.
+
+The reader is also required to already have a good grasp of exploratory data analysis (EDA), descriptive (summary) statistics, and data visualisation. If you are not familiar with these topics, I recommend that you take a look at the excellent book [Exploratory Data Analysis with R](https://bookdown.org/rdpeng/exdata/) by Roger D. Peng, or look at the material on [The Tangled Bank](https://tangledbank.netlify.app). 
+
+The book is divided into several chapters, each of which covers a different aspect of statistics. The chapters are organised in a logical order, starting with the basics of probability and moving on to more advanced topics such as hypothesis testing, regression analysis, and multivariate statistics. Each chapter is accompanied by a set of exercises that are designed to help the reader understand the material and apply it to real-world problems.

@@ -21,30 +21,72 @@ options(knitr.table.format = function() {
 
 ## The Scientific Method in Practice
 
-Answering questions about the natural world using a scientific workflow requires that we draw on many years' of accumulated knowledge and experience. The workflow unpacks into roughly the following sequence of steps:
+Answering questions about the natural world using the scientific method requires that we draw on many years' of accumulated knowledge and experience. This workflow unpacks into roughly the following sequence of steps:
 
 1. Look around you at the world, be curious about it, and ask questions to figure out an explanation for the pattern or phenomenon that tickled your interest. 
-2. Create an unambiguous statement of the question you want to answer, think about what is causing the pattern or phenomenon you observed, and how you might go about measuring the response (the thing you observed initially).
-3. Translate this question into a testable hypothesis. This is the statement that you can test using the data you will collect.
-4. Design an experiment or sampling campaign to collect data that will allow you to test this hypothesis. Clearly understand what the data you'll collect will look like, both for the response and the explanatory variables. For example, do you have a categorical or continuous predictor, is the response continuous, binary, ordinal, etc.? For this, you should have a firm grasp of the various kinds of [Data Classes and Structures in R](https://tangledbank.netlify.app/BCB744/basic_stats/01-data-in-R.html).
+2. **Create an unambiguous statement of the question you want to answer**, think about what is causing the pattern or phenomenon you observed, and how you might go about measuring the response (the thing you observed initially).
+3. **Translate this question into a testable hypothesis**. This is the statement that you can test using the data you will collect.
+4. Design an experiment or sampling campaign to collect data that will allow you to test this hypothesis. Clearly **understand what the data you'll collect will look like**, both for the response and the explanatory variables. For example, do you have a categorical or continuous predictor, is the response continuous, binary, ordinal, etc.? For this, you should have a firm grasp of the various kinds of [Data Classes and Structures in R](https://tangledbank.netlify.app/BCB744/basic_stats/01-data-in-R.html).
 5. Think deeply about any confounding influences that might affect your data, and specify exactly what additional data you will have to collect to isolate the hypothesised influence in your analysis. You need to fully understand all the ways that factors not considered in your hypothesis might affect your study's outcome. Omissions cannot be rectified after the fact without repeating the entire experiment or sampling work. It requires knowledge and experience to avoid confounding influences ruining your work.
-6. Depending on your experiment's design (4) and the nature of the data you'll obtain (4, 5), choose the appropriate statistical methods to analyse them. You should be able to develop a good idea of what statistical methods you'll use---even before the experiment has been done! Decide on the parametric test, or, should the statistical god with the dice not provide an outcome that favours your expectations, you can also decide upfront on a non-parametric equivalent. It is important not to decide on the statistical method after you've collected the data. This is called *p*-hacking, and it is almost a cardinal sin in science.
+6. Depending on your experiment's design (4) and the nature of the data you'll obtain (4, 5), **choose the appropriate statistical methods** to analyse them. You should be able to develop a good idea of what statistical methods you'll use---even before the experiment has been done! Decide on the parametric test, or, should the statistical god with the dice not provide an outcome that favours your expectations, you can also decide upfront on a non-parametric equivalent. It is important not to decide on the statistical method after you've collected the data. This is called *p*-hacking, and it is almost a cardinal sin in science.
 7. Do the experiment or go out into the world to sample, and collect the data. Have fun---this is why we do science, afterall!
 8. Go have a few drinks after a hard day's work and celebrate your success.
-9. Analyse your newly-collected data. This will include explaratory data analyses (see [Exploring With Summaries and Descriptions](https://tangledbank.netlify.app/BCB744/basic_stats/02-summarise-and-describe.html) and [Exploring With Figures](https://tangledbank.netlify.app/BCB744/basic_stats/03-visualise.html)), and then the application of the statistical methods you chose in step 6.
-10. Communicate your results in tables and figures.
+9. **Analyse your newly-collected data**. This will include explaratory data analyses (see [Exploring With Summaries and Descriptions](https://tangledbank.netlify.app/BCB744/basic_stats/02-summarise-and-describe.html) and [Exploring With Figures](https://tangledbank.netlify.app/BCB744/basic_stats/03-visualise.html)), and then the application of the statistical methods you chose in step 6.
+10. **Communicate your results** in tables and figures.
 
-This textbook deals with many of these steps (except for 1, 5, and 7). This knowledge is codified in the form of the statistical method, which provides a systematic framework for collecting,[^0] analysing, and interpreting data. In this chapter, I introduce the fundamental concepts of inferential statistics, which allow us to make inferences about populations based on sample data. I also provide an overview of the types of statistical methods used in inferential statistics, and discuss the importance of understanding the assumptions underlying these methods.
+This textbook deals with many of these steps (except for 1, 5, 7, and 8). This knowledge is codified in the form of the statistical method, which provides a systematic framework for collecting,[^0] analysing, and interpreting data. In this chapter, I will introduce the fundamental concepts of inferential statistics, which allow us to make inferences about populations based on sample data. I will also provide an overview of the types of statistical methods used in inferential statistics, and discuss the importance of understanding the assumptions underlying these methods.
 
 [^0]: Yes, statistics also informs us about how to collect data. 
 
+## Inferential Statistics
+
+This book covers the suite of **inferential statistics** available to biologists. These methods are the cornerstone of hypothesis-driven scientific research. Inferential statistics provide the tools needed to generalise from a sample to a population or to make predictions about future observations. In doing so, we can draw general conclusions or test hypotheses about populations or processes.
+
+Inferential statistics build upon basic exploratory data analysis (EDA), which often includes a substantial use of **descriptive (or summary) statistics**. Descriptive statistics describe and summarise the characteristics of a dataset, such as its central tendency, variability, and distribution. While descriptive statistics offer a snapshot of the data, they do not allow us to draw conclusions about the population from which the data were sampled.
+
+Descriptive and inferential statistics work hand in hand, with the former laying the groundwork for more advanced analyses. Inferential statistics allow us not only to draw conclusions from our data but also to quantify the uncertainty associated with these inferences. This uncertainty arises because we are analysing only a sample and wish to generalise our insights to the entire population from which the sample was drawn. Inferential statistics offer a systematic framework for making these inferences and assessing the strength of the evidence supporting a hypothesis.
+
+The type of statistical approach we choose depends heavily on the biological processes that generate our data. The confident application of inferential statistics is grounded in an understanding of both biological theory and the data’s characteristics. A key element in choosing the right approach is recognising that the probability distribution of your data is closely linked to the natural processes that produce the observed outcomes. Biological data can be influenced by many factors, such as genetics, environmental conditions, and random variation, all of which shape the underlying distribution. For example:
+
+1. **Plant Height (Normal Distribution):** The heights of individual plants in a population typically follow a **normal distribution**. This distribution arises from the combined effects of genetic factors and environmental conditions that influence plant growth, such as soil quality, light, and water availability.
+
+2. **Litter Size in Mammals (Poisson Distribution):** In many mammal species, the number of offspring per litter may follow a **Poisson distribution**, which is common for count data. This distribution reflects the biological processes involved in reproduction, where most females have an average litter size, and larger litters are progressively rarer.
+
+## Parametric or Nonparametric: Understanding Your Data's Distribution
+
+Inferential statistics can be broadly categorised into **parametric** and **nonparametric** methods. The choice between them hinges on understanding the distribution of our data and the assumptions underlying each method. Parametric statistics traditionally rely on specific assumptions about the underlying probability distribution of the population from which the sample data are drawn. The two key assumptions are normality, where the data follow a normal (Gaussian) distribution, and homoscedasticity, which requires equal variances across groups or levels of predictors.
+
+However, parametric methods *don't always require normally distributed data*. The core requirement is that the data follow a **known probability distribution**, which must be specified in advance. Many biological datasets don't follow a normal distribution but can still be analysed using parametric methods. This flexibility is evident in **Generalised Linear Models (GLMs)**, which extend the parametric framework to accommodate a wider range of response variables.
+
+GLMs can handle various distributions, such as Poisson for count data or binomial for binary outcomes. They use a link function to relate the mean of the response to the predictors, adhering to parametric principles while offering flexibility for non-normal data. This makes GLMs well-suited for ecological and biological datasets, where non-normal data are common. Many statistical tests have been extended to other probability distributions. Examples include Generalised Additive Models (GAMs), which are semi-parametric methods, Generalised Non-Linear Models (GNLMs) that fit non-linear models to non-parametric data, and Generalised Linear and Non-Linear Mixed-Effects Models (GLMMs and GNLMMs) that handle hierarchical data.
+
+When data don't conform to any known distribution, nonparametric statistics offer an alternative. They make fewer assumptions about the data's distribution and are more robust when dealing with non-standard or unknown distributions. This makes them suitable for biological processes not easily captured by parametric models.
+
+Choosing between parametric and nonparametric methods involves several considerations. First, it's important to assess whether your data meet the assumptions of parametric tests. Specific tests for this purpose will be discussed in Section X. Sample size is another crucial factor. Parametric methods can often tolerate moderate violations of the normality assumption due to the Central Limit Theorem (CLT), especially with large sample sizes. The CLT states that the sampling distribution of the sample mean approaches a normal distribution as the sample size increases, even if the underlying population is not perfectly normal.
+
+When assumptions are met, parametric tests are more powerful. However, they are also more sensitive to violations of their assumptions. Therefore, we must consider the nature of our data and the processes that generated them when choosing a statistical approach.
+
+<!-- In the parametric framework, statistical methods can be divided into four broad categories based on the type of research question: -->
+
+<!-- 1. **Differences in means** (e.g., *t*-tests, ANOVA). -->
+<!-- 2. **Differences in proportions** (e.g., chi-squared tests). -->
+<!-- 3. **Relationships between variables** (e.g., Pearson correlation). -->
+<!-- 4. **The effect of predictors on a response variable** (e.g., linear or generalised linear regression). -->
+
+<!-- Nonparametric statistics can be placed into similar categories: -->
+
+<!-- 1. **Differences in medians (or distributions)** (e.g., Wilcoxon signed-rank test, Mann-Whitney *U* test, or Kruskal-Wallis test). -->
+<!-- 2. **Differences in proportions** (e.g., Fisher's exact test). -->
+<!-- 3. **Relationships between variables** (e.g., Spearman correlation and Kendall's tau). -->
+<!-- 4. **The effect of predictors on a response variable** (e.g., nonparametric regression such as LOESS or LOWESS, rank-based regression such as the Theil-Sen estimator, or generalised additive models). -->
+
 ## The Statistical Toolbox
 
-With inferential statistics you can analyse data obtained from representative samples to draw conclusions or test hypotheses about populations or processes. I broadly categorise these methods into four main types, each serving different research applications[^1]:
+I broadly categorise parametric and nonparametric methods into four main types, each serving different research applications[^1]:
 
 [^1]: This categorisation reflects my teaching approach, based on the order in which I think topics need to be covered, rather than a strict classification by statisticians. It is intended to provide a high-level overview of the types of statistical methods used in inferential statistics.
 
-1. **Hypothesis Tests**: These parametric and non-parametric techniques assess whether sample data provide evidence for or against a specific claim (hypothesis) about population parameters such as their means, proportions, variances, or correlations between variables. Common hypothesis tests include:
+1. **Hypothesis Tests**: These parametric and non-parametric techniques assess whether sample data provide evidence for or against a specific claim (hypothesis) about population parameters such as their means, medians, proportions, variances, or correlations between variables. Common hypothesis tests include:
 
     - Comparisons of group means or medians for a continuous variable (e.g., *t*-tests, ANOVA, Mann-Whitney *U* test)
     - Comparisons of group proportions for a categorical variable (e.g., $\chi$-square test, Fisher's exact test)
@@ -61,25 +103,7 @@ With inferential statistics you can analyse data obtained from representative sa
 
 4. **Multivariate Analysis:** This includes an assortment of methods to analyse multiple response and predictor variables simultaneously. Dimension reduction methods, such as canonical correlation analysis (CCA) and non-metric multidimensional scaling (nMDS), help simplify complex datasets by identifying key patterns and relationships. Classification, including cluster analysis, is used to group similar observations together based on their characteristics. Multivariate approaches make fewer assumptions about the data’s distribution, and there are techniques to deal with parametric and non-parametric data types (often without discrimination). Although these methods are not covered in this textbook, they are taught in my [Quantitative Ecology](https://tangledbank.netlify.app/BCB743/BCB743_index.html) module, which will eventually be developed into its own textbook.
 
-The above methods include parametric or non-parametric (sometimes called 'robust') methods. Parametric methods assume that the data follow a specific distribution (e.g., normal, Poisson), while non-parametric methods make fewer assumptions about the data distribution. I will cover the parametric methods first, in Part A, followed by non-parametric methods in Part B. Part C of the book will look at semi-parametric methods, which combine aspects of both parametric and non-parametric approaches.
-
-
-## I. Parametric Methods (Known Distribution)
-
-Parametric statistics rely on specific assumptions about the underlying probability distribution of the population from which the sample data were drawn. Biologists are taught that our data must be normally distributed, but this an unreasonable expectation considering the widely varying data sources we will encounter. Some biological processes simply do not generate normally distributed data! 
-
-Nevertheless, parametric statistics have through convention (rather than best practice) become the starting point for introductory forays into statistics. This is not terrible, because, should we be fortunate enough to have normally distributed data, parametric methods are more powerful than their non-parametric counterparts; however, they are also more sensitive to violations of some assumptions about our data.
-
-The staple parametric statistics, such as the *t*-test, ANOVAs, Pearson correlation, and simple linear regression, require that two key assumptions are met: i) that our data (or sometimes the residuals) are **normality distributed** and ii) that the **variances are homoscedastic**. Section X is devoted to statistical tests that we may use to test the assumptions. However, because of the Central Limit Theorem, parametric methods can withstand moderate violations of the normality assumption when the sample size is large.[^2]
-
-[^2]: The CLT states that the sampling distribution of the sample mean approaches a normal distribution as the sample size increases, even if the underlying population is not perfectly normal.
-
-A common mistake biologists makes is to think that parametric tests only apply to normal data. This is not true. Generalised linear models (GLMs) extend the statistical framework to accommodate non-normal error distributions, such as Poisson for count data or binomial for binary outcomes.[^3] GLMs require that the distribution of the response variable belongs to the exponential family of distributions and that a suitable link function is chosen to connect the mean of the response to the linear predictor. Therefore, the defining characteristic of parametric methods is the assumption of a **known distribution** for the response variable, not necessarily that is is normal.
-
-[^3]: In fact, many statistical tests that would ordinarily require the assumption of normality to be met have been extended to other probability distributions, as can be seen from the practice to append the word 'Generalised' to the name of the test. For example, the Generalised Additive Model (GAM) is a generalised semi-parametric method, Generalised Non-Linear Models (GNLMs) permit fitting non-linear models to non-parametric data, and Generalised Linear and Non-Linear Mixed-Effects Models (GLMMs and GNLMMs) do the same with hierarchical data.
-
-Within the parametric statistics framework, we can divide the methods into four groups depending on the type of question we are asking. We can ask questions about i) **difference in means**, ii) **differences in proportions**, iii) **relationships between variables**, or iv) the **effect of one or more predictors on a response variable**. 
-
+I will cover the parametric methods first, in Part A, followed by non-parametric methods in Part B. Part C of the book will look at semi-parametric methods, which combine aspects of both parametric and non-parametric statistics
 
 ### A. Hypotheses About the Means of Groups
 

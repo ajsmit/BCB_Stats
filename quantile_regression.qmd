@@ -6,6 +6,10 @@ knitr:
       - pdf
 ---
 
+```{r echo = FALSE, cache = FALSE}
+source("utils.R", local = TRUE)
+```
+
 # Quantile Regression
 
 In traditional quantile regression, we model the conditional quantiles of the response variable given the predictor variables. However, when you want to study how different quantiles of the predictor variable (e.g., wind stress curl) affect the response variable (e.g., SST and upwelling metrics), you need to employ methods that can capture these dynamics.

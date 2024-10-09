@@ -1,3 +1,15 @@
+---
+knitr:
+  opts_chunk:
+    dev:
+      - svg
+      - pdf
+---
+
+```{r echo = FALSE, cache = FALSE}
+source("utils.R", local = TRUE)
+```
+
 # Linear Regression {#sec-simple-linear-regression}
 
 ```{r}

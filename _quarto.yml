@@ -3,7 +3,7 @@ pdf-engine: lualatex
 # Default author
 author:
   - name: 'Albertus J. Smit'
-    url: https://tangledbank.netlify.app
+    url: https://bcbstats.netlify.app
     affiliation: University of the Western Cape
     affiliation-url: https://uwc.ac.za
     orcid: 0000-0002-3799-6126
@@ -17,10 +17,10 @@ project:
   output-dir: _site
 
 website:
-  title: "The BCB Biostatistics Book"
+  title: "Biostatistics: The Book"
   description: "UWC's Biodiversity & Conservation Biology Department Pages Serving BCB744."
   favicon: "images/favicon.ico"
-  site-url: http://tangledbank.netlify.app
+  site-url: https://bcbstats.netlify.app
   repo-url: https://github.com/ajsmit/BCB_Stats
   google-analytics: G-SCYH68M489
   bread-crumbs: true
@@ -43,7 +43,7 @@ website:
     background: dark
 
 book:
-  title: "The Biostatistics Book"
+  title: "Biostatistics: The Book"
   author: "AJ Smit"
   appendices:
     - appendix_1.qmd

@@ -6,6 +6,10 @@ knitr:
       - pdf
 ---
 
+```{r echo = FALSE, cache = FALSE}
+source("utils.R", local = TRUE)
+```
+
 ```{r}
 #| echo: false
 #| messages: false
@@ -1105,7 +1109,7 @@ mm_data <- mm_data|>
          trt = as.factor(trt))
 ```
 
-The data for this example is by @smit2002nitrogen. A perturbation experiment was conducted to determine the nutrient uptake rate versus nutrient concentration of the red seaweed, \textit{Gracilaria} sp. The experiment involved flasks, initially enriched to approximately 55 μM nitrate, sampled 16 times over approximately 2.5 hours. The uptake rates were measured under three rates of water movement (treatments): low, medium, and high. Each treatment had three replicate flasks (@tbl-mm1). The primary objective was to determine if the Michaelis-Menten parameters significantly differ among the three levels of water movement, and we must state a hypothesis similar to those in @sec-mm-comparison.
+The data for this example is by @smit2002nitrogen. A perturbation experiment was conducted to determine the nutrient uptake rate versus nutrient concentration of the red seaweed, *Gracilaria* sp. The experiment involved flasks, initially enriched to approximately 55 μM nitrate, sampled 16 times over approximately 2.5 hours. The uptake rates were measured under three rates of water movement (treatments): low, medium, and high. Each treatment had three replicate flasks (@tbl-mm1). The primary objective was to determine if the Michaelis-Menten parameters significantly differ among the three levels of water movement, and we must state a hypothesis similar to those in @sec-mm-comparison.
 
 ```{r}
 #| echo: false
@@ -1174,7 +1178,7 @@ nlme_mod3 <- nlme(V ~ mm_fun(S, Vmax, Km),
 ```
 1. The `random` argument specifies that the Michaelis-Menten parameter `Vmax` is a random effect that varies among the replicate flasks nested within the treatment levels.
 2. The `groups` argument specifies that the replicate flasks are nested within the treatment levels.
-3. The `correlation` argument specifies that the residuals have a first-order autoregressive correlation structure. This structure assumes that the correlation between residuals decreases exponentially with the time lag between observations.
+3. The `correlation` argument specifies that the residuals have a first-order autoregressive correlation structure. This structure assumes that the correlation between residuals decreases exponentially with the time lag between observations. Flask is nested *within* treatment.
 
 If we are not convinced that `nlme_mod3` is the best model, we can compare it to `nlme_mod2` using a likelihood ratio test. It is used to compare the fit of two models, where one model is a special case of the other. The test statistic is the difference in the log-likelihoods of the two models, and the null hypothesis is that the simpler model is the best fit. 
 
@@ -1198,7 +1202,7 @@ print(paste("Degrees of freedom:", df_diff))
 print(paste("P-value:", p_value))
 ```
 
-The likelihood ratio test indicates that `nlme_mod3` is a better fit than `nlme_mod2` (p < 0.001). This result suggests that the Michaelis-Menten parameters vary among the treatment levels, and the residuals have a first-order autoregressive correlation structure.
+The likelihood ratio test indicates that `nlme_mod3` is a better fit than `nlme_mod2` (*p* < 0.001). This result suggests that the Michaelis-Menten parameters vary among the treatment levels, and the residuals have a first-order autoregressive correlation structure.
 
 ```{r}
 summary(nlme_mod3)
@@ -1207,7 +1211,7 @@ summary(nlme_mod3)
 
 ## Example: The Growth Rate of Fish (NLMM) {#sec-vonbertalanffy}
 
-The von Bertalanffy model (@eq-vb) is used to describe the growth patterns of animals over time. For example, in a fish growth study, we measure the length of individual fish at regular intervals as the fish age. By fitting the von Bertalanffy model to these length-at-age data, we can estimate growth parameters specific to the fish species. 
+The von Bertalanffy model (@eq-vb) is used to describe the growth patterns of animals over time. For example, in a fish growth study, we measure the length of individual fish at regular intervals as the fish ages. We can estimate growth parameters specific to the fish species by fitting the von Bertalanffy model to these length-at-age data
 
 The model is given by:
 
@@ -1300,8 +1304,9 @@ A plot of the data is shown in @fig-vb1; here, each line represents the growth t
 # Plot the simulated data
 ggplot(vb_data, aes(x = Age, y = Length, group = Fish_ID)) +
   geom_jitter(alpha = 0.6, size = 2, shape = 1,
-              colour = "royalblue2", width = 0.08) +
-  geom_line(alpha = 0.2, linesize = 0.2, colour = "grey50") +
+              colour = "black", width = 0.08) +
+  geom_line(alpha = 0.6, linesize = 0.1,
+            colour = "red", linetype = "dashed") +
   labs(x = "Age (years)",
        y = "Length (cm)")
   theme(legend.position = "none")
@@ -1363,10 +1368,7 @@ ggplot(vb_data, aes(x = Age, y = Length, group = Fish_ID)) +
 
 ### To include in the article
 
--   **Use Cases:** Mentioning use cases like trend analysis in time-series data or other applications where the relationship between variables might be expected to follow a polynomial form (e.g., growth rates, trajectories) can provide practical context.
 -   **Assumptions:** Not necessary for simply estimating model parameters, but if the model is used for prediction or inference, it is important to state the assumptions of the model (e.g., linearity, homoscedasticity, independence of residuals) and test them.
--   **i.i.d.:** The residuals are assumed to be independent and identically distributed (i.i.d.), which is a common assumption in linear regression models.
--   **Homoscedasticity:**
 -   **i.i.d:** The residuals are assumed to be independent and identically distributed (i.i.d.), which is a common assumption in linear regression models. For a normal distribution, this is written as $\epsilon_i \sim N(0, \sigma^2)$, where $\sigma^2$ is the variance of the residuals.
 
 

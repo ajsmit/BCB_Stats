@@ -52,5 +52,8 @@
   },
   "quantile_regression.qmd": {
     "quantile_regression.html": "0d8fe649"
+  },
+  "preface.qmd": {
+    "preface.html": "13d7d03e"
   }
 }

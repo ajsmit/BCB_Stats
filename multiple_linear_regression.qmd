@@ -1,3 +1,15 @@
+---
+knitr:
+  opts_chunk:
+    dev:
+      - svg
+      - pdf
+---
+
+```{r echo = FALSE, cache = FALSE}
+source("utils.R", local = TRUE)
+```
+
 # Multiple Linear Regression {#sec-multiple-linear-regression}
 
 In @sec-simple-linear-regression we have seen how to model the relationship between two variables using simple linear regression (SLR). However, in ecosystems, the relationship between the response variable and the explanatory variables is more complex and in many cases cannot be adequately captured by a single driver (i.e. influential or predictor variable). In such cases, multiple linear regression (MLR) can be used to model the relationship between the response variable and multiple explanatory variables. 

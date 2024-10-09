@@ -1,3 +1,15 @@
+---
+knitr:
+  opts_chunk:
+    dev:
+      - svg
+      - pdf
+---
+
+```{r echo = FALSE, cache = FALSE}
+source("utils.R", local = TRUE)
+```
+
 # Regularisation Techniques {#sec-regularisation}
 
 Regularisation techniques are invaluable when dealing with complex datasets or situations where traditional methods may fall short. They are used to enhance model stability, improve predictive performance, and increase interpretability, especially when working with multi-dimensional data in multiple linear regression models and multivariate analyses. Regularisation addresses several common challenges in statistical modelling: i) multicollinearity, ii) variable selection, iii) overfitting, and iv) model simplification.
