@@ -79,31 +79,22 @@ Violation of any of these assumptions could lead to biased or inefficient parame
 
 The experimenter must ensure the following key requirements for a simple linear regression:
 
-1. **Causality:** There should be a theoretical or philosophical basis for expecting a causal relationship, where the independent variable ($X$) influences or determines the dependent variable ($Y$).[^3] It is assumed that changes in $X$ cause changes in $Y$.
+1. **Causality:** There should be a theoretical or philosophical basis for expecting a causal relationship, where the independent variable ($X$) influences or determines the dependent variable ($Y$).[^chapter_SLR-1] It is assumed that changes in $X$ cause changes in $Y$.
 
 2. **Independence of Observations:**
 
     -   The observations or measured values of $Y$ must be independent of each other. For each value of $X$, there should be only one corresponding value of $Y$, or if there are replicate $Y$ values, they must be statistically independent and not influence each other.
-    -   The observations of $Y$ must also be independently across the range of $X$ values. This means that the value of $Y$ at one point should not influence the value of $Y$ at another point.[^4]
+    -   The observations of $Y$ must also be independently across the range of $X$ values. This means that the value of $Y$ at one point should not influence the value of $Y$ at another point.[^chapter_SLR-2]
 
-3. **Independent Variable Scale:** The independent variable ($X$) should be measured on a continuous scale, such as integers, real numbers, intervals, or ratios.
+3. **Independent Variable:** The independent variable ($X$) should be measured on a continuous scale, such as integers, real numbers, intervals, or ratios. Use an *ordinal regression* if the independent variable is ordinal. If you have more than one independent variable, use a *multiple linear regression*.
 
-4. **Dependent Variable Scale:** Similarly, the dependent variable ($Y$) should also be measured on a continuous scale, such as integers, real numbers, intervals, or ratios.[^5]
+4. **Dependent Variable:** Similarly, the dependent variable ($Y$) should also be measured on a continuous scale, such as integers, real numbers, intervals, or ratios.[^chapter_SLR-3] If your data are not continuous and the dependent variable is ordinal, use a *ordinal (logistic) regression*.
 
-[^3]: The independent and dependent variables are also called the predictor and response variables, respectively. The predictor is often under the experimenter's control (in which case it is a fixed effects model), while the response is the variable predicted to respond in the manner hypothesised.
+[^chapter_SLR-1]: The independent and dependent variables are also called the predictor and response variables, respectively. The predictor is often under the experimenter's control (in which case it is a fixed effects model), while the response is the variable predicted to respond in the manner hypothesised.
 
-[^4]: If $Y$ not independent across the range of $X$, use a different type of regression model, such as a linear mixed-effects model.
+[^chapter_SLR-2]: If $Y$ not independent across the range of $X$, use a different type of regression model, such as a linear mixed-effects model.
 
-[^5]: The dependent variable can also be ordinal, but this is less common. If this is the case, use *ordinal (logistic) regression instead.
-
-What if my data are not continuous?
-
--   If the independent variable is ordinal, use *ordinal regression*.
--   If the dependent variable is ordinal, use *ordinal (logistic) regression*.
-
-What if I have more than one independent variable?
-
--   Use *multiple linear regression*.
+[^chapter_SLR-3]: The dependent variable can also be ordinal, but this is less common. If this is the case, use *ordinal (logistic) regression instead.
 
 Additional assumptions and requirements are discussed next in @sec-linear-model-assumptions.
 
@@ -137,7 +128,7 @@ The general form of the function written in R is:
 lm(formula, data, ...)
 ```
 
-where `formula` is a symbolic description of the model to be fitted, and `data` is the data frame containing the variables. The `...` argument is used to pass additional arguments to the function (consult `?lm`). For example: 
+where `formula` is a symbolic description  [using the notation by @wilkinson1973symbolic] of the model to be fitted, and `data` is the data frame containing the variables. The `...` argument is used to pass additional arguments to the function (consult `?lm`). For example: 
 
 ```{r}
 #| eval: FALSE
@@ -145,7 +136,7 @@ where `formula` is a symbolic description of the model to be fitted, and `data` 
 
 lm(y ~ x, data = df) # <1>
 ```
-1. You can read the statement `y ~ x` as "y is modelled as a function of x."
+1. You can read the statement `y ~ x` as "$y$ is modelled as a function of $x$."
 
 The above statement fits a simple linear regression model with `y` as the dependent variable and `x` as the independent variable. The data frame `df` contains the variables named `x` and `y`.
 
@@ -202,20 +193,19 @@ We see that the dataset contains 344 observations of 8 variables. We shall focus
 
 Construct a scatter plot of the data and include a best fit straight line:
 
-```{r}
+```{r, fig.width=c(6,5),fig.asp=0.65,out.width=c("60%","12cm")}
 #| echo: true
 #| fig.cap: "Scatter plot of the Palmer Station Adelie penguin data with a best fit line."
 #| label: fig-lm
-#| fig.width: 4
-#| fig.height: 2
 #| fig.align: center
+#| fig.width: 4
 
 ggplot(Adelie,
        aes(x = body_mass_g, y = bill_length_mm)) +
   geom_point() +
   geom_smooth(method = "lm", se = FALSE) +
   labs(x = "Body mass (g)", y = "Bill length (mm)") +
-  theme_minimal()
+  theme_bw()
 ```
 
 Although there is some scatter in the data (@fig-lm), there appears to be a positive relationship between the body mass and bill length of the penguins. This relationship might be amenable for modelling with a linear relationship and we shall continue to explore this.
@@ -276,7 +266,7 @@ The *p*-value is greater than 0.05, so I reject the alternative hypothesis. I co
 
 **Option 2**: Create a Residual Q-Q plot to visually assess the normality of the residuals:
 
-```{r}
+```{r, fig.width=c(9,6),fig.asp=c(0.65,0.65),out.width=list("80%","12cm")}
 #| echo: false
 #| fig.cap: "Diagnostics plots the linear regression, `mod1`, for assumption testing."
 #| label: fig-assump-plots
@@ -380,7 +370,7 @@ mod1_data <- mod1_data %>%
 1. Calculate thresholds for Cook's distance.
 2. Calculate the threshold for DFFITS.
 
-```{r}
+```{r, fig.width=c(9,6),fig.asp=c(0.65,0.65),out.width=list("80%","12cm")}
 #| echo: false
 #| messages: false
 #| warning: false
@@ -448,15 +438,14 @@ ggarrange(plt1, plt2, plt3, plt4, nrow = 2, ncol = 2, labels = "AUTO",
 <!-- 1. Adds information about each observation in the dataset to the model output using the `augment()` function from the **broom** package. -->
 <!-- 2. Adds an index column for the observation numbers and calculates the leverage values using the `hatvalues()` function. -->
 
-```{r}
+```{r, fig.width=c(9,6),fig.asp=c(0.75,0.65),out.width=list("40%","12cm")}
 #| echo: false
 #| messages: false
 #| warning: false
 #| fig.cap: "Plot of the linear regression resulting from `mod1` with the outliers identified using Cook's distance highlighted."
 #| label: fig-lm2-outliers2
-#| fig.width: 4
-#| fig.height: 2.75
 #| fig.align: center
+#| fig.width: 3
 
 # Plot the data with the identified points
 ggplot(mod1_data, aes(x = body_mass_g, y = bill_length_mm)) +
@@ -541,16 +530,15 @@ The adequacy of the model fit was judged based on the coefficient of determinati
 
 **Results**
 
-```{r}
+```{r, fig.width=c(6,5),fig.asp=0.65,out.width=c("60%","12cm")}
 #| echo: false
 #| messages: false
 #| warning: false
 #| fig.cap: "Plot of bill length as a function of body mass for Adelie penguins sampled at the Palmer Station. The straight line indicates the best fit regression line and the blue shading is the 95% confidence interval."
 #| label: fig-lm2
-#| fig.width: 4
-#| fig.height: 2
 #| fig.align: center
 #| fig-pos: "t"
+#| fig.width: 4
 
 ggplot(Adelie,
        aes(x = body_mass_g, y = bill_length_mm)) +
@@ -577,14 +565,13 @@ Confidence intervals estimate the range within which the true mean of the depend
 
 Prediction intervals, on the other hand, provide a range of $Y$ values that are likely to contain a single new observation of the dependent variable for a given value of the independent variable $X$. These intervals account for the variability around individual observations and are generally wider than confidence intervals because they include both the variability of the estimated mean response and the variability of individual observations around that mean. Continuing with the Adelie penguin data, the confidence and prediction intervals are shown in @fig-lm2-conf.
 
-```{r}
+```{r, fig.width=c(6,5),fig.asp=0.65,out.width=c("60%","12cm")}
 #| echo: true
 #| messages: false
 #| warning: false
 #| fig.cap: "Plot of pernguin data with the confidence interval (blue) and prediction interval (pink) around the fitted values."
 #| label: fig-lm2-conf
 #| fig.width: 4
-#| fig.height: 2
 #| fig.align: center
 #| fig-pos: "t"
 
@@ -637,12 +624,11 @@ sparrows <- tibble(age = c(3, 4, 5, 6, 8, 9, 10, 11, 12, 14, 15, 16, 17),
                    wing = c(1.4, 1.5, 2.2, 2.4, 3.1, 3.2, 3.2, 3.9, 4.1, 4.7, 4.5, 5.2, 5.0))
 ```
 
-```{r}
+```{r, fig.width=c(6,5),fig.asp=0.65,out.width=c("60%","12cm")}
 #| echo: false
 #| fig.cap: "Scatter plot of the sparrow dataset with a best fit line."
 #| label: fig-lm3
 #| fig.width: 4
-#| fig.height: 2
 #| fig.align: center
 #| fig-pos: "t"
 
@@ -671,23 +657,21 @@ shapiro.test(residuals(mod2))
 
 The *p*-value for the Shapiro-Wilk test is < 0.05, indicating that the residuals are not normally distributed. The histogram and Q-Q plot of the residuals also show that the residuals are not normally distributed (@fig-hist2 and @fig-QQ2). In the Residual Q-Q plot, the points deviate from the straight line, indicating non-normality---note the S-shaped curvature to the data.
 
-```{r}
+```{r, fig.width=c(6,5),fig.asp=0.85,out.width=c("60%","12cm")}
 #| echo: true
 #| fig.cap: "A histogram of the residual of the linear regression, `mod2`."
 #| label: fig-hist2
 #| fig.width: 4
-#| fig.height: 3
 #| fig.align: center
 
 hist(residuals(mod2))
 ```
 
-```{r}
+```{r, fig.width=c(6,5),fig.asp=0.85,out.width=c("60%","12cm")}
 #| echo: true
 #| fig.cap: "A Residual Q-Q plot of the linear regression, `mod2`."
 #| label: fig-QQ2
 #| fig.width: 4
-#| fig.height: 3
 #| fig.align: center
 
 plot(mod2, which = 2)
@@ -703,12 +687,11 @@ bptest(mod2)
 
 The *p*-value for the Breusch-Pagan test is > 0.05, indicating that the residuals are homoscedastic. The plot of residuals against fitted values shows gives a slightly different impression (@fig-resid2).
 
-```{r}
+```{r, fig.width=c(6,5),fig.asp=0.85,out.width=c("60%","12cm")}
 #| echo: true
 #| fig.cap: "A plot of residuals against fitted values for the linear regression, `mod2`."
 #| label: fig-resid2
 #| fig.width: 4
-#| fig.height: 3
 #| fig.align: center
 
 plot(mod2, which = 1)

@@ -1,0 +1,213 @@
+% preamble.tex (for mdframed example)
+\usepackage{pdflscape}        % For landscape pages
+
+% --- Fonts and Encoding ---
+
+\usepackage{fontspec}         % Allows font specification
+\usepackage{luatexja}          % For CJK scripts in LuaLaTeX, load after fontspec
+% Set font for Chinese script
+\newfontfamily\chinesefont{Noto Sans SC}
+% Set font for Devanagari script
+\newfontfamily\devanagarifont[Language=Sanskrit]{Noto Sans Devanagari}
+
+% Main Font
+\setmainfont{Times New Roman}
+
+% Math Font
+\setmathfont{XITS Math}
+
+% Monospace Font
+\setmonofont{Courier New}
+
+% --- Packages for Tables ---
+
+\usepackage{longtable}         % For long tables
+\usepackage{array}             % For table column width specification
+\usepackage{booktabs}         % For table rules
+\usepackage{ragged2e}         % For text alignment (used with \newcolumntype and footnotes)
+
+% --- Other Packages ---
+
+\usepackage{mdframed}
+\usepackage[x11names]{xcolor}    % Required for specifying custom colors, load before tcolorbox
+\usepackage[version=4]{mhchem}  % Formula subscripts using \ce{}
+
+% --- Color Definitions ---
+
+\definecolor{headingblue}{RGB}{23,48,191}
+\definecolor{boxtitle}{HTML}{F0F4F8}
+\definecolor{boxbody}{HTML}{FBFDFF}
+\definecolor{mainboxframe}{HTML}{F0F4F8}
+\definecolor{subboxframe}{HTML}{F0F4F8}
+
+% --- mdframed Styles ---
+
+\newmdenv[
+  skipabove=12pt,
+  skipbelow=12pt,
+  leftmargin=0pt,
+  rightmargin=0pt,
+  innertopmargin=2mm,
+  innerbottommargin=2mm,
+  innerleftmargin=2mm,
+  innerrightmargin=2mm,
+  backgroundcolor=boxbody,
+  frametitlebackgroundcolor=boxtitle,
+  frametitlefont={\bfseries\sffamily},
+  frametitleaboveskip=\dimexpr-\ht\strutbox+2pt\relax,
+  frametitlealignment=\raggedright,
+  roundcorner=0pt,
+  nobreak=false,
+  usetwoside=false,
+  splittopskip=2\baselineskip,
+  splitbottomskip=\baselineskip,
+  linewidth=0pt,
+  frametitle={#1}
+]{mainbox}
+
+\newmdenv[
+  skipabove=12pt,
+  skipbelow=12pt,
+  leftmargin=0pt,
+  rightmargin=0pt,
+  innertopmargin=2mm,
+  innerbottommargin=2mm,
+  innerleftmargin=2mm,
+  innerrightmargin=2mm,
+  backgroundcolor=boxbody,
+  frametitlebackgroundcolor=boxtitle,
+  frametitlefont={\bfseries\sffamily},
+  frametitleaboveskip=\dimexpr-\ht\strutbox+2pt\relax,
+  frametitlealignment=\raggedright,
+  roundcorner=0pt,
+  nobreak=false,
+  usetwoside=false,
+  splittopskip=2\baselineskip,
+  splitbottomskip=\baselineskip,
+  linewidth=0pt,
+  frametitle={#1}
+]{subbox}
+
+% --- Custom Column Type (using ragged2e) ---
+
+\newcolumntype{R}[1]{>{\RaggedRight}p{#1}}
+
+% --- Epigraph ---
+
+\usepackage{epigraph}
+\setlength\epigraphwidth{.9\textwidth}
+\newenvironment{quotepara}
+  {\setlength{\parindent}{1em}\setlength{\parskip}{0.6ex}\itshape\raggedright}
+  {}
+\renewcommand{\textflush}{quotepara}
+
+% --- Small Caps ---
+
+\newcommand{\flatcaps}[1]{\textsc{\MakeLowercase{#1}}}
+
+% --- Custom Chapter/Section Styles ---
+
+\usepackage[compact]{titlesec}  % Allows creating custom chapter styles
+\titleformat{\chapter}[display]
+  {\fontsize{60}{62}\bfseries}
+  {\thechapter}
+  {0pt}
+  {\huge\noindent}
+\titlespacing*{\chapter}{0pt}{0pt}{40pt}
+
+\titleformat{\section}[block]
+  {\large\bfseries}
+  {\thesection}
+  {1em}
+  {}
+\titlespacing*{\section}{0pt}{2\baselineskip}{1\baselineskip}
+
+\titleformat{\subsection}
+  {\large\bfseries}
+  {\thesubsection}
+  {0.6em}
+  {\flatcaps}
+\titlespacing*{\subsection}{0pt}{1\baselineskip}{1\baselineskip}
+
+\titleformat{\subsubsection}[runin]
+  {}
+  {\thesubsubsection}
+  {0.6em}
+  {}
+  {\itshape}
+\titlespacing*{\subsubsection}{0pt}{8pt}{5pt}
+
+\titleformat{\paragraph}[runin]
+  {\flatcaps}
+  {\theparagraph}
+  {0pt}
+  {}
+
+% --- Footnotes ---
+
+\usepackage[ragged,hang]{footmisc}  % Load footmisc with ragged option
+\renewcommand{\footnotelayout}{\RaggedRight\footnotesize} % Typeset footnotes in \RaggedRight
+\setlength{\footnotemargin}{1.5em}   % Adjust space between number and text
+\makeatletter
+\renewcommand{\@makefntext}[1]{%
+    \parindent 1em%                    Set parindent for footnote text
+    \noindent
+    \hb@xt@ 1.8em{%                   Set hanging indent for footnote text
+        \hss\@thefnmark.%
+    }
+    \RaggedRight #1%                  Typeset footnote text ragged right
+}
+\makeatother
+
+% --- Captions ---
+
+\usepackage{caption}
+\captionsetup{
+  font={small},
+  labelfont={bf},
+  textfont={},
+  width=0.9\textwidth,
+  justification=justified,
+  labelformat=default,
+  labelsep=period,
+  format=plain
+}
+\renewcommand{\captionlabelfont}{\bfseries\scshape}
+
+% --- Hyperlinks ---
+
+\usepackage{hyperref}           % Load after most other packages, but before cleveref
+\hypersetup{
+  colorlinks = true,
+  linkcolor = {headingblue},
+  citecolor = {headingblue},
+  urlcolor = {headingblue}
+}
+
+% --- Miscellaneous ---
+
+\usepackage{iftex}             % Detects the engine used
+\usepackage{microtype}         % Improves typography
+\usepackage{etoolbox}
+%% Use lining fonts
+\newcommand\lining{\addfontfeatures{Numbers={Monospaced, Lining}}}
+\AtBeginEnvironment{tabular}{\lining} % In tables
+\renewcommand{\theequation}{ {\lining\arabic{equation}}} % For equation numbers
+
+% --- Index (if needed) ---
+
+\usepackage{makeidx}
+\makeindex
+
+% --- Other Typography Settings ---
+
+\frenchspacing                  % Single space after periods
+
+% --- Microtype Settings (adjust only if needed) ---
+
+% \microtypesetup{
+%    tracking = true,
+%    factor = 1100,
+%    stretch = 15,
+%    shrink = 15
+% }

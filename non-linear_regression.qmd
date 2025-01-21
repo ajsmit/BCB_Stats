@@ -28,17 +28,17 @@ library(latex2exp) # For figure titles with LaTeX expressions
 
 # Nonlinear Models {#sec-nonlinear-regression}
 
-**In This Chapter**
+<!-- **In This Chapter** -->
 
-- [Nonlinear Regression](@sec-nonlinear-regression)
+<!-- - [Nonlinear Regression](@sec-nonlinear-regression) -->
 
-**Elsewhere in the Book**
+<!-- **Elsewhere in the Book** -->
 
-- [Simple Linear Regression](@sec-simple-linear-regression)
-- [Polynomial Regression](@sec-polynomial-regression)
-- [Multiple Linear Regression](@sec-multiple-linear-regression)
-- [Generalised Linear Models](@sec-generalised-linear-models)
-- [Generalised Additive Models](@sec-generalised-additive-models)
+<!-- - [Simple Linear Regression](@sec-simple-linear-regression) -->
+<!-- - [Polynomial Regression](@sec-polynomial-regression) -->
+<!-- - [Multiple Linear Regression](@sec-multiple-linear-regression) -->
+<!-- - [Generalised Linear Models](@sec-generalised-linear-models) -->
+<!-- - [Generalised Additive Models](@sec-generalised-additive-models) -->
 
 Nonlinear regression models\index{nonlinear regression} are used when the relationship between the response variable (dependent variable, $Y$) and the predictor variables (independent variables, $X$) is not linear. In other words, they are employed when a straight line is not an appropriate representation of the relationship between the variables.
 
@@ -189,7 +189,7 @@ Like linear models, nonlinear models have also been extended to include multiple
 
 ## Considerations for Model Selection
 
-```{r, fig.width=c(6,5),fig.asp=0.5,out.width=c("80%","12cm")}
+```{r, fig.width=c(9,6),fig.asp=c(0.65,0.65),out.width=list("80%","12cm")}
 #| echo: false
 #| messages: false
 #| warning: false
@@ -255,21 +255,54 @@ ggplot(dat_vb, aes(t, L_t)) +
 
 There are a few practical considerations to keep in mind when choosing a suitable nonlinear (in shape) model. Sometimes different models can provide similar fits to the same data, but they may have different implications for the interpretation of the relationship between the variables. See for example @fig-combo. The plot shows growth rate data fitted with a first-, second- and third-order polynomial, a GAM, and a NLS von Bertalanffy model. To the untrained eye and inexperienced biologist, all models seem to provide a good fit to the data, but they do differ subtly in the shape of the fitted curve. The von Bertalanffy model is a saturating growth model (it reaches a plateau), while the polynomial models and the GAM are more flexible and can capture a wider range of shapes. The choice of model should be guided by the underlying biological or physical processes that generated the data and the research question you are trying to answer.
 
-Since you will often have to decide among polynomial regressions, nonlinear models, and GAMs, I'll outline some general guidelines to help you make an informed decision.
+Regression analysis will often require that we decide among polynomial regressions, nonlinear models, GAMs, or some of the more complex hierarchical models, and there are various considerations to keep in mind when decising which model to use. I will cover some of these in the next sections.
 
--   **Linearity vs. Nonlinearity:** If the relationship between the variables is linear or can be adequately approximated by a polynomial function, polynomial regression is a suitable choice. Nonlinear models or GAMs may be more appropriate if the relationship is nonlinear and does not follow a specific polynomial form. In @fig-combo, it is obvious that the straight line model is not a good fit for the data, but the second- and third-order polynomial models, the GAM, and the von Bertalanffy model all provide better fits.
+```{mermaid}
+%%| fig-width: 3
+flowchart TD
+    A[Data Pattern] -->|Known mechanistic process| B[Theoretical Model Exists?]
+    A -->|Unknown mechanism| C[Exploratory Analysis]
+    
+    B -->|Yes| D[Nonlinear Model]
+    B -->|No| C
+    
+    C --> E{Pattern Complexity}
+    
+    E -->|Simple curve| F[Polynomial Check]
+    E -->|Complex/unknown| G[GAM Initial Fit]
+    
+    F -->|2-3 bends max| H[Polynomial Regression]
+    F -->|More complex| G
+    
+    G --> I{Sample Size}
+    I -->|Small n| J[Reduce Flexibility]
+    I -->|Large n| K[Keep Flexibility]
+    
+    style A fill:#f9f,stroke:#333
+    style E fill:#bbf,stroke:#333
+    style I fill:#bbf,stroke:#333
+```
 
--   **Complexity of the Relationship:** Polynomial regression is limited in its ability to capture complex nonlinear relationships, especially those with more bends, peaks, or valleys than a polynomial of order <3 (or even 4 at a push) can capture. Another consideration is the process the data represent: if it is inherently nonlinear according to a known function such as exponential growth or decay, seasonal sinusoidal patterns, or logistic growth, then nonlinear models or GAMs are more flexible and can capture a wider range of nonlinear responses. In @fig-combo, the von Bertalanffy model is a saturating growth model, which is a known biological process that can be captured by a nonlinear model. The 3rd-order polynomial model also seems to capture a saturating growth pattern, but it also somewhat influenced by the dip in the raw data around 12.5 years (in addition to some other nuances), but this is likely due to some random variation and is not part of the growth response.
+### Linearity vs. Nonlinearity
+ The first fork in our decision making process involves seeing if the relationship between the variables is linear or can be adequately approximated by a polynomial function, polynomial regression is a suitable choice. Nonlinear models or GAMs may be more appropriate if the relationship is nonlinear and does not follow a specific polynomial form. In @fig-combo, it is obvious that the straight line model is not a good fit for the data, but the second- and third-order polynomial models, the GAM, and the von Bertalanffy model all provide better fits.
 
--   **Interpretability vs. Flexibility:** Polynomial regression provides coefficients that relate to the powers of the predictor variables, but the interpretation of the $\beta$ parameters is not as intuitive as in a linear model of order 1. In contrast, nonlinear models and GAMs offer greater flexibility in capturing complex patterns. GAMs may lack direct interpretability of the coefficients, but the nonlinear model offers coefficients that can be interpreted in the context of the model's structure. In @fig-combo, the von Bertalanffy model has a clear biological interpretation (see @sec-vonbertalanffy), while the 3rd-order polynomial model and the GAM are more flexible and can capture a wider range of shapes (it follows the dips and peaks in the raw data closer). The 2nd-order polynomial does not fit the data as well at very low ages at 20 year, but it is still a better fit than the linear model.
+### Complexity of the Relationship
+Polynomial regression is limited in its ability to capture complex nonlinear relationships, especially those with more bends, peaks, or valleys than a polynomial of order <3 (or even 4 at a push) can capture. Another consideration is the process the data represent: if it is inherently nonlinear according to a known function such as exponential growth or decay, seasonal sinusoidal patterns, or logistic growth, then nonlinear models or GAMs are more flexible and can capture a wider range of nonlinear responses. In @fig-combo, the von Bertalanffy model is a saturating growth model, which is a known biological process that can be captured by a nonlinear model. The 3rd-order polynomial model also seems to capture a saturating growth pattern, but it also somewhat influenced by the dip in the raw data around 12.5 years (in addition to some other nuances), but this is likely due to some random variation and is not part of the growth response.
 
--   **Overfitting Concerns:** Polynomial regression with high-degree polynomials can lead to overfitting, especially when the model complexity exceeds the underlying data patterns. Nonlinear models and GAMs can also overfit if not properly regularised or constrained. These insights can be seen when we examine the summaries of the regression fits, and can be formally assessed using cross-validation or information criteria. In @fig-combo, the 3rd-order polynomial model seems to capture some of the random variation in the data, which may be an indication of overfitting. The GAM also seems to capture some of the random variation, but it is less pronounced than in the 3rd-order polynomial model.
+### Interpretability vs. Flexibility
+Polynomial regression provides coefficients that relate to the powers of the predictor variables, but the interpretation of the $\beta$ parameters is not as intuitive as in a linear model of order 1. In contrast, nonlinear models and GAMs offer greater flexibility in capturing complex patterns. GAMs may lack direct interpretability of the coefficients, but the nonlinear model offers coefficients that can be interpreted in the context of the model's structure. In @fig-combo, the von Bertalanffy model has a clear biological interpretation (see @sec-vonbertalanffy), while the 3rd-order polynomial model and the GAM are more flexible and can capture a wider range of shapes (it follows the dips and peaks in the raw data closer). The 2nd-order polynomial does not fit the data as well at very low ages at 20 year, but it is still a better fit than the linear model.
 
--   **Data Size and Complexity:** For small to moderate-sized datasets with complex nonlinear relationships, GAMs may be more suitable due to their flexibility and ability to capture intricate patterns. For simpler relationships or when interpretability is important, nonlinear regression (with mechanistically-informed parameters) may be preferred. These are not of concern in @fig-combo.
+### Overfitting Concerns
+Polynomial regression with high-degree polynomials can lead to overfitting, especially when the model complexity exceeds the underlying data patterns. Nonlinear models and GAMs can also overfit if not properly regularised or constrained. These insights can be seen when we examine the summaries of the regression fits, and can be formally assessed using cross-validation or information criteria. In @fig-combo, the 3rd-order polynomial model seems to capture some of the random variation in the data, which may be an indication of overfitting. The GAM also seems to capture some of the random variation, but it is less pronounced than in the 3rd-order polynomial model.
 
--   **Model Complexity and Assumptions:** Polynomial regression assumes a specific polynomial form for the relationship, which may not hold in practice. Nonlinear models and GAMs are more flexible and do not always impose strict parametric assumptions (see @sec-assumptions), making them more robust to deviations from the assumed form. A detailed assessment of the model assumptions and the complexity of the relationship can help guide the choice of model. We need to add to this our biologist specialist knowledge to make the best choice.
+### Data Size and Complexity
+For small to moderate-sized datasets with complex nonlinear relationships, GAMs may be more suitable due to their flexibility and ability to capture intricate patterns. For simpler relationships or when interpretability is important, nonlinear regression (with mechanistically-informed parameters) may be preferred. These are not of concern in @fig-combo.
 
--   **Computational Considerations:** Polynomial regression is relatively simple to implement and computationally efficient, especially for low-degree polynomials. Nonlinear models and GAMs may require more computational resources, especially for large datasets or complex models. Not a concern for the models represented in @fig-combo.
+### Model Complexity and Assumptions
+Polynomial regression assumes a specific polynomial form for the relationship, which may not hold in practice. Nonlinear models and GAMs are more flexible and do not always impose strict parametric assumptions (see @sec-assumptions), making them more robust to deviations from the assumed form. A detailed assessment of the model assumptions and the complexity of the relationship can help guide the choice of model. We need to add to this our biologist specialist knowledge to make the best choice.
+
+### Computational Considerations
+Polynomial regression is relatively simple to implement and computationally efficient, especially for low-degree polynomials. Nonlinear models and GAMs may require more computational resources, especially for large datasets or complex models. Not a concern for the models represented in @fig-combo.
 
 ## Requirements and Assumptions {#sec-assumptions}
 

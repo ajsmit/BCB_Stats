@@ -1,0 +1,41 @@
+\documentclass{book}
+
+\usepackage{float}
+\usepackage{xcolor}
+\usepackage{etoolbox}
+\usepackage{ragged2e}
+
+\newfloat{custombox}{tbp}{box}[section]
+\renewcommand{\thecustombox}{\thesection}
+\floatname{custombox}{Box}
+
+\newcommand{\customboxcontent}[2]{%
+    \begin{custombox}
+        \setlength{\fboxrule}{0.5pt}%
+        \setlength{\fboxsep}{0pt}%
+        \fbox{%
+            \setlength{\fboxsep}{10pt}%
+            \colorbox{gray!5}{%
+                \begin{minipage}{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}
+                    {\textsc{Box~\thecustombox\quad#1}}
+
+                    \vspace{6pt}
+                    {\RaggedRight#2}
+                \end{minipage}%
+            }%
+        }%
+    \end{custombox}
+}
+
+\begin{document}
+
+\section{Section 1}
+
+As we observe in Box~\ref{box:example}, the theoretical framework...
+
+\customboxcontent{A Brief Title}{The primary content follows in this section,
+demonstrating typographical refinement through ragged right margins. The structural
+elements maintain coherence while accommodating flexible content arrangement.}
+\label{box:example}
+
+\end{document}

@@ -1,0 +1,37 @@
+---
+title: "Latex"
+author: "john the toucanite"
+format: pdf
+pdf-engine: lualatex
+header-includes:
+  \usepackage{lipsum}
+  \usepackage{tcolorbox}
+  \epigraph
+include-in-header:
+  file: "preamble.tex"
+---
+
+\begin{tcolorbox}
+\lipsum[1]\\
+a new line\\
+$$ y = x^2$$
+\end{tcolorbox}
+
+\epigraph{
+\begin{quotepara}
+In the beginning, there was a void in the minds of creatures, who moved blindly through the world. And the force of evolution said: ``Let there be sensation,'' and sensation came to be.
+
+From the primordial soup arose beings who could detect light from darkness, warmth from cold. And evolution saw that it was adaptive, and it was good.
+
+And evolution spoke again, saying: ``Let there be more subtle discernment among the creatures.'' And eyes formed to see detail, ears to hear distant sounds, noses to smell food and danger, tongues to taste what nourishes and what harms, and skin to feel the textures of the world.
+
+And Nature called sensation knowledge, and ignorance it called death. And perception and survival were the first day of knowing.
+
+These senses multiplied and refined across generations. Those who sensed well lived to breed, and those who sensed poorly perished. Thus was empirical knowledge selected and preserved.
+
+And in the fullness of time arose creatures who walked upright, whose brains grew large with sensory processing. They began to pass their empirical knowledge to their young through teaching and tale. They named the stars and tracked the seasons. They learned which plants heal and which harm. They studied the ways of prey and predator.
+
+And from these foundations of sensory truth, they built great towers of understanding. They created science and philosophy, art and mathematics. But all rested upon the bedrock of empirical knowing that evolution had wrought.
+
+Thus was empiricism established as the first way of knowing, from which all other knowing springs. And evolution saw all that it had made, and behold, it was very good.
+\end{quotepara}

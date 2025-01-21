@@ -1,0 +1,173 @@
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+library(tidyverse)
+library(kableExtra)
+```
+
+```{r echo = FALSE, cache = FALSE}
+source("utils.R", local = TRUE)
+```
+
+# One-Sample Hypotheses  {#sec-t-tests}
+
+As biologists, we might be interested in making inferences about populations based on samples.[^chapter_2-1] We collect data from a subset of individuals and then use statistical methods to draw conclusions about the broader population from which the sample was drawn. One fundamental type of inference we often make is whether the population mean (or median) is equal to a specific, pre-determined value. This is where *one-sample hypothesis tests* come into play. They allow us to address questions such as:
+
+[^chapter_2-1]: Inference in statistical hypothesis testing is the process of drawing conclusions about an underlying population from sample data, typically by quantifying how surprising observed outcomes would be under a proposed null hypothesis. It allows us to assess whether any detected differences or relationships are genuinely present or merely due to random variation.
+
+\vspace{6pt}
+
+- Does the average height of *Aloe dichotoma* (quiver trees) in a newly protected area in the Richtersveld differ from the known average height of this species across its range?
+- Is the median concentration of lead in the soil near a mining operation in Limpopo above a regulatory threshold?
+- Has the mean number of African wild dog pups per litter in the Kruger National Park changed after a new management strategy was implemented?
+
+\vspace{6pt}
+
+These questions are not just academic. They have real-world implications for conservation efforts, environmental management, and our understanding of ecological and evolutionary processes in unique ecosystems, not only in South Africa as the examples would suggest, but anywhere in the world.
+
+To reiterate, one-sample hypothesis tests are statistical procedures designed to assess whether a population parameter (typically the mean or median) is likely to be different from a hypothesised value. The distinction between mean and median is important. The mean is interesting when we know our sample data are normally distributed (@sec-chapter2_assumptions), and if this is the case, it calls for a \emph{Student's} or \emph{Welch's \emph{t} test}. \marginnote{Student's or Welch's \emph{t} test\\ Wilcoxon signed-rank test} If, however, our data are non-normal, the median is the measure of central tendency that must be tested with a \emph{Wilcoxon signed-rank test}.
+
+
+We might use $\mu_0$ to represent the *hypothesised value* of the population mean in a one-sample hypothesis test. As an example, let's say we want to test the hypothesis that the mean beak length of Cape Sugarbirds in a particular fynbos region is 15 mm, we would say that our hypothesised value is $\mu_0=15$. The goal is to determine whether the evidence from our sample suggests that the true population mean/median is consistent with the null hypothesis or if it deviates significantly from it. The *null hypothesis* states that there is no difference between the true population mean and the hypothesised value. \marginnote{One- and two-tailed hypotheses.} For instance, if we were interested in testing whether the mean beak length of Cape Sugarbirds is different from 15 mm, we would have a *two-tailed hypothesis*. Alternatively, if we were interested in knowing if the mean beak length is *either* below *or* above 15, we would have a *one-tailed hypothesis*.
+
+It is important to make a distinction at this point. Although we are ultimately interested in the population we are sampling, our calculations (i.e., the statistical test) are done on our *sample* data. For example, we calculate the mean of our sample, which we refer to as $\bar{x}$. We then use $\bar{x}$ to make inferences about the population.
+
+The process involves formulating a *null hypothesis* (often denoted as $H_0$). \marginnote{Null and alternative hypotheses.} This hypothesis represents the scenario where the population mean/median equals the hypothesised value ("is no different from," i.e., *null*), and an *alternative hypothesis* (often denoted as $H_1$ or $H_a$), which represents the scenario where the population mean/median differs from the hypothesised value (either greater than, smaller than, or either greater or smaller than) (Box \ref{box:Null and Alternative Hypotheses}). 
+
+<!-- \begin{figure}[t] -->
+<!-- \caption{Caption for your floating text box.} -->
+<!-- \label{fig:my_textbox} % Label for referencing later -->
+<!-- \centering -->
+<!-- \colorbox{gray!5}{ -->
+<!-- \begin{minipage}{1.0\textwidth} % Adjust width as needed -->
+<!-- \raggedright -->
+<!-- \vspace{0.5\baselineskip} % Optional: Add some vertical space -->
+
+<!-- In the example of the Cape Sugarbirds, we want to assess if the population mean, \(\bar{x}\), is the same or different from the hypothesised value, \(\mu_{0}=15\). The two types of hypotheses are therefore: -->
+
+<!-- \vspace{3pt} -->
+
+<!-- \begin{itemize} -->
+<!-- \item \(H_{0}: \bar{x} = \mu_{0}\), or \(H_{0}: \bar{x} = 15\) -->
+<!-- \item \(H_{a}: \bar{x} \ne \mu_{0}\), or \(H_{a}: \bar{x} \ne 15\) -->
+<!-- \end{itemize} -->
+
+<!-- \vspace{3pt} -->
+
+<!-- This is the same as saying: -->
+
+<!-- \vspace{3pt} -->
+
+<!-- \begin{itemize} -->
+<!-- \item \(H_{0}: \bar{x} - \mu_{0} = 0\) -->
+<!-- \item \(H_{a}: \bar{x} - \mu_{0} \ne 0\) -->
+<!-- \end{itemize} -->
+
+<!-- \vspace{3pt} -->
+
+<!-- Note that in this formulation of the hypotheses, we do not make a distinction between whether we expect \(\bar{x}\) to be \(<\) or \(>\) \(\mu_{0}\), calling for a two-sided one-sample \emph{t}-test. -->
+
+<!-- \vspace{0.5\baselineskip} -->
+<!-- \end{minipage} -->
+<!-- } -->
+<!-- \end{figure} -->
+
+\boxcontent{Null and Alternative Hypotheses}{
+In the example of the Cape Sugarbirds, we want to assess if the population mean, \(\bar{x}\), is the same or different from the hypothesised value, \(\mu_{0}=15\). The two types of hypotheses are therefore:
+
+\vspace{3pt}
+
+\begin{itemize}
+\item \(H_{0}: \bar{x} = \mu_{0}\), or \(H_{0}: \bar{x} = 15\)
+\item \(H_{a}: \bar{x} \ne \mu_{0}\), or \(H_{a}: \bar{x} \ne 15\)
+\end{itemize}
+
+\vspace{3pt}
+
+This is the same as saying:
+
+\vspace{3pt}
+
+\begin{itemize}
+\item \(H_{0}: \bar{x} - \mu_{0} = 0\)
+\item \(H_{a}: \bar{x} - \mu_{0} \ne 0\)
+\end{itemize}
+
+\vspace{3pt}
+
+Note that in this formulation of the hypotheses, we do not make a distinction between whether we expect \(\bar{x}\) to be \(<\) or \(>\) \(\mu_{0}\), calling for a two-sided one-sample \emph{t}-test.
+}
+
+We then collect data, calculate a *test statistic* (e.g., a *t*-statistic in the case of a one-sample *t*-test, or a *z*-statistic for a one-sample *z*-test -- see the examples below), and determine the probability of observing our sample data (or something more extreme) if the null hypothesis were true. This probability is known as the *p*-value. If the *p*-value is very small (typically below a pre-determined significance level, often 0.05), we reject the null hypothesis in favour of the alternative hypothesis, suggesting that the population mean/median is likely different from the hypothesised value.
+
+In this chapter, we will explore three common one-sample hypothesis tests:
+
+\vspace{6pt}
+
+1.  **One-sample *t*-test** (@sec-one-sample-t-test): Used to compare the mean of a normally distributed population to a hypothesised value when the population standard deviation is unknown. It's a versatile test applicable in many biological contexts.
+2.  **One-sample *z*-test** (@sec-one-sample-z-test): Applied when you want to compare the mean of a normally distributed population to a hypothesised value and you know the population standard deviation. While less common in practice, it's conceptually important.
+3.  **One-sample Wilcoxon Signed-Rank Test** (@sec-one-sample-wilcoxon-test): A non-parametric test used to compare the median of a population to a hypothesised value. It's valuable when dealing with data that don't meet the assumptions of normality.
+
+\vspace{6pt}
+
+Throughout this chapter, we'll delve into the assumptions, calculations, and interpretations of these tests. We'll also illustrate their application using real biological examples from South African contexts and demonstrate how to perform these tests in R. My aim is not just to teach you the mechanics of these tests but also to develop a deeper understanding of their underlying principles and their role in making sound, data-driven biological inferences. By the end of this chapter, you will have the knowledge and skills needed to apply these one-sample hypothesis tests in your research and confidently interpret the results, contributing to the conservation and understanding of South Africa's incredible biodiversity.
+
+## Nature of the Data and Assumptions {#sec-chapter2_assumptions}
+
+One-sample *t*-tests require data of a specific nature. The appropriateness of a one-sample *t*-test hinges on several key assumptions about the data you've collected.
+
+Let's consider what these data requirements mean:
+
+\vspace{6pt}
+
+1. **Data Type:** A one-sample *t*-test is intended for *quantitative data* that are measured on a *continuous* or *interval/ratio scale*.
+
+    * *Continuous variables* can take any value within a given range. For instance, the height of *Aloe dichotoma* in our example is a continuous variable, as it can theoretically take on any value within a reasonable range (e.g., 2.5 meters, 3.82 meters, 5.175 meters).
+    * *Interval/ratio variables* are a type of continuous data where the differences between values are meaningful, and in the case of ratio data, there is a true zero point. Beak length of Cape Sugarbirds, for instance, is a ratio variable because a beak of 4 mm is twice as long as a beak of 2 mm, and a beak length of 0 mm implies the absence of a beak (a biological impossibility, of course, but it illustrates the concept of a true zero).
+
+  Importantly, categorical or ordinal data are not suitable for a one-sample *t*-test. For example, if you were to categorise the soil contamination levels near a mine in Limpopo as "low," "medium," or "high," you would not be able to use a one-sample *t*-test to compare these categories to a specific threshold.
+
+2. **Independence:** The observations in your sample must be *independent* of each other. This means that the value of one observation should not influence or be related to the value of any other observation.
+
+    * In our African wild dog example, the number of pups in one litter should not affect the number of pups in another litter. If, for instance, you were sampling litters from the same pack over multiple years, the data points might not be truly independent because they may share certain characteristics from the same pack or the same matriarch, which will be important to take into account.
+    * Similarly, when measuring quiver tree heights, each tree measured should be selected independently. If you were to measure all the trees within a small, isolated clump, they might be genetically related or influenced by the same micro-environmental conditions, potentially violating the independence assumption.
+
+3. **Normality:** A one-sample *t*-test assumes that the data (or more precisely, the sampling distribution of the sample mean) are approximately *normally distributed*. The normal distribution, also known as the Gaussian distribution, is a bell-shaped curve that is symmetric around the mean.
+
+    * The raw data themselves don't necessarily need to be perfectly normally distributed, especially if the sample size is large. The Central Limit Theorem tells us that the distribution of sample means will tend to be normal, even if the population distribution is not, as long as the sample size is sufficiently large (often considered to be around 30 or more).
+    * However, if your sample size is small and the data deviate strongly from normality (e.g., heavily skewed or with many outliers), a one-sample *t*-test might not be appropriate. In such cases, a non-parametric alternative like the Wilcoxon Signed-Rank test (which we will discuss later) might be more suitable.
+
+4. **Random Sampling:** Ideally, your data should come from a *random sample* of the population of interest. Random sampling helps ensure that your sample is representative of the broader population, allowing you to make valid inferences.
+
+    * For instance, if you're studying lead contamination near a mine, you should randomly select sampling sites within the area of interest, rather than, for example, only sampling sites where it is convenient and accessible to do so.
+    * In practice, truly random sampling can be challenging to achieve in biological studies. However, we must strive to apply sampling methods that minimise bias and maximise the representativeness of your sample.
+
+\vspace{6pt}
+
+Before conducting a one-sample *t*-test, you must assess whether your data meet these requirements. Visual inspection of the data (e.g., using histograms or Q-Q plots), along with formal statistical tests for normality (e.g., the Shapiro-Wilk test), can help you determine if a one-sample *t*-test is appropriate, or if you'd be better served by a Wilcoxon signed-rank test. We will explore these diagnostic techniques in R later in the chapter. You can ensure that your statistical analysis is valid and that your conclusions are robust and meaningful by exploring the nature of your data before you commit to your hypothesis testing.
+
+## R Function
+
+One- and two-sided Student's and Welch's *t* tests can be applied with the `t.test()` function. The help file for the function, accessed via `?t.test` provides explicit use cases and examples. When you have non-normal data, you can use the `wilcox.test()` for the Wilcoxon signed-rank test. Examples of both function are shown below.
+
+## Example: Crab Body Temperatures (Zar, 2010, p. 98)
+
+The data for the first example are drawn from Jerold H. Zar’s excellent book, *Biostatistical Analysis* (2010, 5th ed.). These data consist of measurements of the body temperatures of 25 crabs. Prior to measurement, the crabs were exposed to air at 24.3°C for an unspecified duration. The question posed is whether, on average, the crabs’ body temperatures match the air temperature to which they were exposed.
+
+### Do an Exploratory Data Analysis (EDA)
+
+To explore the data, we will calculate the mean ± SD, create a hisotogram for a visual indication of the data's normality (are they normally distributed, one of the assumptions for Student's or Welch's *t* tests), do a Shapiro-Wilk test as a statistical measure for normality, and, lastely, a Levene's test to check the assumption of homoscedasticity. 
+
+```{r}
+crabs <- c(25.8, 24.6, 26.1, 22.9, 25.1, 27.3, 24.0, 24.5, 23.9,
+           26.2, 24.3, 24.6, 23.3, 25.5, 28.1, 24.8, 23.5, 26.3,
+           25.4, 25.5, 23.9, 27.0, 24.8, 22.9, 25.4)
+
+mean(crabs)
+var(crabs)
+sd(crabs)
+```
+

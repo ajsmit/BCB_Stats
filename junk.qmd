@@ -1,0 +1,728 @@
+---
+title: "Chapter 1"
+author: "AJ Smit"
+format: pdf
+knitr:
+  opts_chunk:
+    dev:
+      - svg
+      - pdf
+---
+
+
+# To Know is Not to Believe
+
+<!-- > *
+...I stand at the seashore, alone, and start to think.
+
+There are the rushing waves, mountains of molecules
+Each stupidly minding its own business
+Trillions apart, yet forming white surf in unison
+
+Ages on ages, before any eyes could see
+Year after year, thunderously pounding the shore as now
+For whom, for what?
+On a dead planet, with no life to entertain
+
+Never at rest, tortured by energy
+Wasted prodigiously by the sun, poured into space
+A mite makes the sea roar
+
+Deep in the sea, all molecules repeat the patterns
+Of one another till complex new ones are formed
+They make others like themselves
+And a new dance starts
+
+Growing in size and complexity
+Living things, masses of atoms, DNA, protein
+Dancing a pattern ever more intricate
+
+
+Out of the cradle onto the dry land
+Here it is standing
+Atoms with consciousness, matter with curiosity
+Stands at the sea, wonders at wondering
+
+I, a universe of atoms
+An atom in the universe
+* -->
+
+<!-- > -- Richard P. Feynman -->
+
+::: {.cell}
+```{=tex}
+\epigraph{
+\begin{quotepara}
+In the beginning, there was a void in the minds of creatures, who moved blindly through the world. And the force of evolution said: ``Let there be sensation,'' and sensation came to be.
+
+From the primordial soup arose beings who could detect light from darkness, warmth from cold. And evolution saw that it was adaptive, and it was good.
+
+And evolution spoke again, saying: ``Let there be more subtle discernment among the creatures.'' And eyes formed to see detail, ears to hear distant sounds, noses to smell food and danger, tongues to taste what nourishes and what harms, and skin to feel the textures of the world.
+
+And Nature called sensation knowledge, and ignorance it called death. And perception and survival were the first day of knowing.
+
+These senses multiplied and refined across generations. Those who sensed well lived to breed, and those who sensed poorly perished. Thus was empirical knowledge selected and preserved.
+
+And in the fullness of time arose creatures who walked upright, whose brains grew large with sensory processing. They began to pass their empirical knowledge to their young through teaching and tale. They named the stars and tracked the seasons. They learned which plants heal and which harm. They studied the ways of prey and predator.
+
+And from these foundations of sensory truth, they built great towers of understanding. They created science and philosophy, art and mathematics. But all rested upon the bedrock of empirical knowing that evolution had wrought.
+
+Thus was empiricism established as the first way of knowing, from which all other knowing springs. And evolution saw all that it had made, and behold, it was very good.
+\end{quotepara}
+}
+```
+
+```{=html}
+<div style="font-size: smaller;">
+In the beginning, there was a void in the minds of creatures, who moved blindly through the world. And the force of evolution said: "Let there be sensation," and sensation came to be.
+
+From the primordial soup arose beings who could detect light from darkness, warmth from cold. And evolution saw that it was adaptive, and it was good.
+
+And evolution spoke again, saying: "Let there be more subtle discernment among the creatures." And eyes formed to see detail, ears to hear distant sounds, noses to smell food and danger, tongues to taste what nourishes and what harms, and skin to feel the textures of the world.
+
+And Nature called sensation knowledge, and ignorance it called death. And perception and survival were the first day of knowing.
+
+These senses multiplied and refined across generations. Those who sensed well lived to breed, and those who sensed poorly perished. Thus was empirical knowledge selected and preserved.
+
+And in the fullness of time arose creatures who walked upright, whose brains grew large with sensory processing. They began to pass their empirical knowledge to their young through teaching and tale. They named the stars and tracked the seasons. They learned which plants heal and which harm. They studied the ways of prey and predator.
+
+And from these foundations of sensory truth, they built great towers of understanding. They created science and philosophy, art and mathematics. But all rested upon the bedrock of empirical knowing that evolution had wrought.
+
+Thus was empiricism established as the first way of knowing, from which all other knowing springs. And evolution saw all that it had made, and behold, it was very good.
+</div>
+```
+:::
+
+
+
+## Introduction to Knowing {#sec-knowing}
+
+Developing an understanding about how we acquire, validate, and systematise knowledge is an important challenge in philosophy. Philosophers from antiquity to the modern era have grappled with what it means to 'know': from Plato’s forms, Aristotle’s categories, Descartes’ *cogito*, Locke’s *tabula rasa*, Kant’s synthetic *a priori*, and towards contemporary thinking in evolutionary epistemology. In this chapter, I explore some of the most relevant epistemic frameworks that shape our comprehension of reality. What I want to achieve is an appreciation of how these various ways of knowing inform and influence modern scientific practice.
+
+Science is a wholly human endeavour, and as such, it is subject to the same epistemic constraints and biases that affect all human knowledge. How did we come to develop the kind of knowing that only humans have? In this chapter, I want to arrive at this end point by setting the following core inquiry: what is the nature of 'knowledge' for beings at varying levels of complexity, from non-conscious chemical-sensing entities to fully conscious, sentient humans? But I want to accomplish more than that. I also want to explore the evolutionary process by which knowledge has been selected and preserved in the natural world. Naturally, I need to juxtapose these ways of knowing with routes to not knowing, or believing, as the case may be.
+
+The concept of **knowing** requires distinctions between mere *belief*, *justified opinion*, and *genuine knowledge*. At its core, knowing is traditionally characterised as **justified true belief** (JTB). JBT is foundational in epistemology, but it is incomplete. **Edmund Gettier** (1927--2021) challenged this framework in *Is Justified True Belief Knowledge* (1963) by demonstrating that a belief can be justified, true, and believed yet still fail to qualify as knowledge if its truth is coincidental or accidental. His counterexamples, such as the case of the stopped clock[^1_1] and the Smith and Jones[^1_2] case, reveal that justification, truth, and belief, while necessary, are not sufficient conditions for knowledge. Cutting-edge definitions of knowledge now aim to refine JTB by incorporating elements that prevent accidental truths from counting as knowledge. They emphasise that knowledge must be gained in a way that is not just only justified and true, but also epistemically secure, well-grounded, and robust against the kind of coincidences Gettier cases highlight.
+
+[^1_1]: A person looks at a clock to determine the time and sees that it is 3:00. The clock has stopped, but coincidentally, it is actually 3:00 at that moment. The person’s belief that “It is 3:00” is true, justified (based on the clock’s reading), and believed, but it is true only by chance. Hence, it fails to constitute knowledge.
+
+[^1_2]: Smith has strong evidence to believe the proposition: “Jones will get the job, and Jones has ten coins in his pocket”. This evidence might include testimony or observations. From this, Smith deduces: “The man who will get the job has ten coins in his pocket”. Unexpectedly, Smith himself gets the job and happens to also have ten coins in his pocket. Smith’s belief that “The man who will get the job has ten coins in his pocket” is true, justified, and believed, but it is true only due to an unforeseen coincidence. Thus, it does not qualify as genuine knowledge.
+
+Knowing extends far beyond this propositional framework. The deep history and incredible diversity of human knowledge encompasses at least three distinct but interrelated modalities: propositional knowledge (*knowing that*), practical knowledge (*knowing how*), and experiential knowledge (*knowing by acquaintance*). Consider the act of restoring a degraded ecosystem: one might possess propositional knowledge about ecological principles and biodiversity, practical knowledge of how to propagate native plants or control invasive species, and experiential knowledge of how an ecosystem responds over time to restoration efforts. None of these forms of knowing can be fully reduced to the others, yet they combine to create genuine expertise. This multifaceted nature of knowing highlights the limitations of purely propositional accounts of knowledge and points toward a more subtle understanding of our cognitive capabilities. The integration of these different forms of knowing (theoretical, practical, and experiential) more accurately reflects the integrated and complicated ways we navigate and understand the world. This suggests that any complete epistemology must account for all three dimensions of knowledge acquisition and application. Relevance extends to teaching, learning, and the academic endeavour.
+
+In the following sections, I explore the philosophy of knowledge. I begin with an evolutionary perspective, tracing how our capacity for knowledge emerged from basic sensory mechanisms honed by natural selection, resulting in the diversity of creatures[^1_3] we know today (@sec-epistemology-evolution-sensation). The shared evolutionary lineage underscores that the ability to sense, process, and respond to the environment is a universal characteristic of life, not limited to creatures with nervous systems. This biological foundation is not simply a metaphor; it demonstrates that our entire philosophical framework about knowledge is grounded in the adaptive architectures shaped by evolution. The implication is that the nature of knowledge is contingent on the thing doing the knowing.
+
+[^1_3]: The term *creature* originates from the Latin word *creatura*, which derives from *creare*, meaning “to create” or “to bring forth”. It first entered Middle English in the 13th century via Old French (*creature*) and carries a strong theological undertone as something created by God. In its earliest usage, creature often referred to us, people, reflecting the Judeo-Christian worldview where we are seen as the pinnacle of God’s creation. Over time, the term broadened to include all living beings, and even inanimate entities, conceived as products of creation.
+
+This evolutionary lens offers a segue into the rapidly advancing field of artificial intelligence (AI). Just as human neural systems were shaped by evolution to make sense of the world, AI systems are being designed to process and interpret data—though through fundamentally different mechanisms. The question remains: can AI ever replicate or exceed the kind of *knowing* rooted in the adaptive, embodied, and experiential context of human cognition? Do AI entities *understand*? While AI today lack the embodied sensory experience of living organisms, they do interface with the world through artificial sensory mechanisms such as cameras and sensors. Yet, as we will see later (@sec-epistemology-evolution-sensation), certain forms of knowing (such as that tied to the human lived experience) may require more than simply sensing the world; they may depend on the integration of sensory input with an adaptive, embodied presence. This inquiry bridges the ancient origins of knowledge with its potential future and insists that we rethink the limits of knowledge, what it means to truly *know*, and *who or what* is doing the knowing.
+
+Building on an empirical foundation, people have developed increasingly abstract and more useful ways of knowing (@sec-epistemology-scepticism and @sec-epistemology). Religious and mystical traditions provided early frameworks for understanding the world, but their resistance to revision and lack of verifiability ultimately limited their utility for systematic inquiry. Rationalist approaches grounded in pure reason and logical deduction lead to mathematics and logic but struggled to reconcile theoretical constructs with physical reality. Meanwhile, empiricism, with its emphasis on knowledge derived from sensory experience, grappled with challenges in establishing the reliability of perception and justifying the principles of inductive reasoning.
+
+The scientific method resulted from a practical synthesis of these approaches. It combines empirical observation with rational analysis and pragmatic validation, all the while recognising that all knowledge is provisional. But this synthesis raises its own philosophical questions: how do we justify our trust in scientific instruments that extend our senses far beyond their natural limits (@sec-epistemology-technology)? What distinguishes scientific confidence from religious faith (@sec-faith-and-trust-in-technology)? How do we balance the competing demands of theoretical elegance, experimental evidence, and the ever-changing socio-cultural norms?
+
+Modern epistemological frameworks (from constructivism to critical theory) have further complicated our understanding of knowledge production by highlighting the social and political dimensions of knowing. These perspectives tell us that knowledge never exists in a vacuum but always emerges within specific historical and cultural contexts. They challenge us to consider how power dynamics, social norms, and personal biases shape what we know and how we know it. They also remind us that knowledge is not a static entity but a dynamic process of negotiation and contestation. At the same time we must contemplate what to do in an age when knowledge is increasingly generated by but by machines and not the human mind (@sec-contemporary-challenges-and-future-directions).
+
+This chapter maps this uneven terrain while maintaining focus on a central question: how can we best align our ways of knowing with the fundamental goal of understanding reality? Through careful examination of various epistemological approaches, their strengths and limitations, we seek not absolute certainty but rather increasingly reliable and useful ways of comprehending our world.
+
+The journey through these epistemological schools reveals that knowledge is neither purely objective nor wholly subjective, but rather emerges through the disciplined application of multiple complementary approaches to understanding. This recognition of epistemological pluralism, properly constrained by empirical validation and logical coherence, offers our best path forward in the continuing quest to know.
+
+To assist our journey, I have created a table that links some of the most influential philosophers. The table presents my modest attempt to create an ambitious intellectual genealogy of epistemological thought. It traces the evolution of how humans have conceptualised knowledge acquisition from Classical Greece through to the contemporary era. I try to display the interconnections between different philosophical traditions and their historical contexts.
+
+The table is designed to illuminate four important dimensions of epistemological development: the philosophers themselves, their core positions, the web of influences connecting their ideas across the ages, and the cultural-historical matrices from which their thoughts emerged. Taking such a multidimensional approach allows us to see how epistemological frameworks didn't simply succeed one another in linear progression, but rather engaged in complex dialogues across time and space.
+
+What is striking is the gradual fragmentation of epistemological certainty. We begin with the confident rationalism of Plato and the empirically-inflected realism of Aristotle, trace the emergence of systematic skepticism through figures like Pyrrho and Sextus Empiricus, and witness the increasingly sophisticated challenges to simple notions of truth and knowledge as we move toward contemporary thought. The inclusion of more recent actors like Lyotard, Foucault, and Haraway shows how modern epistemology has become inextricably entangled with questions of power, perspective, and social construction.
+
+The table's attention to the cultural-historical context is especially important. This prevents us from falling into the trap of treating philosophical ideas as if they emerged in some rarefied intellectual vacuum. Instead, we see how epistemological positions developed in dialogue with their times -- whether that's Al-Ghazālī wrestling with the relationship between reason and faith in the Medieval Islamic Golden Age, or Kuhn developing his paradigm theory against the backdrop of Cold War big science.
+
+The table serves as both a reference tool and an argument about the nature of epistemological development itself. Its structure suggests that understanding how we know things requires understanding the complex interplay between individual thinkers, intellectual traditions, and broader historical forces. It's highlights how epistemology isn't simply about abstract theories of knowledge; instead, this field of philosophy is about how humans, embedded in particular times and places, have attempted to make sense of our ability to make sense of the world.
+
+```{=tex}
+\begin{landscape}
+\begingroup
+\fontsize{8pt}{9.6pt}\selectfont % Set font size to 8pt for the table
+\setlength{\tabcolsep}{4pt}
+
+\begin{longtable}{R{2.5cm}R{3.5cm}R{5.25cm}R{5.25cm}R{3cm}}
+\caption{Philosophers, Their Epistemological Positions, Overlapping Ideas, Context, and Key Works}\\
+\toprule
+\textbf{Author(s) \& Dates} & \textbf{Epistemological School / Position} & \textbf{Overlapping \& Interconnected Ideas} & \textbf{Cultural \& Historical Context} & \textbf{Key Works / Where Ideas Are Discussed}\\
+\midrule
+\endfirsthead
+
+\multicolumn{5}{l}{\small\itshape Continued from previous page}\\[0.5em]
+\toprule
+\textbf{Author(s) \& Dates} & \textbf{Epistemological School / Position} & \textbf{Overlapping \& Interconnected Ideas} & \textbf{Cultural \& Historical Context} & \textbf{Key Works / Where Ideas Are Discussed}\\
+\midrule
+\endhead
+
+\midrule
+\multicolumn{5}{r}{\small\itshape Continued on next page}\\
+\endfoot
+
+\bottomrule
+\endlastfoot
+
+Plato (427–347 BCE) & Rationalist, Idealist (Theory of Forms) & Intersects with later Rationalists (Descartes, Kant) and influenced Christian Platonism, Neoplatonism, and Idealist traditions. & Classical Athens, post-Peloponnesian War era, influenced by Socrates and the Sophists, foundational to Western philosophy. & \emph{Republic} (\emph{c}. 380 BCE), \emph{Meno} (\emph{c}. 380 BCE), \emph{Theaetetus} (\emph{c}. 369 BCE) \\[1em]
+
+Aristotle (384–322 BCE) & Empiricism-inflected Realism, Early Systematic Epistemology & Bridges Platonic rationalism and later empirical traditions (e.g., Bacon, Locke). Influential on Scholasticism (Aquinas) and early scientific method. & Macedonian Greek world, tutor to Alexander the Great, work reflects transitional period from Greek city-states to Hellenistic era. & \emph{Posterior Analytics}, \emph{De Anima}, \emph{Physics} (all \emph{c}. 350 BCE) \\[1em]
+
+Pyrrho of Elis (\emph{c}. 360–270 BCE) & Founder of Pyrrhonian Skepticism & Influenced Sextus Empiricus and later Skeptical traditions. Contrasts with Stoicism and Epicureanism by suspending judgment. & Post-Alexandrian Greek world, encountering diverse philosophies, responding to dogmatic claims. & Known via Sextus Empiricus's references \\[1em]
+
+Sextus Empiricus (late 2nd/early 3rd \emph{c}. CE) & Pyrrhonian Skepticism (systematic exposition) & Provides a structured form of Pyrrhonism, interacting critically with Dogmatists and Academics. Influences modern skepticism (e.g. Montaigne, Hume). & Hellenistic-Roman era, a time when multiple philosophical schools contended within the empire’s cosmopolitan intellectual milieu. & \emph{Outlines of Pyrrhonism} (\emph{c}. 200 CE) \\[1em]
+
+Al-Ghazālī (1058–1111) & Islamic philosophy; skepticism about philosophical causation and sense reliability & Dialogues with Aristotelianism (Avicenna), influenced by Islamic theology (Ash'arism), and prefigures Hume's critique of causation. & Medieval Islamic Golden Age, cross-cultural transmission of Greek philosophy into Islamic thought, tension between reason and faith. & \emph{The Incoherence of the Philosophers} (1095) \\[1em]
+
+St. Thomas Aquinas (1225–1274) & Scholastic Theology, Aristotelian-Christian Synthesis & Merges Aristotelian logic with Christian theology. Influences Catholic doctrine and later theological epistemologies. & High Middle Ages, Latin Scholastic tradition, universities emerging as centres of learning in Western Europe. & \emph{Summa Theologiae} (1265–1274) \\[1em]
+
+Meister Eckhart (1260–1328) & Christian Mysticism; intuitive/experiential knowledge grounded in theology & Connected to Neoplatonism, influenced later mystical traditions (John of the Cross, Sufi mysticism parallels) and some phenomenological thought. & Late Medieval Holy Roman Empire, thriving monastic and scholastic culture, emphasis on spiritual renewal and mysticism. & \emph{Sermons} (early 14th century) \\[1em]
+
+Michel de Montaigne (1533–1592) & Renaissance Skepticism focusing on human judgment limits & Influenced by Pyrrhonism and classical sources, prefigures modern skepticism (Hume), engages with Reformation-era debates over truth. & French Renaissance, religious conflicts (Reformation), printing press spreading new ideas, skepticism as intellectual honesty. & \emph{Essays} (1580) \\[1em]
+
+Francis Bacon (1561–1626) & Early Modern Empiricism, Scientific Method & Sets stage for modern science, bridging Renaissance humanism and mechanical philosophy; influences Locke, Newton, Royal Society. & Late English Renaissance, Elizabethan/Jacobean England, emerging scientific societies, decline of Aristotelian scholasticism. & \emph{Novum Organum} (1620), \emph{The New Atlantis} (1627) \\[1em]
+
+Thomas Hobbes (1588–1679) & Empiricism, Materialism & Engages with Baconian empiricism and Descartes' rationalism, influenced Enlightenment political thought (Locke, Spinoza). & English Civil War era, tension between royalists and parliamentarians, rise of mechanical philosophy and secular politics. & \emph{Leviathan} (1651) \\[1em]
+
+René Descartes (1596–1650) & Rationalism, Methodological Skepticism & Interacts with Scholasticism and sets foundation for Enlightenment rationalism; Kant's transcendental idealism responds to Descartes. & Early Scientific Revolution, Catholic Europe (France/Netherlands), seeking secure foundations after religious conflicts. & \emph{Discourse on the Method} (1637), \emph{Meditations on First Philosophy} (1641) \\[1em]
+
+Antoine Arnauld (1612–1694) \& Pierre Nicole (1625–1695) & Cartesian Logic, Rational Analysis of Ideas & Part of the Port-Royal circle interacting with Descartes, Pascal, Jansenism; influenced logic and epistemology in Enlightenment. & Seventeenth-century France, height of Cartesian influence, religious debates (Jansenism) and the rise of rationalist logic. & \emph{Logic, or the Art of Thinking} (1662) \\[1em]
+
+Robert Boyle (1627–1691) & Early Experimental Philosophy, Empiricism & Connects Baconian empiricism with mechanical philosophy; influences Newton and the Royal Society. & English Restoration, founding member of Royal Society, era of experimental natural philosophy. & \emph{The Sceptical Chymist} (1661) \\[1em]
+
+John Locke (1632–1704) & Empiricism (Tabula Rasa) & Responds to Descartes, influences Berkeley, Hume, and Enlightenment liberal political theory. Bridges Bacon and later British Empiricism. & Glorious Revolution era England, rising bourgeois values, expanding commerce, religious toleration debates. & \emph{An Essay Concerning Human Understanding} (1690) \\[1em]
+
+Isaac Newton (1642–1726/1727) & Empirical-Mechanical Philosophy, Mathematical Physics & Integrates empirical observation with mathematical frameworks, building on Bacon, Boyle; influences Enlightenment epistemology and Kant. & Late 17th-century England, Royal Society milieu, Scientific Revolution pinnacle, establishment of universal laws and rational mechanics. & \emph{Philosophiae Naturalis Principia Mathematica} (1687) \\[1em]
+
+Pierre Bayle (1647–1706) & Philosophical Skepticism, Religious Tolerance & Advanced sceptical philosophy by challenging the rationalist and dogmatic claims of his era; influenced later Enlightenment thinkers like Voltaire and Hume with his critiques of certainty and advocacy for toleration. & Late 17th-century France and the Netherlands; context of religious conflict post-Revocation of the Edict of Nantes, flourishing of early Enlightenment intellectual thought. & \emph{Dictionnaire Historique et Critique} (1697) \\[1em]
+
+Giambattista Vico (1668–1744) & Historicist Epistemology, early Constructivist elements & Engages with Enlightenment rationalism but emphasises cultural-historical relativity; foreshadows hermeneutics (Dilthey) and Constructivist thought. & Early Enlightenment Naples, debate over the universality of reason vs. historical contingency, reaction to Cartesian method. & \emph{The New Science} (1725) \\[1em]
+
+George Berkeley (1685–1753) & Idealism (to be is to be perceived) & Responds to Locke's empiricism, influences Hume and later phenomenalism; engages with early Enlightenment debates on material substance. & Anglo-Irish context, tension between materialist science and religious ontology, post-Newtonian philosophical developments. & \emph{A Treatise Concerning the Principles of Human Knowledge} (1710) \\[1em]
+
+David Hume (1711–1776) & Empiricism, Radical Skepticism about Induction & Influences Kant, skeptical about causation and induction, links to Scottish Enlightenment and emerging naturalism. & Scottish Enlightenment, commercial society, declining religious authority, rising secular intellectual culture. & \emph{A Treatise of Human Nature} (1739–1740), \emph{An Enquiry Concerning Human Understanding} (1748) \\[1em]
+
+Immanuel Kant (1724–1804) & Transcendental Idealism, Synthetic A Priori Knowledge & Mediates between rationalism and empiricism, inspiring German Idealists and shaping modern epistemology. & Prussian Enlightenment, Frederick the Great's court, peak of rational debate, responding to Hume's skepticism and Newtonian physics. & \emph{Critique of Pure Reason} (1781/1787) \\[1em]
+
+Georg Wilhelm Friedrich Hegel (1770–1831) & Dialectical Method, Historical Determinism & Developed the dialectical method, emphasising the synthesis of contradictions; influenced statistical thinking in terms of modelling dynamic processes and understanding historical trends as interconnected developments. & Early 19th-century Germany; German Idealism, Napoleonic era, emerging focus on systematic philosophy and historical analysis. & \emph{Phenomenology of Spirit} (1807), \emph{Science of Logic} (1812–1816), contributions to the philosophy of history and systems thinking. \\[1em]
+
+William Whewell (1794–1866) & Inductive Epistemology, Philosophy of Science & Developed systematic principles for inductive reasoning; contributed to the debate between empiricism and rationalism, influencing Mill and early scientific methodology. & Victorian Britain; scientific revolution and the institutionalisation of science, early tensions between natural theology and secularism. & \emph{The Philosophy of the Inductive Sciences} (1840), \emph{History of the Inductive Sciences} (1837) \\[1em]
+
+John Stuart Mill (1806–1873) & Empiricism, Utilitarian Epistemology, Logic of Induction & Builds on Hume and Bacon, influences logical positivism, pragmatism, and social science methodology. & Victorian Britain, industrial revolution, social reform debates, rise of utilitarian political philosophy. & \emph{A System of Logic} (1843) \\[1em]
+
+Karl Marx (1818–1883) & Materialist Conception of History, Ideology Critique & Influences critical theory, historical materialism affects epistemology of social sciences; responds to Hegelian idealism and classical economics. & Industrial revolution Europe, class struggles, mid-19th-century socialist movements, collapse of feudal structures. & \emph{The German Ideology} (writ. 1845–46, pub. 1932), \emph{Das Kapital} (Vol.1 1867) \\[1em]
+
+Helena Blavatsky (1831–1891) & Esoteric/Theosophical Epistemology, Controversial Claims & Intersects with Western occult traditions and Eastern religious influences; marginal to mainstream philosophy but indicative of esoteric syncretism. & Late Victorian Britain and Russian intellectual contexts, colonial encounters with Eastern religions, spiritualist movements. & \emph{The Secret Doctrine} (1888) \\[1em]
+
+Wilhelm Dilthey (1833–1911) & Hermeneutics, Historical Epistemology & Influences phenomenology, hermeneutics (Gadamer), and historicist critiques of positivism; contrasts with Enlightenment universalism. & Wilhelmine Germany, rise of historical and cultural sciences, reaction to positivist historiography and Comtean sociology. & \emph{Introduction to the Human Sciences} (1883) \\[1em]
+
+Charles Sanders Peirce (1839–1914) & Pragmatism, Fallibilism & Foundation of Pragmatism, influences James, Dewey, and logical empiricists; bridges logic, semiotics, and scientific methodology. & Late 19th-century America, post-Civil War intellectual expansion, growth of scientific institutions and professional philosophy. & \emph{The Fixation of Belief} (1877), \emph{How to Make Our Ideas Clear} (1878) \\[1em]
+
+William James (1842–1910) & Pragmatism, Practical Justification of Belief & Connects empiricism and religious experience; influences American philosophy, resonates with Dewey and later neopragmatists. & Gilded Age America, rise of psychology as a discipline, religious pluralism, intellectual ferment in universities. & \emph{The Varieties of Religious Experience} (1902), \emph{Pragmatism} (1907) \\[1em]
+
+John Dewey (1859–1952) & Pragmatism, Instrumentalism in Education and Knowledge & Influences education reforms, connects evolutionary theory with epistemology, linked to progressive political thought. & Progressive Era America, institutionalisation of public education, industrial economy and social reform movements. & \emph{How We Think} (1910), \emph{Experience and Nature} (1925) \\[1em]
+
+Edmund Husserl (1859–1938) & Phenomenology (rigorous science of consciousness) & Influences Heidegger, Merleau-Ponty, Derrida, connecting with hermeneutics and existentialism; reaction to positivism and psychologism. & Austro-Hungarian Empire/German context, late 19th–early 20th century, crisis of foundationalism in math/logic. & \emph{Logical Investigations} (1900–1901), \emph{Ideas} (1913) \\[1em]
+
+Jean Piaget (1896–1980) & Constructivism (Genetic Epistemology) & Links developmental psychology and knowledge theory, influencing educational psychology, interacting with Kantian and empiricist currents. & Early to mid-20th century Swiss intellectual climate, rise of developmental psychology and scientific study of cognition. & \emph{The Child's Conception of the World} (1929), \emph{Genetic Epistemology} (1970) \\[1em]
+
+Herbert Marcuse (1898–1979), Max Horkheimer (1895–1973), Theodor Adorno (1903–1969) & Critical Theory (Frankfurt School), reason as domination and social critique & Connects Marxism, psychoanalysis (Freud), and Weberian social critique, influencing Habermas, feminist and postcolonial theorists. & Interwar Germany, Weimar to Nazi era, exile in US, post-WWII Western reconstruction, responding to mass culture and capitalist modernity. & \emph{Dialectic of Enlightenment} (Horkheimer \& Adorno, 1944), Marcuse: \emph{One-Dimensional Man} (1964) \\
+
+Karl Popper (1902–1994) & Critical Rationalism, Falsification & Engages with logical positivism and Vienna Circle, influences philosophy of science debates (Kuhn), stands against dogmatic certainty. & Interwar and post-WWII Europe/Britain, Cold War era science policy, British empirical tradition vs. Continental philosophy. & \emph{The Logic of Scientific Discovery} (1934), \emph{The Open Society and Its Enemies} (1945), \emph{Objective Knowledge} (1972) \\[1em]
+
+Konrad Lorenz (1903–1989) & Evolutionary Epistemology & Connects biological evolution with knowledge acquisition, influences ethology, relates to Popper’s evolutionary approach to knowledge. & Early-mid 20th century Austria/Germany, rise of ethology, aftermath of Darwinian theory’s integration into behavioural sciences. & \emph{Behind the Mirror} (1973) \\[1em]
+
+Donald T. Campbell (1916–1996) & Evolutionary Epistemology (Blind Variation \& Selective Retention) & Influences social science methodology, links Darwinian processes to scientific progress, intersects with pragmatism and Popperian views. & 20th-century American social sciences, empirical social research boom, interdisciplinary inquiries into knowledge and behavior. & \emph{Evolutionary Epistemology} Essays (1974 and onward) \\[1em]
+
+% Louis C. Helm (????) & Evolutionary Epistemology & Further explored evolutionary theories of knowledge, extending Campbell’s ideas; contributed to understanding knowledge as adaptive. & Mid-late 20th-century intellectual context in evolutionary epistemology, influenced by post-Darwinian, Popperian frameworks. & Specific works unknown or not provided \\[1em]
+
+% William W. Dressler (b. 1951) & Evolutionary Epistemology & Alongside Helm, expanded on evolutionary approaches to cognition/knowledge; contributed to developing the evolutionary paradigm in epistemology. & Similar mid-late 20th-century context, interdisciplinary interest in biological bases of knowledge processes. & Specific works unknown or not provided \\[1em]
+
+Paulo Freire (1921–1997) & Critical Pedagogy (influenced by Critical Theory) & Overlaps with Marxist and Frankfurt School critique; informs educational reform, liberation theology, and feminist epistemologies. & Mid-20th-century Latin America, Brazilian dictatorship, global decolonisation movements, social injustice in education. & \emph{Pedagogy of the Oppressed} (1968/1970) \\[1em]
+
+Thomas Kuhn (1922–1996) & Paradigm-Shift Relativism in Science & Influences post-positivism, in dialogue with Popper, prefigures constructivist and postmodern critiques of scientific objectivity. & Cold War America, “Big Science” era, NASA and atomic research contexts, growth of history and philosophy of science departments. & \emph{The Structure of Scientific Revolutions} (1962) \\[1em]
+
+Jean-François Lyotard (1924–1998) & Postmodernism (Critique of Metanarratives) & Relates to Foucault, Derrida, and Baudrillard; challenges grand narratives of modernity, impacting cultural studies and social theory. & Post-WWII France, breakdown of colonial empires, rise of mass media, scepticism about Enlightenment rationality. & \emph{The Postmodern Condition} (1979) \\[1em]
+
+Gilles Deleuze (1925–1995) \& Félix Guattari (1930–1992) & Poststructuralism (Rhizomatic Knowledge, Anti-Foundationalism) & Linked to Derrida, Foucault, Lyotard; influenced critical theory, cultural studies, and new materialisms (Stengers, Haraway). & Post-1968 France, anti-authoritarian intellectual climate, new experimentation in philosophy, psychoanalysis, and social critique. & \emph{Anti-Oedipus} (1972), \emph{A Thousand Plateaus} (1980) \\[1em]
+
+Hilary Putnam (1926–2016) & Neopragmatism, Internal Realism & Interacts with Rorty, Quine, and pragmatist traditions, critiques metaphysical realism, links philosophy of mind and language. & Postwar American philosophy, analytic dominance, reaction against logical positivism and strict realism. & \emph{Reason, Truth, and History} (1981) \\[1em]
+
+Michel Foucault (1926–1984) & Postmodernism, Epistemes, Knowledge-Power Nexus & Connects with structuralism/post-structuralism (Derrida), critiques Enlightenment reason, informs Critical Theory, gender/queer theory. & Postwar France, May '68 cultural upheaval, questioning institutions, psychiatry, prisons, sexuality, and their power relations. & \emph{The Order of Things} (1966), \emph{Discipline and Punish} (1975) \\[1em]
+
+Edmund Gettier (1927–2021) & Analytic Epistemology (Gettier Problem) & Challenges the classical definition of knowledge as Justified True Belief (JTB), influencing subsequent epistemological debates. & Postwar American analytic philosophy, responding to established definitions of knowledge in a climate of linguistic and conceptual clarity. & \emph{Is Justified True Belief Knowledge?} (1963) \\[1em]
+
+Jürgen Habermas (b. 1929) & Critical Theory, Communicative Rationality & Engages with Marx, Frankfurt School (Adorno, Horkheimer), counters postmodern skepticism, seeks rational discourse ethics. & Postwar West Germany, democratisation and EU formation era, reaction to totalitarian past and need for rational public sphere. & \emph{The Theory of Communicative Action} (1981) \\[1em]
+
+Jean Baudrillard (1929–2007) & Postmodernism (Simulacra, Hyperreality) & Intersects with Lyotard, Debord, and cultural studies, shaping media theory and critiques of consumer society. & Late 20th-century France, media-saturated environment, post-1968 intellectual scene, global capitalism and information age. & \emph{Simulacra and Simulation} (1981) \\[1em]
+
+Jacques Derrida (1930–2004) & Deconstruction, Postmodern Critique of Stable Meaning & Connects with structuralism (Saussure), phenomenology (Husserl), and influences literary theory, feminist theory, postcolonial theory. & Postwar France, intellectual ferment in Paris, critique of Western metaphysics, “textual turn” in humanities. & \emph{Of Grammatology} (1967) \\[1em]
+
+Richard Rorty (1931–2007) & Neopragmatism, Linguistic Turn in Epistemology & Influences Putnam, interacts with Wittgenstein, Dewey, and rejects foundationalism, inspiring post-philosophical cultural criticism. & Late 20th-century American academe, post-analytic philosophy trend, cultural relativism debates. & \emph{Philosophy and the Mirror of Nature} (1979) \\[1em]
+
+Ram Dass (Richard Alpert) (1931–2019) & Mystical/Spiritual Epistemology (Experiential Insight) & Engages with Eastern mysticism, New Age spirituality, contrasts empirical science and rationalism with intuitive spiritual knowledge. & Postwar American counterculture, 1960s psychedelia, Eastern philosophy influx into Western spirituality, era of self-exploration. & \emph{Be Here Now} (1971) \\[1em]
+
+Alvin Plantinga (b. 1932) & Religious Epistemology (Proper Basicality) & Dialogues with Reformed epistemology traditions, responding to Enlightenment evidentialism and secular critiques. & Mid-late 20th-century American analytic philosophy of religion, revival of Christian philosophical thought. & \emph{Warrant and Proper Function} (1993) \\[1em]
+
+Carl Sagan (1934–1996) & Scientific Skepticism & Continues empirical tradition, counters pseudoscience, influenced by Enlightenment rationalism and 20th-century cosmology. & Late Cold War/early digital age America, space exploration era, public science communication. & \emph{The Demon-Haunted World} (1995) \\[1em]
+
+Sandra Harding (b. 1935) & Feminist Epistemology, Standpoint Theory & Intersects with Haraway, critical theory, postcolonial feminism, challenging objectivity and androcentrism in science. & Late 20th-century feminist movements, women's studies institutionalisation, critique of Western male-dominated academe. & \emph{Whose Science? Whose Knowledge?} (1991) \\[1em]
+
+Richard Dawkins (b. 1941) & Evolutionary Biology, Rationalist/Atheist Critique of Traditional Epistemologies & Advances gene-centered view of evolution, challenges religious epistemologies, intersects with Dennett and Darwinian frameworks. & Late 20th-century Britain, rise of molecular biology, public debates over science vs. religion, secular humanism. & \emph{The Selfish Gene} (1976) \\[1em]
+
+Daniel Dennett (1942–2024) & Philosophy of Mind, Evolutionary Epistemology, Cognitive Science & Builds on Darwinian ideas, naturalistic explanations of consciousness, aligns with Dawkins, challenges Cartesian dualisms, religious epistemic claims. & Late 20th/early 21st-century American analytic philosophy, cognitive revolution, debates on free will, consciousness. & \emph{Darwin’s Dangerous Idea} (1995), \emph{Consciousness Explained} (1991) \\[1em]
+
+Gayatri Chakravorty Spivak (b. 1942) & Postcolonial Feminist Epistemology, Deconstruction & Intersects with Derrida, subaltern studies, engages with feminist and Marxist critiques, influencing postcolonial theory (Said, Bhabha). & Late 20th-century global academia, decolonisation, postcolonial intellectual wave, feminist and cultural theory institutionalisation. & \emph{Can the Subaltern Speak?} (1988) \\[1em]
+
+Donna Haraway (b. 1944) & Feminist Epistemology, Situated Knowledge & Connects with Latour's STS, feminist science studies, environmental humanities, influences new materialism. & Late 20th-century American feminism, biotech revolution, environmental movements, postmodern academic milieu. & \emph{A Cyborg Manifesto} (1985) \\[1em]
+
+Bruno Latour (1947–2022) \& Steve Woolgar (b. 1950) & Social Constructivism of Scientific Facts & Intersects with Kuhn, STS (Bijker, Pinch), influenced by Foucault; challenges naive realism in laboratory work. & Post-1960s science studies in Europe/US, Cold War big science projects, reflexivity in sociology of knowledge. & \emph{Laboratory Life} (1979) \\[1em]
+
+Nancy Fraser (b. 1947) & Critical Theory (Social Justice, Redistribution/Recognition) & Engages with Habermas, feminist theory (Butler), and postcolonial critiques, focusing on social inequalities and epistemic injustice. & Late 20th/early 21st-century North America, neoliberal globalisation, intersectional feminist and social justice movements. & \emph{Justice Interruptus} (1997) \\[1em]
+
+Axel Honneth (b. 1949) & Critical Theory (Recognition Theory) & Builds on Frankfurt School, Hegel, Mead; overlaps with Habermas and Fraser on social justice and recognition. & Late 20th-century Germany, post-Cold War European context, rethinking Marxism and social solidarity in liberal democracies. & \emph{The Struggle for Recognition} (1992) \\[1em]
+
+Chandra Talpade Mohanty (b. 1955) & Postcolonial Feminist Epistemology, Critique of Western Feminist Discourse & Overlaps with Spivak and Harding, introduces intersectionality and critiques universalising Western feminist frameworks. & Late 20th-century North American and transnational feminism, debates over multiculturalism and global inequality. & \emph{Under Western Eyes} (1984) \\[1em]
+
+Neil deGrasse Tyson (b. 1958) & Scientific Skepticism, Public Understanding of Science & Inherits Sagan’s mantle, promoting scientific literacy, empiricism, challenges pseudoscience and appeals to authority. & Late 20th/early 21st-century America, post-space race era, media-saturated public engagement with science. & Popular writings, TV series \emph{Cosmos: A Spacetime Odyssey} (2014) \\[1em]
+
+Rahel Jaeggi (b. 1967) & Contemporary Critical Theory & Interacts with Honneth, Habermas, Fraser, and Marx's tradition, focusing on forms of life and normative reconstruction of society. & Post-Cold War European academia, interest in social philosophy after socialism's collapse, rethinking Marxist legacy. & \emph{Critique of Forms of Life} (2013) \\[1em]
+
+Tim Morton (b. 1968) & Ecological Philosophy (Hyperobjects, Mesh) & Engages with posthumanism (Haraway), poststructuralist theory, and object-oriented ontology (Harman), influencing environmental humanities. & Early 21st-century global ecological crisis, Anthropocene debates, climate change awareness, posthuman and material turn. & \emph{Hyperobjects} (2013) \\[1em]
+
+\end{longtable}
+\endgroup
+\end{landscape}
+```
+
+
+
+<!-- ## From Sensation to Understanding: Evolution of Knowing {#sec-epistemology-evolution} -->
+
+## Pre-Cognitive Epistemes {#sec-epistemology-evolution}
+
+[All sections here are incomplete and need to be expanded.]
+
+### The Evolution of Sensation {#sec-epistemology-evolution-sensation}
+Pre-cognitive sensing emerged approximately 3.5 billion years ago with the advent of life itself. During the early stages of life's beginning, 'knowing' had one sole purpose: adaptation rather than reason. Prokaryotes navigated their environments exclusively through molecular engagement with chemical gradients and, later, with light. For roughly 1.5 billion years, prokaryotes refined their chemo- and phototactic responses absent from any form of neural mediation and attained a level of precision rooted in evolutionary optimisation rather than cognitive computation. These cells were (and continue to be) 'concerned' about nutrients, toxins, and signaling molecules to guide their movements and maintain homeostasis. They also responded to basic physical variables like temperature or pH.
+
+This era of early sensory evolution defies the notion that the advanced knowledge systems needed to infer success onto the individual require neurons; instead, it reveals that effective and useful environmental integration can occur through molecular machinery alone. We see information processing resulting in immediate reaction (to a stimulus), not conceptual understanding. In one sense, evolution through natural selection is pragmatism (@sec-epistemology-pragmatism) in action at the most fundamental level: if a molecular mechanism can solve a problem, it will be selected for; if not, it is eliminated as future options.
+
+The capacity of early cyanobacteria to detect and respond to light gradients exemplifies this point. Their photoreceptive pigments were not precursors to neural systems, but fully realised molecular solutions that channeled energy into metabolic processes. These mechanisms altered Earth’s atmosphere through oxygenic photosynthesis (setting the stage for all subsequent stages of evolution), yet they never involved conceptual understanding. As eukaryotic life emerged around 2 billion years ago, cellular complexity and signaling pathways diversified, but even then the fundamental character of these responses remained pre-cognitive. Organisms integrated multiple environmental cues through intricate molecular interactions, producing complex behavioral outcomes devoid of neural input.
+
+The implications are profound. In these ancient systems, responses arise through precise molecular architecture rather than neural networks or learned behaviour. Their optimisation depends on selection over deep evolutionary time rather than on conscious adaptation. Such sophistication at the molecular level, persisting to this day, demonstrates that pre-cognitive sensory mechanisms are not mere transitional forms. They represent a stable and enduring mode of environmental engagement that stands alongside the more recently evolved neural frameworks of later life. By examining these ancient mechanisms, it becomes clear that knowledge need not be confined to sentient or conceptual forms; pre-cognitive systems, operating at a molecular scale, prove capable of integrating environmental information with an efficacy that challenges our traditional hierarchies of cognitive evolution. In doing so, they compel us to broaden our definition of knowledge to include diverse, non-neural forms of environmental awareness that emerged long before the advent of consciousness.
+
+### A Philosophical Perspective {#sec-epistemology-evolution-philosophical}
+
+While ancient philosophers lacked knowledge of prokaryotic sensing mechanisms, **Aristotle**’s (384--322 BCE) concept of physis -- the intrinsic principle guiding the development and behavior of living entities -- offers a framework for understanding life’s inherent capacity to engage with its environment. In *Physics*, Aristotle asserts that natural things possess an original internal principle (*archē*) of motion toward some completion (*telos*), distinguishing them from artificial objects. He states, “Nature is a source or cause of being moved and of being at rest in that to which it belongs primarily” (Physics II.1, 192b20–23). In other words, he recognised that all living organisms have an innate drive toward their natural ends, aligning with the idea that even the simplest forms of life possess inherent mechanisms enabling environmental interaction. This thread of thinking lay largely dormant until the theory of evolution and advances in molecular biology provided mechanisms to explain such innate capacities. Pre-cognitive sensing systems, which emerged at the dawn of life, may precisely embody what Aristotle termed *physis*: the inherent principle of environmental engagement encoded not in abstract reasoning but in the molecular architecture of living systems themselves.
+
+**Konrad Lorenz** (1903--1989) provided a bridge between Aristotle's *physis* and modern evolutionary understanding by grounding the idea of innate, goal-directed principles in the framework of natural selection. In *Behind the Mirror* (1973), he made the case that knowledge systems fundamentally emerge as adaptations to environmental constraints, shaped by the evolutionary pressures that favour survival and reproduction. Accordingly, even the most basic forms of sensory engagement (i..e even chemical sensing) represent evolutionary solutions to the challenges posed by the environment. These adaptations form an innate 'knowledge' of reality, not in the conceptual or reflective sense, but as a deeply embedded responsiveness that enables life to thrive. Even the earliest mechanisms for sensing and responding to the environment represent enduring, elegant solutions rather than simply stepping stones to more complex cognition.
+
+In *The Open Society and Its Enemies* (1945) and *Objective Knowledge: An Evolutionary Approach* (1972), **Karl Popper**'s (1902--1994) proposed that knowledge evolves through a process of *conjecture* and *refutation*, the core of the scientific method. It does not require a big leap in imagination to extend this process to molecular processes goverened by evolution by natural selection. The molecular mechanisms of chemotaxis, for example, is a direct analogue of Popper's "survival-tested" concept. Each random mutation in sensing proteins represents a 'conjecture' and the reality of natural selection provides the 'refutation'. Molecular configurations not selevted by nature were eliminated and successful variants persisted and propagated.
+
+Popper emphasised *incremental* evolution. Molecular sensing mechanisms didn't emerge fully formed but underwent countless iterations of molecular refinement. Each slight improvement in protein structure or signaling pathways withstood Popper's "selection pressures", except, here it operates at the molecular rather than conceptual level. Popper proposed that knowledge evolves through "natural selection on mental representations". Though bacteria possess no neurons in which to form mental representations, their molecular machinery serves an analogous function and encodes billions of years of evolutionary 'wisdom' in the exact architecture of proteins and signaling pathways.
+
+Far from mere philosophical analogy, this parallel suggests that Popper inadvertently described a universal principle of knowledge evolution, one that operates from molecular mechanisms to scientific theories. The pre-cognitive sensing systems of early life thus serve as both historical precursor and proof of concept for Popper's evolutionary epistemology.
+
+In **Donald T. Campbell**'s (1916--1996) essay *"Evolutionary Epistemology"* (1974 and onwards), he argued that human cognition evolved through a process of evolution by natural selection, much like biological traits. He suggested that our sensory and cognitive systems, including knowledge itself, are structured by evolutionary pressures geared toward adapting to an environment. He also introduced the notion of "blind variation and selective retention" in the context of epistemic processes, suggesting that our understanding of the world is shaped by this mechanism.
+
+**Louis C. Helm** (????) and **William W. Dressler** (????) further explored how knowledge itself might evolve in accordance with evolutionary theories, contributing to the idea that cognition, including basic survival mechanisms like sensory input, represents rudimentary forms of knowledge in earlier organisms before our more complex treatments of belief and understanding emerged.
+
+This synthesis of philosophical insight and modern evolutionary understanding reveals that the capacity for environmental engagement isn't something added to life but rather intrinsic to it from the very beginning. The pre-cognitive sensing mechanisms of early life thus represent not just the historical origin of knowing but a fundamental pattern that persists throughout the evolution of knowledge systems.
+
+In this light, we might view the entire history of knowledge systems as elaborations on a theme first articulated by Aristotle's *physis* and fully realised in our understanding of pre-cognitive molecular mechanisms. These ancient systems reveal that knowledge, in its most fundamental form, emerges from the direct interaction between life and environment, shaped by evolutionary pressures rather than conscious design.
+
+### Non-human Knowing: Beyond Posthumanism to Prehumanism
+
+Defining knowledge as existing beyond human consciousness requires placing biological reality within philosophical frameworks. **Donna Haraway** (b. 1944) and **Timothy Morton** (b. 1968) take a position against our default anthropocentric epistemological stance and explore ideas that align with **post-humanist** thought. This approach decentres human consciousness and provides a foundation for understanding as something inherent in the interconnectedness of all life forms.
+
+Haraway’s concept of **situated knowledge** provides the theoretical framework for understanding diverse forms of engagement with the environment. Haraway’s critique is primarily directed at human scientific practices, but it can be extended to consider how molecular mechanisms like those in *Deinococcus radiodurans* are adaptive forms of knowing. Its radiation resistance could be seen as a form of **embodied knowledge**, a kind of understanding encoded directly in molecular machinery without conscious awareness. Thus, she challenges the disembodied, objective knowledge that traditionally dominates Western epistemology and favours the materiality and context-dependence of knowledge production.
+
+Though Haraway does not explicitly identify her work as posthumanist, her ideas align with this perspective. Her essay *A Cyborg Manifesto* (1985) critiques anthropocentrism and explores the relational entanglements between people, nonhuman animals, machines, and ecosystems. Her terms, such as ‘companion species’ and ‘sympoiesis’, show her preference for describing interconnectedness and the mutual processes through which life and knowledge systems are constituted.
+
+Morton’s ecological thought, specifically the concept of the **mesh**, frames non-human knowledge systems as integral components of extensive, interconnected ecological networks. The mesh emphasises the relational nature of all entities, revealing bacteria like *Thermus* spp. not as isolated organisms but as participants in complex environmental interdependencies. Their thermal adaptations, far from survival mechanisms, point to their active role in maintaining and responding to ecosystems shaped by forces that transcend traditional human scales.
+
+In Morton’s concept of **hyperobjects** (phenomena like geothermal heat, planetary cycles, or climate change that operate across spatial and temporal dimensions beyond immediate human perception), *Thermus* spp. participate in processes that exceed local survival. These bacteria, with their capacity to function at extreme temperatures, demonstrate how life integrates into and influences systems that exceed our ability to grasp at the vast spatiotemporal scales they operate at. In this view, bacterial adaptations are not isolated traits but active engagements within the broader ecological mesh.
+
+Posthumanism critiques human-centric epistemology but often remains reactive to humanism, framing knowledge and existence regarding how humans come to understand them. I argue that a **prehumanism** perspective goes further. It eliminates residual human-centric tendencies by recognising forms of knowledge that precede and transcend human consciousness entirely. It acknowledges evolutionary and ecological modes of understanding that flourished long before human cognition emerged.
+
+From this perspective, the **anthropic principle** -- that the universe’s observed conditions must allow for the existence of observers—serves not as a validation of the human perspective but as an instructive irony. It simply states that we exist in a universe compatible with our emergence, not that our existence or epistemological frameworks are central to the cosmos. Instead, the anthropic principle highlights the contingency of human perception as a latecomer to epistemic processes embedded in material and ecological systems billions of years before our species arose. This recognition requires that we not simply to decenter human consciousness but that we concede that sophisticated knowledge systems existed long before (and entirely independent of) the relatively recent accident of human beings capable of reflecting on knowledge.
+
+Prehumanism also offers interesting implications for interpreting the anthropic principle. Rather than suggesting the universe is fine-tuned for conscious observers, we might better understand it as fine-tuned for knowledge production in all its forms, from quantum interactions to molecular sensing to neural processing. Human consciousness becomes not the pinnacle of cosmic awareness but one manifestation among many of the universe's inherent capacity for knowing.
+
+The molecular machinery of prokaryotes exemplifies this pre-human epistemology. These systems do not merely challenge human exceptionalism; they demonstrate that complex knowledge production and environmental integration existed long before the evolution of neurons. Prokaryotic sensing and response mechanisms represent not primitive precursors to consciousness but refined endpoints of evolutionary optimisation.
+
+Although pre-humanist, embodied knowledge systems (such as genetic codes, neural wiring, and symbiotic network responses) may appear maximally optimised, they remain provisional in a fundamental sense. Their functional correctness is contingent upon relatively stable environmental envelopes. When these envelopes widen or narrow -- due to climate change, new predators, shifting resource distributions, or other ecological pressures -- what was once an adaptive ‘knowledge solution’ can become obsolete. Just as human intellectual frameworks must be revised in light of new evidence or theoretical challenges, biological know-how accumulates only insofar as it maximises ecological fitness. Over evolutionary timescales, natural selection perpetually revises, refines, or discards these knowledge forms. What emerges is not an absolute, unchanging truth but a continuous adaptation process. In this light, even the most deeply embodied, nonhuman modes of knowing are provisional, dynamically sculpted by shifting ecological circumstances.
+
+Can this reframing influence scientific investigation? Understanding non-human forms of knowing requires new methodological approaches that can account for distributed, ecological forms of knowledge production. It even extends to AI. New experimental paradigms could capture the complexity of non-human sensing and response systems and acknowledge their embeddedness in more extensive networks, networks that existed long before human observation.
+
+### Understanding
+
+In @sec-epistemology-evolution-sensation, I discussed the preconditions for human understanding. So far, I have used the term *understanding* almost interchangeably with *knowledge*, implicitly assuming we share a common definition. However, I have yet to explicitly define or argue for what understanding truly entails. Let us now dig deeper and develop a clearer understanding of understanding.
+
+The relationship between knowing and understanding represents a multifaceted challenge. Knowing emerges as distinct modalities (propositional, practical, and experiential understanding; see @sec-knowing) but understanding comes out of a higher-order synthesis that transcends these individual components. This synthesis doesn't only aggregate different forms of knowledge; it transforms them into a coherent, integrated framework that enables deeper comprehension and more effective action.
+
+Understanding manifests in the scientific practice. A marine biologist studying temperate reef ecosystems draws upon propositional knowledge of reef ecology, practical knowledge of sampling methodologies, and experiential knowledge gained through countless hours of field observation. But their understanding of reef systems goes far beyond these individual knowledge components. It emerges as a dynamic, integrated perspective that enables them to grasp complex interactions, predict system responses, and develop effective conservation strategies.
+
+This integration process isn't just additive. Understanding arises through the knowledge modalities informing and enriching each other. Propositional knowledge provides theoretical frameworks that help interpret practical experiences. Practical knowledge grounds theoretical insights in concrete reality. Experiential knowledge reveals nuances and complexities that refine both theoretical models and practical approaches. The result is a sophisticated comprehension that exceeds the sum of its parts.
+
+The contextual and relational nature of understanding becomes evident in addressing complex challenges. Climate change, for instance, demands more than accumulated knowledge about atmospheric physics, ecological impacts, and mitigation strategies. True understanding requires grasping the intricate web of relationships between physical processes, biological responses, and human systems. This integrated comprehension enables more effective responses to environmental challenges.
+
+Understanding's transformative potential manifests powerfully in educational contexts. Traditional education often emphasises knowledge transmission, but genuine learning requires nurturing the integration of different knowledge modalities. When students engage with material through multiple approaches—theoretical study, practical application, and direct experience—they develop deeper understanding that enables creative problem-solving and innovative thinking.
+
+From a philosophical perspective, understanding represents a distinct epistemological achievement. While knowledge can be compartmentalized and transmitted in discrete units, understanding emerges through active synthesis and integration. It requires not just knowing facts or procedures but grasping the underlying principles, relationships, and contexts that give them meaning. This distinction has profound implications for how we approach both research and education.
+
+The evolution from knowledge to understanding often follows a non-linear path. Initial exposure might begin with propositional knowledge, but deep understanding typically emerges through iterative cycles of theoretical reflection, practical application, and experiential learning. This process reveals understanding's dynamic nature. It continually evolves as new insights and experiences reshape our comprehension.
+
+Understanding's relational aspect extends beyond connecting different forms of knowledge. It encompasses relationships between concepts, between theory and practice, and between knowledge and its broader contexts. This web of relationships enables the recognition of patterns, the anticipation of consequences, and the generation of novel insights, capabilities that mere knowledge accumulation cannot provide.
+
+## Foundation of Critical Thinking: Scepticism and Cartesianism {#sec-epistemology-scepticism}
+
+At its core, scepticism is not so much a way of knowing as a philosophical stance toward knowledge claims. It functions as a methodological approach that can be applied within any epistemological framework. It is a call to question and validate knowledge rather than generate it. The development of many epistemological schools of thought themselves owes much to the influence of sceptical philosophers. From Pyrrhonian doubt to Cartesian methodological scepticism to modern scientific scepticism, it has evolved into a over-arching meta-epistemological mindset -- it serves as a second-order approach that evaluates and interrogates all ways of acquiring knowledge. It is this role that makes scepticism and Cartesianism indispensable to modern scientific inquiry.
+
+The historical roots of formal scepticism trace back to **Pyrrho of Elis** (*c*. 360--270 BCE), the founder of Pyrrhonism. His encounters with Eastern philosophies during his travels to India inspired his systematic approach to doubt. Pyrrho proposed that since our senses and reasoning can deceive us, we should suspend judgment about truth claims, advocating for *epoché* ("suspension of judgment") as a methodological principle. This early form of scepticism laid the groundwork for later developments in philosophical and scientific thought.
+
+While Pyrrho himself likely did not use the term *epoché*, **Sextus Empiricus**, writing in the late 2nd or early 3rd century CE, formalised and articulated this concept as central to Pyrrhonian scepticism in *Outlines of Pyrrhonism*. This is the essence of Pyrrho’s approach to achieving *ataraxia* (tranquillity). Sextus’s analysis of the limitations of sensory evidence and reasoning continues to inform contemporary approaches to measurement error and observational bias, particularly in the study of systems with complex interactions where causation is difficult to establish.
+
+Medieval Islamic philosophy, through figures such as **Al-Ghazālī** (1058--1111), presented thoroughly logical arguments questioning causation. In his 1095 work Tahāfut *al-falāsifa* (*The Incoherence of the Philosophers*), Al-Ghazālī posed epistemological challenges to the notion of necessary causation, arguing that causation is not inherent in the nature of things but a matter of divine will. These ideas prefigured David Hume’s (@sec-epistemology-empiricism) later critique of causation in Western philosophy.
+
+The Renaissance period brought significant transformation to sceptical thought through **Michel de Montaigne** (1533--1592). His collection of 107 essays across three books, titled *Essays* (first published in 1580), demonstrated how sceptical thinking could enhance rather than impede inquiry and established principles that would later influence hypothesis testing and scientific peer review. Montaigne’s embrace of systematic doubt provided a framework for critically examining assumptions while encouraging productive investigation.
+
+The most systematic response to sceptical challenges emerged through Cartesianism, a term derived from the Latinised form of **René Descartes**’ (1596--1650) name, *Cartesius*. In his *Discourse on the Method* (1637) and *Meditations on First Philosophy* (1641), Descartes transformed scepticism from a potentially paralysing philosophical stance into a constructive methodology. Central to his work is the principle that the only thing beyond doubt is the existence of the thinking self: *cogito, ergo sum* (“I think, therefore I am”).
+
+Descartes reasoned that the act of doubting requires a doubter, something that is thinking. Thus, the very act of thought demonstrates the existence of the thinker. “I think” refers to the undeniable act of thinking (whether doubting, reasoning, or imagining) and “therefore I am” affirms the existence of a thinking self, as thought cannot occur without a thinker. This fundamental principle, known as the *cogito*, provided a secure starting point for rebuilding knowledge on unshakeable foundations. Descartes’ methodological scepticism, which demanded that all knowledge claims be subjected to rigorous doubt, laid the groundwork for modern scientific inquiry.
+
+Descartes was particularly concerned with the proper application of human reason. As he wrote in *Discourse on the Method*:
+
+::: {.cell}
+```{=tex}
+\epigraph{
+\begin{quotepara}
+For it is not enough to possess a good mind; the most important thing is to apply it correctly. The greatest minds are capable of the greatest vices as well as the greatest virtues; those who go forward but very slowly can get further, if they always follow the right road, than those who are in too much of a hurry and stray off it.
+\end{quotepara}
+}
+```
+
+```{=html}
+<div style="font-size: smaller;">
+For it is not enough to possess a good mind; the most important thing is to apply it correctly. The greatest minds are capable of the greatest vices as well as the greatest virtues; those who go forward but very slowly can get further, if they always follow the right road, than those who are in too much of a hurry and stray off it.
+</div>
+```
+:::
+
+Starting from radical doubt, Descartes sought to rebuild knowledge systematically, emphasising clarity and precision. This fundamentally influenced scientific thinking. **Nicolas Malebranche** (1638--1715) expanded on these ideas in *The Search After Truth* (1674–1675) and highlighted how systematic doubt could serve as a positive tool for inquiry. Similarly, **Antoine Arnauld** (1612--1694) and **Pierre Nicole** (1625--1695), in *Logic, or the Art of Thinking* (1662), also known as the Port-Royal Logic, applied Cartesian principles to scientific reasoning and showed how clear and distinct ideas could enhance logical and empirical inquiry.
+
+The influence of Cartesian methodology extends past its historical context. Descartes’ emphasis on breaking problems into manageable parts, working methodically from simple to complex, and demanding clear and distinct ideas continues to underpin scientific methodologies. Modern experimental design, with its focus on controlled variables and systematic investigation, owes much to this Cartesian legacy, which remains central to critical thinking and inquiry today.
+
+The Scientific Revolution marked a sharp transition in sceptical thought, integrating it as a cornerstone of scientific thinking. The Royal Society, founded in 1660, underscored this commitment by adopting the motto *Nullius in verba* ("Take nobody’s word for it"), symbolising its dedication to empirical scepticism and the rejection of dogmatic authority. Natural philosophers like **Robert Boyle** (1627--1691) developed methodological approaches that successfully combined sceptical rigour with empirical investigation and so established the foundations for modern scientific practice.
+
+The seeming friction between sceptical thought and scientific progress gave rise to two interesting philosophical responses: **fallibilism** and **relativism**. Fallibilism stems from the Latin word *fallibilis*, meaning "liable to err" or "capable of being mistaken". Developed by **Charles Sanders Peirce** (1839--1914), is the principle that no belief is beyond doubt or revision. Peirce concedes that while absolute certainty may be impossible, we can still develop reliable knowledge through rigorous methodology. This position offers a practical resolution to sceptical challenges by accepting the possibility of error while maintaining that scientific knowledge, though tentative, can be both reliable and useful. We see this approach reflected in modern statistical inference and confidence intervals, tools that explicitly acknowledge uncertainty while enabling meaningful scientific conclusions.
+
+Relativism is a more radical. Thomas Kuhn (see @sec-epistemology-constructivism-postmodernism) makes the case that scientific truth claims are inherently relative to their paradigmatic context, thus attempting to sidestep sceptical challenges altogether. This stance risks undermining the objective aspirations of scientific inquiry and many philosophers of science tend to favour fallibilism's more nuanced position.
+
+Contemporary scientific scepticism, cuttingly articulated by voices of reason such as **Carl Sagan** (1934--1996) in *The Demon-Haunted World* (1995), emphasises the essential role of disciplined doubt in scientific progress. His principle that extraordinary claims require extraordinary evidence provides a practical framework for evaluating research findings. This is especially important in complex biological systems where multiple variables interact. His words have never been more relevant than today:
+
+::: {.cell}
+```{=tex}
+\epigraph{
+\begin{quotepara}
+I have a foreboding of an America in my children's or grandchildren's time -- when the United States is a service and information economy; when nearly all the manufacturing industries have slipped away to other countries; when awesome technological powers are in the hands of a very few, and no one representing the public interest can even grasp the issues; when the people have lost the ability to set their own agendas or knowledgeably question those in authority; when, clutching our crystals and nervously consulting our horoscopes, our critical faculties in decline, unable to distinguish between what feels good and what's true, we slide, almost without noticing, back into superstition and darkness...
+
+The dumbing down of American is most evident in the slow decay of substantive content in the enormously influential media, the 30 second sound bites (now down to 10 seconds or less), lowest common denominator programming, credulous presentations on pseudoscience and superstition, but especially a kind of celebration of ignorance.
+\end{quotepara}
+}{Carl Sagan \\ The Demon-Haunted World: Science as a Candle in the Dark (1995)}
+```
+
+```{=html}
+<div style="font-size: smaller;">
+I have a foreboding of an America in my children's or grandchildren's time -- when the United States is a service and information economy; when nearly all the manufacturing industries have slipped away to other countries; when awesome technological powers are in the hands of a very few, and no one representing the public interest can even grasp the issues; when the people have lost the ability to set their own agendas or knowledgeably question those in authority; when, clutching our crystals and nervously consulting our horoscopes, our critical faculties in decline, unable to distinguish between what feels good and what's true, we slide, almost without noticing, back into superstition and darkness...
+
+The dumbing down of American is most evident in the slow decay of substantive content in the enormously influential media, the 30 second sound bites (now down to 10 seconds or less), lowest common denominator programming, credulous presentations on pseudoscience and superstition, but especially a kind of celebration of ignorance.
+\p
+-- Carl Sagan, The Demon-Haunted World: Science as a Candle in the Dark (1995)
+</div>
+```
+:::
+
+In modern science, scepticism finds its most productive form in *constructive scepticism*. By challenging assumptions and demanding robust evidence, constructive scepticism sharpens the accuracy and reliability of experimental design, hypothesis testing, and data interpretation. Doubt fuels progress and ensures claims are scrutinised before being accepted. *Extreme scepticism*, on the other hand, denies the possibility of knowledge altogether. While constructive scepticism encourages inquiry and iterative refinement of understanding, extreme scepticism paralyses the scientific mind, stifles investigation, and rejects even provisional truths.
+
+Calibrated scepticism guards against accepting false conclusions. It requires balancing appropriate doubt with acceptance of well-supported findings, and is a prerequisite in all fields of inquiry, especially where system complexity and variable interactions can obscure causal relationships.
+
+The application of sceptical methodology to contemporary challenges reveals its continuing relevance. As artificial intelligence and machine learning increasingly influence data analysis and hypothesis generation, understanding the philosophical foundations of scientific scepticism becomes even more important for maintaining investigative rigour while remaining open-minded methodological innovations.
+
+---
+
+Note: Then, scepticism's specific applications should be threaded through discussions of each way of knowing, showing how sceptical approaches strengthen or challenge each epistemological framework. For instance:
+
+- In empiricism: How scepticism drives rigorous experimental design and replication
+- In rationalism: Its role in questioning assumptions and logical frameworks
+- In pragmatism: How sceptical inquiry shapes evaluation of practical outcomes
+- In belief-based systems: The tension between faith and sceptical inquiry
+
+---
+
+## Ways of Knowing {#sec-epistemology}
+
+Understanding how we know things, the scope of what is knowable, and the *truthfulness* of how knowledge reflects reality (even, *what is* reality?) has occupied the minds of philosophers for millennia. Epistemology is the branch of philosophy that questions and reflects on knowledge. What is knowledge? Where does it come from? What does it mean to *know*? What is the nature of a *being* capable of knowing? What does knowing accomplish? Such questions about knowledge have shaped everything from religious belief to the scientific method.
+
+The different approaches to knowledge reflect our human diversity, interests, and values. Some of us trust only what we can measure, others rely on pure reason, some seek truth in mystical experience, and, sadly, most are content to simply *believe*. Humanity's cognitive toolbox is comprised of different tools for finding knowledge, each suited to particular kinds of questions or meaning. The practise of science itself is a blend of these epistemological approaches, combining empirical observation, logical reasoning, and practical utility.
+
+Before we discuss how science works, and expound on the insistence that our wide statistical repertoire is an integral part in our quest to understand the universe, we must first understand the different ways of knowing that humans have developed over the millennia.
+
+### Belief-based Epistemologies {#sec-epistemology-non-empirical}
+
+Believing stands diametrically opposed to knowing. Belief-based epistemology cover wide ground from rigid institutional dogma to deeply personal mystical experiences. Philosophers treat them as discrete categories but I find it useful to see them as points along a continuum of non-empirical approaches to knowledge. What unites them is their shared admiration of revelation, intuition, or authority over empirical evidence and rational inquiry, but they'd likely disagree rather strongly about which of these non-empirical sources to trust.
+
+At the most structured end of the spectrum lurk the institutional dogmatic traditions and theologies. Here we find **St. Thomas Aquinas** (1225--1274) engaging in intellectual contortion to reconcile Aristotelian philosophy with Christian doctrine, and **Alvin Plantinga** (b. 1932) advancing the concept of *proper basicality* in religious belief. Plantinga argues that certain beliefs, such as belief in God, can be rational and justified without relying on evidence or argument. These beliefs are considered properly basic, that is, foundational, not inferred from other beliefs, yet still reasonable to hold based on natural human experience and cognitive faculties.
+
+Proper basicality aligns with the structure of dogmatic religions, which are characterised by formal hierarchies, codified texts, and standardised practices. These systems collectively maintain a rigid orthodoxy, often treating deviation not as an alternative hypothesis but as heresy.
+
+The middle ground is cobbled together from useful parts of pre-existing systems. New Age movements and syncretic traditions cherry-pick elements from various belief systems while maintaining just enough organisational structure to perpetuate themselves. **Helena Blavatsky** (1831--1891) exemplifies this approach by creatively blending Eastern and Western esoteric traditions. These intermediate positions maintain some organisational structure while allowing for more fluid interpretation. Still, as with all other beliefs, this fluidity seldom extends to questioning their fundamental premises.
+
+At the individualistic end of the spectrum loiter the mystics and intuitivists. Characters like the mystic rhetorician **Meister Eckhart** (1260--1328) and the spiritual opportunist **Ram Dass** (1931--2019) emphasise direct personal experience over institutional authority. They're fond of pointing out that true knowledge can't be contained in books or institutions. They then go on to write books about this supposedly ineffable wisdom.
+
+For all their surface differences, these dubious approaches share a fundamental epistemological flaw: they're all equally impotent in advancing scientific understanding. Whether it's a formal theological system or a personal mystical insight, they are merely beliefs; they resist both falsification and revision. **William James** (1842--1910) documented this insightfully in his *Varieties of Religious Experience* (1902), though perhaps not with the conclusions he intended. His careful cataloguing of religious experiences serves mainly to highlight their resistance to empirical verification.
+
+Champions of modern scientific consensus like **Neil deGrasse Tyson** (b. 1958) and St. **Richard Dawkins** (b. 1941), increasingly recognise that all forms of non-empirical epistemology are equally incompatible with scientific methodology. **Daniel Dennett** (1942--2024) makes a convincing case that even seemingly harmless personal spiritual beliefs contribute to an intellectual climate that undermines scientific thinking (an intellectual conflict of interest, of sorts), like claiming that while you personally believe in dragons, this shouldn't affect your biology research. The very act of compartmentalising these beliefs undermines the consistent application of scientific reasoning.
+
+This incompatibility becomes evident in contemporary issues where scientific consensus meets social resistance. Whether it's climate change denial, anti-vaccination movements, or resistance to evolutionary theory, we find support for these positions across the entire spectrum of non-empirical belief systems. The institutional religious doctrine and personal spiritual intuition prove equally effective at impeding the acceptance of scientific evidence. This is an interesting demonstration of unity across the belief spectrum, though perhaps not one they should be proud of.
+
+The historical pattern is clear: as scientific understanding advances, the space for belief-based explanations continues to shrink. Individuals may find personal meaning in these various belief systems -- and I'm not particularly interested in challenging that aspect of their value -- but none of them contribute to the advancement of scientific knowledge. The scientific method's unique advantage lies precisely in its rejection of all forms of divine or mystic authority, whether they come wrapped in institutional dogma or personal revelation.
+
+In the end, the universe remains indifferent to how fervently we believe something. If a claim isn’t supported by evidence, it’s simply wrong, no matter how strongly we feel about it. Facts don't care about our feelings. But we see non-empirical approaches is persistently retreating into the ever-shrinking gaps in scientific understanding, the so-called "God of the gaps." From the mechanics of planetary motion to the origin of life, phenomena once attributed to godly causes have steadily yielded to scientific explanation. Yet rather than embracing these diminishing gaps as opportunities for humility and revision, believers instead withdraw into what remains, squeezing their gods with them into ever-smaller spaces. Inevitably, those gaps will disappear altogether.
+
+### Empiricism {#sec-epistemology-empiricism}
+
+In the beginning there was empiricism. In a proximal, physical sense, all life on Earth is founded on empiricism. We evolved to sense the world, to see, hear, touch, taste, and smell. I have already explored the evolution of senses in @sec-epistemology-evolution. These 'data' are foundational to our knowledge about the world. Early hominids learned to trust their senses to find food, avoid predators, and navigate the world. This shaped our brains and and informed to stories we told to explain things, to make sense of how the world worked, to predict the future, and even to find meaning in life.
+
+At its core of empiricism, now used in the intended epistemological sense, are the signals we generate as our senses *perceive* the natural world around us. Empiricism is the foundation of the scientific method, where hypotheses are tested against these data. Empiricists are those people who'd rather measure twice than philosophise once.
+
+**Aristotle** (384--322 BCE) laid the foundations of empiricism in Ancient Greece. In his works *Posterior Analytics* and *De Anima* (both *c*. 350 BCE), Aristotle emphasised the importance of sensory experience in gaining knowledge about the world. Unlike his teacher, **Plato** (427--347 BCE), who favoured 'forms' (ideas), Aristotle insisted that knowledge begins with perception and observation of particular instances, from which we can derive universal principles through careful reasoning.
+
+The modern empiricist tradition started with **Francis Bacon** (1561--1626). Bacon revolutionised scientific methodology. In his writings *Novum Organum* (1620) and *The New Atlantis* (1627), Bacon outlined a new system of logic based on systematic observation and experimentation. He was impatient with the medieval reliance on authority and abstract reasoning and advocates for what would become the scientific method. Bacon's famous critique of the 'idols' that obstruct clear thinking laid the groundwork for a more rigorous approach to acquiring and developing knowledge.
+
+**Thomas Hobbes** (1588--1679) further developed empiricist ideas in his work, *Leviathan* (1651). He made the case that all knowledge derives from sensory experience and mechanical processes. With his materialist philosophy he suggested that even complex human behaviours and social structures could be understood through careful observation of cause and effect.
+
+During the Age of Enlightenment, **John Locke** (1632--1704) completely reshaped our understanding of how we acquire knowledge. His proposition of the mind as a *tabula rasa*, a blank slate devoid of innate ideas, confronted the Cartesian rationalist view of pre-existing truths, asserting instead that knowledge arises solely through experience.
+
+The scientific revolution provided the backdrop for Locke's empiricist framework. As telescopes revealed distant galaxies and microscopes unveiled microscopic worlds, the emphasis shifted from speculation to evidence-based inquiry. This transformation wasn't merely congruent with Locke's philosophy, it was intimately intertwined with it. Locke was a member of the Royal Society and actively participated in the scientific conversations of his time; he engaged with key figures who were revolutionising our understanding of the natural world.
+
+In his seminal work, *An Essay Concerning Human Understanding* (1690), Locke elaborated a model of knowledge acquisition. He proposed two primary channels: *sensation*, through which we perceive the external world's qualities, and *reflection*, the mind's internal processing mechanism. These weren't passive processes; rather, they formed an active system where the mind deliberately organised and interpreted sensory input.
+
+The philosophical implications were far-reaching. While René Descartes (@sec-epistemology-scepticism) pushed reason as the source of knowledge, arguing for the existence of innate ideas like mathematical principles and moral laws, Locke insisted that even our most abstract concepts could be traced back to sensory impressions. This aligned well with the empirical methods being developed by his contemporaries like **Isaac Newton** (1642--1726/1727), whose laws of motion and gravitation emerged from careful observation rather than pure reason.
+
+Locke's theory distinguished between 'simple' and 'complex' ideas in a way that paralleled the scientific method's approach to understanding the world. Simple ideas (like the sensation of warmth or the taste of bitterness) were irreducible units of experience, analogous to the basic observations scientists made with their new instruments. Complex ideas emerged through the mind's ability to combine, compare, and abstract these simple elements into sophisticated concepts, much as scientists constructed complex theories from basic empirical observations.
+
+This framework provided the intellectual support for the scientific revolution's methodological innovations. Just as scientists were demonstrating that nature's secrets could be uncovered through observation and experimentation rather than abstract reasoning, Locke's epistemology explained why this approach worked. His shared conviction with Newton about the limits of human understanding and the necessity of grounding knowledge in observable phenomena helped establish the foundations of modern scientific thinking.
+
+The alignment of Locke's empiricism with the scientific method wasn't coincidental; it reflected a broader cultural shift away from Aristotelian scholasticism toward evidence-based inquiry. His insistence that nothing enters the mind without first passing through the senses provided philosophical justification for the experimental methods that were transforming astronomy, biology, and physics. In essence, Locke's empiricism and the scientific revolution were mutually reinforcing movements that together reshaped how we understand both knowledge and nature.
+
+While Locke laid the groundwork for systematic empiricism, other philosophers developed and refined this approach. **George Berkeley** (1685--1753) argued that material objects exist only as perceptions in minds with his famous assertion *esse est percipi* ("to be is to be perceived"). Though this idealist conclusion might seem to contradict empiricism's essence, Berkeley's assertive adherence to experiential evidence led him there. He questioned how we could meaningfully speak of objects existing independently of all perception when our only access to them is through perception itself.
+
+**David Hume** (1711--1776) delivered a critique of certainty itself. His influence was extensive and reshaped how we think about causality, free will, and other core concepts of human experience. Since Hume’s ideas remain important today, I will cover them with some depth as they continue to shape our understanding of the human experience.
+
+Hume took empiricism to its logical limits in *A Treatise of Human Nature* (1739--1740) and *An Enquiry Concerning Human Understanding* (1748). He delivered what I consider philosophy's most elegant demolition of our basic assumptions about knowledge and causality. His famous problem of induction reveals a flaw in empirical reasoning: we can never logically justify our *belief* that the future will resemble the past.
+
+We've observed sunrises countless times. We have developed precise astronomical models to predict them. The synchronicity of our entire civilisation depends on this clockwork reliability. But Hume showed that we have no rational basis for thinking tomorrow's sun will rise, beyond our habit of seeing it did so in the past. No matter how many times we observe one event following another, we can never observe the necessary connection between them. The relation between cause and effect, accepted as fundamental to scientific understanding, turns out to be psychologically ingrained rather than logically tenable.
+
+Hume questions the foundation of empirical reasoning: inductive inference, or predicting the future based on the past: we notice that water boils at 100°C in our lab, so we assume it does so everywhere (under similar conditions). As practical as this pattern-matching habit is, it doesn't have a logical justification. Any attempt to prove induction works must circularly assume that past successes of induction predict its future reliability.
+
+It implies that we cannot prove causation exists. So, we can't even justify our most basic scientific predictions! The entire basis for empirical science rests on what Hume reveals to be nothing more than custom and habit: psychologically compelling but logically unprovable assumptions about the uniformity and predictability of nature. The crisis Hume precipitated was real. If we can't trust our senses completely (optical illusions exist, after all), can't observe causation directly, and can't even justify our predictions logically, what can we know? Empiricism seems undermined by its own rigorous commitment to sensory evidence.
+
+But Hume didn't consider this devastating to scientific practice. He simply argued that we should accept our reasoning for what it is: a useful habit rather than a logically justified process. We continue doing science not because we can prove it works, but because we're psychologically constituted to learn from experience and because it has proven pragmatically successful (see @sec-epistemology-pragmatism and @sec-faith-and-trust-in-technology). It's a modern view that anticipates aspects of both pragmatism and psychological theories of learning.
+
+**Immanuel Kant** (1724--1804) responded to this crisis in his *Critique of Pure Reason* (1781, revised 1787) and completely restructured epistemology. We need to spend a bit of time with him too. He sought to resolve the tensions between rationalism and empiricism that had defined much of early modern thought, and became increasingly important since science became a valid system for finding things out. Kant's *Copernican Revolution* in philosophy proposed that instead of our knowledge conforming to objects, objects must conform to our knowledge -- or more precisely, to the necessary structures of our cognition. These structures include not just space and time as forms of intuition, but twelve categories of understanding, including causality, which organise our experience into coherent form.
+
+Kant’s philosophy was informed by the scientific developments during the Scientific Revolution and the Enlightenment. The empiricist tradition, from **Francis Bacon** to **David Hume**, had emphasised the primacy of sensory experience, while rationalists like **René Descartes** and **Gottfried Leibniz** argued for the role of innate ideas and deductive reasoning. Kant, recognising the merits and limitations of both, proposed a synthetic approach: knowledge arises from the interplay between sensory input (empiricism) and the a priori categories of the mind (rationalism). Space, time, and causality, for instance, are not properties of the world as it exists independently but frameworks through which the mind organises experience. For the scientific method, this philosophical shift underscored the importance of both empirical observation and the theoretical structures that make such observations intelligible.
+
+Kant distinguished between two types of judgments. Analytic judgments, like "all predators are animals", restate something already contained in the subject. Synthetic judgments, however, expand knowledge: "all predators influence prey populations". Kant’s insight lay in showing that some synthetic judgments are *a priori* truths we know before observation, like the principle of causality, which underpins every ecological study. We assume that changes in prey abundance are caused by predator activity, even before collecting data. Another example: biologists often assume causality before testing hypotheses: for example, "nutrient availability causes plant growth". This is again Kant's synthetic *a priori* judgment. It’s not based on direct observation but on a mental framework that makes experimentation possible. Without this assumption of cause and effect, ecological experiments couldn’t get off the ground. This synthetic *a priori* knowledge is possible because it reflects the mind's own contribution to experience. There are the necessary ways we must organise sensory data to have coherent experience at all.
+
+Mathematics is a case in point for this synthetic a priori knowledge: "$7 + 5 = 12$" isn’t analytic (the concept '$12$' isn’t contained in the concepts '$7$', '$5$', and '$+$'), but we can know it with necessary certainty, independent of experience. Similarly, the principle that every event has a cause isn’t derived from experience (as Hume showed), nor is it analytic; it’s necessarily true for any possible experience. These synthetic a priori judgments are possible because they reflect the mind’s own contribution to experience. These are the necessary ways we must organise sensory data to have coherent experience at all.
+
+Furthermore, Kant's distinction between phenomena (things as they appear to us) and *noumena* (things as they are in themselves) reframed the entire empiricist project. We can have objective knowledge, but only of things as they appear to beings with our cognitive architecture. This seemingly restrictive conclusion actually secured the possibility of scientific knowledge while acknowledging its limitations. His insight that causality is a necessary category of understanding helped resolve Hume's scepticism without simply dismissing it. We can't observe necessary connections in reality itself, but we necessarily think in terms of them.
+
+**John Stuart Mill** (1806--1873) brought empiricism into the 19th century. He developed methods of inductive reasoning that would influence both scientific methodology and statistical analysis. His *Methods of Agreement and Difference* provided practical tools for empirical investigation that remain relevant to modern experimental design. Mill's empiricism extended beyond natural science into social and political theory, arguing that even moral knowledge must be grounded in experience rather than abstract reason.
+
+Empiricism remains fundamental to modern science, though we've moved well beyond simple sensory observation. Today's empiricists work with particle accelerators and radio telescopes, measuring phenomena far removed from direct sensory experience. Yet the basic principle remains: knowledge claims must be tested against observable evidence.
+
+I have heard science sceptics argue something like "But you have never really seen an atom or the rings around Saturn, so science is no different from religion as it requires belief." Yes. But no. In @sec-faith-and-trust-in-technology, I'll explain why this is a false equivalence.
+
+Empiricism doesn't offer all the answers: it can't tell us much about love, consciousness, or why anyone finds meaning in social media. He doesn’t close the book on knowledge; he opens it to let later philosophers grapple with the questions that senses cannot experience. For Locke, empiricism is a method, not a dogma. It’s a framework for understanding the world, grounded in the messy, unreliable, but indispensable foundation of human experience.
+
+### Rationalism {#sec-epistemology-rationalism}
+
+Before empiricism emerged as a formal epistemology, rationalism had already taken root in Greek philosophy. While my earlier discussion (@sec-epistemology-empiricism) playfully traced empiricism back to life's origins, rationalism as a philosophical idea claims precedence.
+
+Rationalism posits that certain knowledge can be gained through reason alone, independent of sensory experience. Its proponents argue that some truths are self-evident and universal, discoverable through pure deductive reasoning from first principles. These truths, they maintain, are eternal and unchanging, accessible to any mind capable of proper logical thought. For rationalists, reason represents the highest form of knowing, capable of revealing truths that lie beyond the reach of mere sensory perception.
+
+Mathematics and formal logic are rationalist constructs gained through pure thought rather than observation. This knowledge (or approach to knowledge, rather) is absolute and so powerful that even empiricists rely on it daily, no less so than within the scientific process. The rationalist tradition stretches back to Plato's forms and finds perhaps its purest expression in Descartes' famous "I think, therefore I am," a truth he claimed to know with absolute certainty through reason alone.
+
+Rationalism has limits. One can try to experience a sunset by calculating the wavelengths of sunlight: technically doable but is misses something valuable. Pure reason alone can't tell us if there are black holes in the universe or how genes regulate cell development. These require empirical investigation. The most productive approach often combines rationalist and empiricist methods, using reason to guide our investigations and interpret our observations. This reflection summarises it well:
+
+::: {.cell}
+```{=tex}
+\epigraph{
+\begin{quotepara}
+I have a friend who's an artist and has sometimes taken a view which I don't agree with very well. He'll hold up a flower and say ``look how beautiful it is,'' and I'll agree. Then he says ``I as an artist can see how beautiful this is but you as a scientist take this all apart and it becomes a dull thing'' and I think that he's kind of nutty. First of all, the beauty that he sees is available to other people and to me too, I believe. Although I may not be quite as refined aesthetically as he is ... I can appreciate the beauty of a flower. At the same time, I see much more about the flower than he sees. I could imagine the cells in there, the complicated actions inside, which also have a beauty. I mean it's not just beauty at this dimension, at one centimeter; there's also beauty at smaller dimensions, the inner structure, also the processes. The fact that the colors in the flower evolved in order to attract insects to pollinate it is interesting; it means that insects can see the color. It adds a question: does this aesthetic sense also exist in the lower forms? Why is it aesthetic? All kinds of interesting questions which the science knowledge only adds to the excitement, the mystery and the awe of a flower. It only adds. I don't understand how it subtracts.
+\end{quotepara}
+}{Richard P. Feynman \\ The Pleasure of Finding Things Out (1999)}
+```
+
+```{=html}
+<div style="font-size: smaller;">
+I have a friend who's an artist and has sometimes taken a view which I don't agree with very well. He'll hold up a flower and say "look how beautiful it is," and I'll agree. Then he says "I as an artist can see how beautiful this is but you as a scientist take this all apart and it becomes a dull thing," and I think that he's kind of nutty. First of all, the beauty that he sees is available to other people and to me too, I believe. Although I may not be quite as refined aesthetically as he is ... I can appreciate the beauty of a flower. At the same time, I see much more about the flower than he sees. I could imagine the cells in there, the complicated actions inside, which also have a beauty. I mean it's not just beauty at this dimension, at one centimeter; there's also beauty at smaller dimensions, the inner structure, also the processes. The fact that the colors in the flower evolved in order to attract insects to pollinate it is interesting; it means that insects can see the color. It adds a question: does this aesthetic sense also exist in the lower forms? Why is it aesthetic? All kinds of interesting questions which the science knowledge only adds to the excitement, the mystery and the awe of a flower. It only adds. I don't understand how it subtracts.
+\p
+-- Richard P. Feynman, The Pleasure of Finding Things Out (1999)
+</div>
+```
+:::
+
+The juxtaposition between these approaches remains evident in modern debates about the foundations of mathematics and logic. Are mathematical truths discovered (suggesting they exist independently in some Platonic realm) or invented (suggesting they're sophisticated human constructs)? The answer isn't clear.
+
+### Pragmatism {#sec-epistemology-pragmatism}
+
+Pragmatism emerged in late 19th century America as a refreshingly useful approach to philosophical questions. The classical pragmatists **Charles Sanders Peirce** (1839--1914), **William James** (1842--1910), and **John Dewey** (1859--1952) developed a philosophical method that judged ideas by their practical consequences rather than their claims to abstract truth.
+
+For pragmatists, truth isn't about finding perfect correspondence with reality. Instead, they ask, what difference would it make if this idea were true? This shift in perspective has profound implications. Peirce argued that we should understand concepts by examining their practical effects, a view that influenced fields from scientific methodology to semiotics. He suggests that we should "consider what effects, which might conceivably have practical bearings, we conceive the object of our conception to have." This remains the cornerstone of pragmatic thinking.
+
+William James expanded pragmatism's scope beyond Peirce's more scientific focus. He applied pragmatic thinking to questions of religion, psychology, and personal meaning, arguing that beliefs could be justified by their practical value in people's lives rather than just their empirical verifiability. This broader application sometimes put him at odds with Peirce, who worried that James had made pragmatism too permissive.
+
+John Dewey applied pragmatism to social and educational reform. His vision of inquiry as a tool for solving practical problems rather than discovering eternal truths has profoundly influenced modern approaches to education and democratic theory. For Dewey, knowledge wasn't about passive observation but active engagement with the world: we learn by doing, by testing ideas in practice.
+
+Neopragmatists like **Richard Rorty** (1931--2007) and **Hilary Putnam** (1926--2016) have continued to develop these themes. Rorty applied a linguistic lense, arguing that knowledge is fundamentally constrained by the boundaries of language itself. In his view, we're not discovering truths about an external reality so much as participating in conversations using historically contingent vocabularies. When we claim to *know* something, we're really just successfully navigating within a particular linguistic framework. He suggested we might do better to stop thinking about truth as correspondence to reality and instead focus on the practical consequences of different ways of talking. It's less about finding the one *right* vocabulary and more about expanding our linguistic repertoire to better handle different kinds of problems and experiences.
+
+Putnam was critical of Rorty’s antirealist tendencies. He maintained that truth involves a normative dimension -- what works is not just what we agree on but what stands up to inquiry and practice over time. Putnam’s *internal realism* represents his attempt to reconcile pragmatism with a form of realism. To Putman, truth is neither an objective “view from nowhere” nor merely subjective consensus. Instead, it emerges within frameworks shaped by human activity but constrained by the world.
+
+What makes pragmatism esepecially relevant today is its focus on practical consequences rather than abstract theoretical debates. In an era of complex global challenges, from climate change to artificial intelligence, pragmatism's emphasis on problem-solving and practical outcomes offers valuable insights. It suggests that instead of getting bogged down in theoretical disputes, we should ask: what works? What helps us solve real problems?
+
+The pragmatic approach neatly sidesteps some traditional epistemological debates. It doesn't need to resolve the tension between empiricism and rationalism, or between constructivism and realism. Instead, it suggests we evaluate ideas based on their usefulness in practice. This doesn't mean ignoring truth; rather, it redefines truth in terms of what works reliably over time. As William James put it, "The truth of an idea is not a stagnant property inherent in it. Truth happens to an idea. It becomes true, is made true by events."
+
+### Phenomenology {#sec-epistemology-phenomenology}
+
+Phenomenology emerged in the early 20th century through **Edmund Husserl**'s (1859--1938) ambitious attempt to create a rigorous science of conscious experience. As a mathematician turned philosopher, Husserl sought to develop a method for examining consciousness with the same precision that mathematics brings to abstract reasoning. His student **Martin Heidegger** (1889--1976) later transformed phenomenology into an investigation of human existence itself, while **Maurice Merleau-Ponty** (1908--1961) extended its reach into perception and embodied experience.
+
+The phenomenological approach attempts to bridge the gap between pure subjectivity and objective reality through what Husserl called the *epoché*, a systematic suspension of our usual assumptions about reality. Rather than accepting or rejecting the existence of an objective world, phenomenologists bracket such questions to focus on how things appear to consciousness. It's an intriguing method, though achieving Husserl's ideal of completely unfiltered experience seems as impossible as trying to see our own eyes without a mirror.
+
+By focusing on the immediate, lived experience of consciousness, phenomenologists seek to understand how we encounter and make sense of the world before our analytical minds dissect it into theoretical constructs. This emphasis on direct, pre-theoretical experience provides a valuable counterpoint to both rationalist abstraction and empiricist measurement. Heidegger's analysis of "being-in-the-world", introduced in *Being in Time* (1927), and Merleau-Ponty's investigations of perception have deeply influenced fields from psychology to artificial intelligence.
+
+When designing technologies or conducting experiments, understanding the raw, lived experience of consciousness becomes important. But phenomenology, like all epistemological approaches, has its blind spots. The notion of pure, unmediated experience might be as much a philosophical fiction as pure reason or pure observation. **Jean-Paul Sartre** (1905--1980), in his writing *Being and Nothingness* (1943), argued that consciousness is always intentional; it is always directed toward something. This makies truly neutral observation impossible. For Sartre, this intentionality highlights the situated and relational nature of consciousness, which is shaped by prior experiences, desires, and contexts. He distinguished between *being-for-itself* (consciousness) and *being-in-itself* (non-conscious objects) and emphasises that the act of observing alters the relationship between observer and observed. Sartre’s critique of neutrality underscores the ethical and interpretive responsibilities of designers and researchers, urging them to recognise the complexities of lived experience and the broader societal impacts of their work.
+
+### Epistemic Relativism, Constructivism, and Postmodernism {#sec-epistemology-constructivism-postmodernism}
+
+Positioning epistemological relativism, constructivism, and postmodernism side by side exposes a gradient of scepticism towards any assertion of universal truth. It is helpful to view these positions as part of a complex landscape, ranging from the cautious acknowledgement that truth may depend on shifting frameworks to the persistent assertion that nothing can rightfully claim final authority. I want to explore how thinkers from various traditions fit along this spectrum, what motivations propelled them, and how their work challenged the cultural authority of the scientific method. There is little merit in reducing their positions to tidy categories; it is preferable to regard them as interconnected clusters, each contributing to the others’ uncertainties. Some philosophers experimented with the notion that the mind constructs reality rather than merely reflecting it; others pursued that belief until all grand narratives, including science, began to falter.
+
+**Jean Piaget** (1896--1980) operated closer to the milder end of this sceptical range, though it would be wrong to call him timid. In works like *The Child’s Conception of the World* (1929) and *Genetic Epistemology* (1970), Piaget showed that knowledge arises through developmental stages, not by absorbing facts handed down from on high. Children, far from being empty vessels, construct their understanding bit by bit. To read Piaget as a philosopher of science might feel odd, but his insistence that cognition evolves through the active structuring of experience nudges us toward the idea that no knowledge stands free from interpretive frameworks. His project presaged a move toward what I view as a kinder constructivism. While he didn’t trash scientific knowledge or call it fiction, he implied that what we call 'objectivity' grows out of human minds grappling with the world’s raw data. We see here the flicker of relativism: the truth that a child constructs differs from what a scientist might hold dear, yet each truth has its own logic.
+
+**Thomas Kuhn** (1922--1996), in *The Structure of Scientific Revolutions* (1962), took this notion of framework-dependence further. By showing that scientific progress does not advance via the smooth accumulation of facts but through paradigm shifts, Kuhn shattered the polite illusion of a linear, universal pursuit of knowledge. Paradigms come and go, he said, governed not just by nature’s dictates but by the messy interplay of human communities, language, training, and institutional pressures. Kuhn stopped short of unbridled relativism—after all, he never said science is useless—but he certainly made it harder to claim that current scientific truths stand on neutral ground. Although some have tried to read him as a relativist par excellence, he resisted that label, yet his emphasis on paradigm-bound science opened a door. It’s hard to close that door once we’ve glimpsed how worldviews shift. Epistemological relativism in science found in Kuhn a powerful ally, if not a perfect champion.
+
+The door stands wide open when we reach the works of **Bruno Latour** (1947--2022) and **Steve Woolgar** (b. 1950). In *Laboratory Life: The Construction of Scientific Facts* (1979), they showed how scientists in the lab don’t simply read off facts from nature; they build them through practices, negotiations, rhetorical manoeuvres, and decisions often invisible to outsiders. At first glance, this doesn’t deny that electrons or genes exist, but it does insist that what counts as a fact results from a social process shaped by culture, funding, prestige, and the like. Latour and Woolgar offered something more direct than Piaget’s child-building concepts or Kuhn’s community-forging paradigms. They put a magnifying glass on the daily grind of making facts, revealing a constructivism that can unsettle those who thought science held a unique key to truth. This is the heart of a more explicit relativism: one cannot read their work without feeling that the authority of the scientific method rests as much on social scaffolding as on brute empirical necessity. Still, they never entirely denied the existence of reality. They just made it impossible to separate fact from the human activities that define, measure, and explain it.
+
+Once we drift toward postmodern thinkers, we should pause to disentangle them from reductive caricatures. **Jean-François Lyotard** (1924--1998), in *The Postmodern Condition: A Report on Knowledge* (1979), declared the end of overarching 'metanarratives' that had long anchored Western thought. This did not mean he abandoned the idea that science can be useful or produce workable models; rather, he challenged the assumption that science grants a transcendent form of truth that eclipses all other modes of knowing. In his reading, to elevate science as the final arbiter of reality is to ignore that knowledge emerges within language games, each with its own rules, interests, and historical baggage. By placing science alongside myth, literature, and other narratives, Lyotard pried open the possibility that scientific claims, while effective in many domains, cannot claim a universal legitimacy beyond all contexts.
+
+**Michel Foucault** (1926--1984), often misunderstood as simply 'reducing' knowledge to power, actually offered a subtler view. In texts like *The Order of Things* (1966) and *Discipline and Punish* (1975), he showed that each historical epoch has certain conditions for what can appear as truth -- what he called an 'episteme'. Foucault did not say “anything goes” or that truth has no meaning. He argued that the shape of possible knowledge depends on a shifting configuration of discourse, social institutions, political interests, and the complex interplay of what can be said, by whom, and under what authority. He didn’t deny that science can produce consistent, testable claims. Instead, he aimed to show how those claims take on meaning and legitimacy in historically situated fields of power. It’s not that science is merely politics in disguise, but that the political, institutional, and conceptual frameworks in which science flourishes deeply influence what gets counted as legitimate knowledge.
+
+**Jacques Derrida** (1930--2004) further complicated the scene. While *Of Grammatology* (1967) indeed cast suspicion on stable meanings, Derrida never claimed that no meaning exists. Rather, he revealed how texts (and, by extension, concepts and theories) carry inherent tensions and internal contradictions that prevent them from attaining permanent closure. Applying this perspective to science isn’t as simple as declaring that scientific truths evaporate into chaos. Derrida did not argue that scientists cannot do their work or that reliable knowledge is a mirage. Instead, his approach pointed to the subtle complexities of interpretation that underpin all meaning-making practices. Even a carefully verified scientific theory, when articulated through language, enters into a play of references that’s never fully sealed off from revision or reinterpretation. Derrida’s deconstruction is not a tool for nihilism, but a reminder that any claim to a final, uncontested truth remains open to new contexts and further questions.
+
+**Jacques Baudrillard** (1929--2007), in *Simulacra and Simulation* (1981), described a cultural landscape saturated with signs that refer only to other signs, collapsing the distinction between representation and reality. But Baudrillard’s thought, again, should not be boiled down to the facile notion that “nothing is real.” He asked what it means for a society to navigate a world of images, models, and codes that proliferate without a stable anchor. While this vision unsettles the confidence that science directly captures reality, it doesn’t necessarily claim that scientific practice is useless. Instead, it questions the place of scientific knowledge in a media-rich environment where “reality” itself is constantly reconstituted through layers of interpretation, technological mediation, and cultural expectation.
+
+Not everyone headed off the sceptical deep end. **Donna Haraway** (b. 1944), known for *A Cyborg Manifesto* (1985), and **Sandra Harding** (b. 1935), author of *Whose Science? Whose Knowledge?* (1991), pushed these frameworks in more situated directions. They warned that knowledge, including scientific knowledge, emerges from positions that reflect gender, ethnicity, class, and historical moment. Harding advanced the concept of standpoint epistemology, where what we know depends on where we stand. Haraway’s *Cyborg Manifesto* satirised boundaries and identities, challenging the assumption that science hovers above bias. Yet their approach, unlike certain strands of postmodernism, need not discard the notion of reliability altogether. Instead, they invite an honest reckoning with how scientific claims arise from partial perspectives. These thinkers can be read as more constructive, aiming to reposition science as a tool we can wield more responsibly once we accept its situatedness. Their scepticism isn’t a call to abandon the lab or consign all truth claims to oblivion but to reframe knowledge as always rooted in contingent vantage points. They expose how those vantage points shape who benefits and who gets left behind.
+
+Behind all this lies a lineage of earlier figures who planted seeds of relativism. There’s no single birthplace, but **Giambattista Vico** (1668--1744) suggested centuries ago that truth grows from what humans create themselves, while **Wilhelm Dilthey** (1833--1911) stressed the historical character of understanding. So by the time Piaget’s child constructs concepts, or Kuhn’s communities flip from one paradigm to another, we’re standing on ground prepared by earlier thinkers who chipped away at the notion of fixed, mind-independent truth. They left us with a world in which knowledge is an achievement of interpretive beings working in concrete places and times.
+
+When I place all these figures side by side, I see a gradient stretching from an earlier sense of mild framework dependence—Piaget’s and Kuhn’s sense of evolving knowledge that still respects empirical constraints—through the more radical constructivist claims of Latour and Woolgar, all the way to the postmodern explosion in which Lyotard, Derrida, and Baudrillard dismantle any overarching claims to authority, leaving science as one story among many. Then Haraway and Harding circle back, not to reassert universal truth, but to show that what we know comes from somewhere and that “somewhere” matters. Their synthesis doesn’t restore lost certainties, but it rescues us from despair. After all, admitting that knowledge depends on perspective doesn’t mean giving up on knowledge; it only means we must handle it more carefully, treat it as fragile yet still worth fighting over, and never forget that truth-seeking is a human endeavour embedded in our messy world.
+
+
+### Critical Theory {#sec-epistemology-critical-theory}
+
+The relationship between postmodernism and Critical Theory reveals complex intellectual tensions that shape contemporary debates about knowledge and power. Rather than seeing a natural progression from one to the other, we must understand their parallel yet distinct developments. Critical Theory emerged from the Frankfurt School in 1923, with **Max Horkheimer** (1895--1973) and **Theodor Adorno** (1903--1969) examining how rationality, intended as a tool of liberation, had become an instrument of domination in modern society.
+
+While postmodernism questions the very possibility of objective truth, Critical Theory maintains a commitment to rational critique and positive social change. This distinction becomes crucial in their respective influences on scientific discourse. **Herbert Marcuse** (1898--1979) expanded critical theory's scope by analysing how consumer culture and technical rationality suppress critical thinking, while **Jürgen Habermas** (b. 1929) later developed a theory of rational communication suggesting that genuine understanding and consensus are possible through ideal speech situations.
+
+The threat to scientific progress comes not from Critical Theory proper, but from its popular misappropriation combined with postmodern scepticism. The third generation of critical theorists, led by **Axel Honneth** (b. 1949), focused on recognition theory and social justice, exploring how social conflicts arise from denied recognition rather than just material inequalities. This work, along with contemporary critical theorists like **Nancy Fraser** (b. 1947), has particular resonance in our current moment, where issues of power, identity, and social justice dominate public discourse.
+
+Critical Theory distinguishes itself through its explicit commitment to human emancipation, drawing on **Karl Marx**'s (1818--1883) famous thesis that philosophers have only interpreted the world, but the point is to change it. This transformative aim becomes especially relevant when considering how power operates through knowledge systems and cultural institutions. **Paulo Freire** (1921--1997) applied these principles to develop his influential "pedagogy of the oppressed," demonstrating Critical Theory's practical applications beyond philosophy.
+
+The challenge today lies in incorporating these insights while maintaining science's practical effectiveness. When Critical Theory's emphasis on power relations merges with postmodern scepticism, the result can undermine scientific methodology and evidence-based reasoning. Yet philosophers like **Rahel Jaeggi** (b. 1967) continue to refresh Critical Theory's relevance, applying its insights to contemporary issues while maintaining its analytical rigour.
+
+The key is finding balance: acknowledging how power shapes knowledge without concluding that knowledge is nothing but power; recognising social construction without falling into complete relativism; critiquing scientific institutions while preserving scientific methodology. Critics argue that Critical Theory's emphasis on critique sometimes leads to an overly negative view of society, while its sometimes obscure theoretical language can alienate those it aims to empower. Yet its fundamental insights about the relationship between power, knowledge, and social change remain vital tools for addressing today's challenges.
+
+This balance becomes increasingly crucial as we face global challenges requiring both scientific solutions and critical awareness of power structures. The real threat isn't Critical Theory's analytical framework but its potential misuse in combination with postmodern relativism. The goal should be to strengthen scientific progress by making it more inclusive and responsive to diverse perspectives while maintaining its methodological rigour.
+
+### Beyond the Western Lens {#sec-epistemology-global}
+
+The conventional narrative of epistemological development -- flowing from ancient Greek philosophy through European Enlightenment to modern scientific thinking -- represents a biased, oversimplified, and problematically Western-centric view of human knowledge systems. This reductionist perspective neglects the sophisticated epistemological frameworks developed independently across diverse civilisations, many of which offer valuable insights that could enrich our contemporary understanding of knowledge acquisition and validation.
+
+The Chinese concept of 知 ('zhī') transcends the theory-practice dichotomy that often constrains Western thought. Traditional Chinese medicine exemplifies this integration and demonstrates demonstrable efficacy in treating complex conditions through a synthesis of empirical observation and philosophical principles, even while the underlying mechanisms remain opaque to Western scientific frameworks. This success challenges our assumptions about what constitutes valid knowledge and suggests the limitations of rigid epistemological categorisations.
+
+The Indian philosophical tradition, particularly through the Nyāya school, developed complex systems of logic and empirical methodology that preceded similar Western developments. Their पर्माण ('pramāṇa') framework recognises multiple valid paths to knowledge, including direct perception, inference, comparison, and testimony. It acknowledges that different types of understanding may require distinct validation methods. This insight remains relevant to contemporary discussions of scientific methodology.
+
+<!-- ::: {.cell} -->
+<!-- ```{=tex} -->
+<!-- The Chinese concept of {\chinesefont 知} (zhī) elegantly transcends the theory-practice dichotomy that often constrains Western thought. Traditional Chinese medicine exemplifies this integration and demonstrates demonstrable efficacy in treating complex conditions through a synthesis of empirical observation and philosophical principles, even while the underlying mechanisms remain opaque to Western scientific frameworks. This success challenges our assumptions about what constitutes valid knowledge and suggests the limitations of rigid epistemological categorisations. -->
+
+<!-- The Indian philosophical tradition, particularly through the Nyāya school, developed complex systems of logic and empirical methodology that preceded similar Western developments. Their {\devanagarifont पर्माण} (*pramāṇa*) framework recognises multiple valid paths to knowledge, including direct perception, inference, comparison, and testimony. It acknowledges that different types of understanding may require distinct validation methods. This insight remains relevant to contemporary discussions of scientific methodology. -->
+<!-- ``` -->
+
+<!-- ```{html} -->
+<!-- The Chinese concept of 知 (zhī) elegantly transcends the theory-practice dichotomy that often constrains Western thought. Traditional Chinese medicine exemplifies this integration and demonstrates demonstrable efficacy in treating complex conditions through a synthesis of empirical observation and philosophical principles, even while the underlying mechanisms remain opaque to Western scientific frameworks. This success challenges our assumptions about what constitutes valid knowledge and suggests the limitations of rigid epistemological categorisations. -->
+
+<!-- The Indian philosophical tradition, particularly through the Nyāya school, developed complex systems of logic and empirical methodology that preceded similar Western developments. Their पर्माण (pramāṇa) framework recognises multiple valid paths to knowledge, including direct perception, inference, comparison, and testimony. It acknowledges that different types of understanding may require distinct validation methods. This insight that remains relevant to contemporary discussions of scientific methodology. -->
+<!-- ``` -->
+<!-- ::: -->
+
+Islamic scholars during the Golden Age made fundamental contributions that directly influenced the development of Western scientific methods. **Ibn al-Haytham**'s (965--1040 CE) work in optics and mathematics exemplifies the sophisticated empirical methodologies that emerged from this tradition. The Islamic synthesis of rational inquiry with religious knowledge offers an interesting case study in how seemingly disparate epistemological frameworks can coexist productively.
+
+Worldwide, Indigenous knowledge systems provide a practical understanding of ecological relationships and natural processes, developed through millennia of lived experience and intergenerational transmission. These systems are often transmitted orally. They integrate empirical observation with cultural and spiritual beliefs and capture intricacies that reductionist scientific methods might overlook. For instance, Aboriginal fire-stick farming in Australia demonstrates precise techniques for managing biodiversity and preventing wildfires, while the Māori principles of 'kaitiakitanga' encourages sustainable stewardship of natural resources. Similarly, Amazonian Indigenous communities’ botanical knowledge, such as the identification of medicinal plants, underscores the practical and empirical strengths of this knowledge.
+
+African Indigenous knowledge systems provide examples of sustainable resource management and ecological insight. The Zulu concept of 'ubuntu', often summarised as “I am because we are,” extends beyond human relationships to encompass ecological interconnectedness. This worldview promotes a holistic understanding of environmental stewardship, encouraging practices that Western conservation biology has recently begun to explore. The San people’s tracking knowledge exemplifies this depth of ecological understanding, combining sensory observation with pattern recognition to predict animal behaviour and ecosystem dynamics. Additionally, traditional African healers have developed taxonomic systems for medicinal plants, such as the Khoi-San’s knowledge of *Hoodia gordonii*’s appetite-suppressing properties, validated by Western science centuries later.
+
+Indigenous knowledge systems also incorporate long temporal perspectives that may exceed the scope of Western scientific studies. For example, the Ndebele people’s agricultural calendar, based on multi-generational climate observations, enables adaptive responses to environmental variability. The nguni cattle-keeping practices of southern African communities further highlight this temporal depth and reflects advanced genetic selection principles that enhance productivity and resilience. These examples reveal the empirical validity and practical effectiveness of Indigenous knowledge systems and offers insights into long-term environmental management that could enrich contemporary approaches to conservation and sustainable development.
+
+The value of Indigenous knowledge lies not in its traditional nature but in its empirical grounding and practical application. Integrating these insights into contemporary scientific methodologies presents both a challenge and an opportunity for epistemological synthesis. Indigenous knowledge systems can complement Western scientific methods with alternative perspectives and enhance our ability to address complex ecological and sustainability challenges through a diverse and inclusive approach to knowledge generation.
+
+However, we must resist the temptation to romanticise non-Western traditions or to accept their claims uncritically. The key challenge lies in determining how different approaches to knowledge can inform and enhance each other while maintaining appropriate validation standards. The scientific method, while not the only path to understanding, offers powerful tools for testing claims and building reliable knowledge.
+
+The persistence and practical success of various knowledge systems across cultural contexts warrant serious consideration in any comprehensive discussion of human understanding. These traditions remind us that while the scientific method represents a powerful approach to systematic inquiry, it need not be viewed as the exclusive path to valid knowledge. The deep history of human knowledge-seeking suggests possibilities for enriching our understanding by incorporating insights from different epistemological frameworks while maintaining rigorous standards of validation.
+
+This integration requires careful navigation. We must avoid both uncritical acceptance and dismissive rejection of non-Western epistemologies. Instead, we should seek to understand how different approaches to knowledge can complement and enhance each other, while recognising the unique power of scientific methodology in investigating natural phenomena. This balanced perspective enriches our understanding of human knowledge-seeking while acknowledging the complexity of truth-finding across cultural and philosophical boundaries.
+
+### Epistemological Humility {#sec-epistemology-humility}
+
+The trick lies in knowing which tool suits which question. The wise knower becomes a philosophical hoarder, collecting useful approaches while remaining mindful of their limitations. It's rather like having both a hammer and a screwdriver -- each valuable, neither universal.
+
+In the end, epistemology teaches us humility. The more we understand about knowledge, the more we recognise its boundaries. Yet paradoxically, this very understanding enriches our engagement with the world. We become more discerning in our knowing, more precise in our uncertainty, and perhaps a bit less likely to mistake our particular window on truth for the whole view.
+
+## Contemporary Challenges and Future Directions {#sec-contemporary-challenges-and-future-directions}
+
+To develop:
+
+- Replication crisis
+- Integration of diverse knowledge systems
+- Technological augmentation of knowing
+- Emerging epistemological frameworks
+- Implications for AI and machine learning
+
+To consider also:
+
+- Concepts of induction and deduction
+- Hypotheses and theory
+- The role of models in science
+- The relationship between science and philosophy
+- The role of values in science
+
+Notes for further consideration...
+
+- Rationalism supplements empiricism by insisting that reason and logic structure the interpretation of data. Hypotheses are framed deductively, often anticipating empirical validation. The interplay between empiricism and rationalism is most evident in the hypothetico-deductive model, where predictions test hypotheses, and results refine understanding.
+
+- Science also engages with pragmatism, prioritising useful, testable outcomes over abstract certainty. Scientific models aren’t necessarily “true” but are judged by their explanatory and predictive power. This aligns with instrumentalism, where theories are tools, not ultimate truths.
+
+- Probabilistic reasoning: frequentist (the topic of the rest of this book) and Bayesian approaches. Frequentist statistics emphasises the role of data in hypothesis testing, while Bayesian statistics incorporates prior beliefs into the analysis. Both methods contribute to the probabilistic nature of scientific inference. In a Bayesian framework, the scientific process embodies epistemological coherence. Initial beliefs (priors) evolve with evidence (likelihood) into refined understanding (posteriors). This iterative updating mirrors how science adjusts theories in light of new data.
+
+- From a critical realist perspective, science seeks to uncover the underlying structures of reality. Empirical findings are contingent but aim to reflect deeper truths about the world. Here, falsifiability plays a central role, as hypotheses remain provisional and are subject to refutation.
+
+- Science resists dogmatism and aligns with fallibilism. No claim is immune to revision. This humility fits a post-positivist stance, rejecting the idea of absolute certainty while pursuing objective methods to approximate truth.
+
+- Epistemological pluralism finds a home in science. Observation (empiricism), theory (rationalism), and practical application (pragmatism) all contribute. Each approach provides tools, but the scientific process synthesises them, creating a method that is adaptive to uncertainty yet robust in its pursuit of knowledge.
+
+## Truth and Science
+
+To be developed...
+
+Science does not claim absolute truth. Instead, it seeks the best explanations available, recognising that all knowledge is contingent on evidence, methodology, and perspective. Science defines truth provisionally. A “truth” is an explanation supported by evidence and consistent with current knowledge, but it remains open to revision. For example, Newtonian physics was true within its observable limits until Einstein’s relativity expanded its scope.

@@ -51,9 +51,10 @@ book:
   cover-image: logo.png
   chapters:
     - index.qmd
-    - intro.qmd
+    - Chapter_1.qmd
     - part: part_A.qmd
       chapters:
+        - Chapter_2.qmd
         - correlation.qmd
         - simple_linear_regression.qmd
         - polynomial_regression.qmd
@@ -93,11 +94,12 @@ execute:
 
 bibliography: references.bib
 citation: true
-csl: marine-biology.csl
+# csl: marine-biology.csl
+citeproc: true
+csl: ieee.csl
 copyright: AJ Smit
 df-print: default
 footnotes-hover: true
-# lang: en-GB
 
 format:
   html:
@@ -149,53 +151,50 @@ format:
     toc-location: right
     toc-title: "On this page"
   pdf:
-    code-block-bg: "#f8f9fa"
-    colorlinks: true
-    citecolor: teal
+    pdf-engine: lualatex    # Use LuaLaTeX for better font and layout control
+    keep-tex: true          # Keep the intermediate .tex file for debugging
     documentclass: book
+    # classoption:            # Pass options to \documentclass
+    #   - 8pt                # Set the font size to 10pt
+    #   - twoside             # Enable different formatting for odd/even pages
+    #   - openright           # Start new chapters on the next odd page
+    # papersize: "a5"
+    # fontsize: "10pt"
+    # geometry: "top=3cm, bottom=3cm, left=3cm, right=3cm, heightrounded"
+    # linestretch: 1.1
+    crossref:
+      ref-hyperlink: true
+    code-block-bg: "#f8f9fa"
     indent: true
     fig-align: center
     fig-asp: 0.65
     fig-height: 4
     fig-width: 6
     fig-format: pdf
-    fig-pos: 't'
-    fontsize: "10"
-    geometry:
-      - heightrounded
+    fig-pos: 'tbp'
     highlight-style: arrow
     include-in-header:
-      - text: |
-          \usepackage{amsmath}
-          \setmathfont{Lato Math}
-          \setmainfont{Lato}
-          \usepackage[version=4]{mhchem}
-          \usepackage{iftex}
-          \usepackage{makeidx}
-          \makeindex
-          \usepackage[dvipsnames]{xcolor}
-          \frenchspacing
+      file: "preamble.tex"
     include-after-body:
       - text: |
           \printindex
     latex-tinytex: false
-    linkcolor: teal
-    lof: false
-    lot: false
-    # mainfont: Lato
-    # mathfont: Lato Math
+    lof: true
+    lot: true
     monofont: FiraCode Nerd Font
     monofontoptions:
-      - Scale=0.91
+      - Scale=0.89
     mathfontoptions:
       - Scale=1.08
-    microtypeoptions: "final,tracking=true,factor=1100,stretch=10,shrink=10"
-    number-depth: 2
+    # number-depth: 3
     number-sections: true
-    papersize: a4
+    # reference-location: section
     toc: true
-    toc-depth: 2
-    toccolor: teal
-    urlcolor: teal
+    # toc-depth: 2
+    linkcolor: "blue"
+    filecolor: "blue"
+    citecolor: "blue"
+    urlcolor: "blue"
+    toccolor: "blue"
 
 

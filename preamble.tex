@@ -1,0 +1,259 @@
+% preamble.tex
+
+% --- Document Structure and Layout ---
+
+\usepackage{pdflscape}        % For landscape pages
+
+% --- Configure fancy headers and footers ---
+% \usepackage{fancyhdr}
+% \pagestyle{fancy}
+% \fancyhf{} % Clear header and footer
+% \fancyhead[LE,RO]{\thepage} % Page numbers: Left Even, Right Odd
+% \fancyhead[RE]{\nouppercase{\leftmark}} % Chapter title on Even pages
+% \fancyhead[LO]{\nouppercase{\rightmark}} % Section title on Odd pages
+
+% --- Paragraph settings ---
+% \setlength{\parindent}{1.5em}
+% \setlength{\parskip}{0.5em}
+
+% --- Fonts and Encoding ---
+
+\usepackage{fontspec}         % Allows font specification
+\usepackage{amsmath}          % For math symbols
+\usepackage{luatexja}         % For CJK scripts in LuaLaTeX, load after fontspec
+
+% Main Font
+\setmainfont[
+  UprightFont = *-Regular,
+  ItalicFont = *-Italic,
+  ItalicFeatures = { SmallCapsFont = *-Italic },
+  SlantedFont = *-Regular,
+  SlantedFeatures= { FakeSlant=0.2 },
+  BoldFont = *-Bold,
+  BoldFeatures = { SmallCapsFont = *-Bold },
+  BoldItalicFont = *-BoldItalic,
+  BoldItalicFeatures = { SmallCapsFont = *-BoldItalic },
+  BoldSlantedFont= *-Bold,
+  BoldSlantedFeatures= { FakeSlant=0.2, SmallCapsFont = *-Bold },
+  SmallCapsFont = *-Regular,
+  SmallCapsFeatures={ RawFeature=+smcp },
+  Ligatures=TeX,
+  Numbers={OldStyle, Proportional}
+]{StixTwoText}
+
+% Math Font
+\setmathfont{StixTwoMath.otf}
+
+% Monospace Font
+\setmonofont[
+  Scale=0.89
+]{FiraCode Nerd Font}
+
+% --- Packages for Tables ---
+
+\usepackage{longtable}        % For long tables
+\usepackage{array}            % For table column width specification
+\usepackage{booktabs}         % For table rules
+\usepackage{ragged2e}         % For text alignment (used with \newcolumntype)
+
+% --- Other Packages ---
+
+\usepackage[most]{tcolorbox}  % For colored boxes, load after xcolor to avoid option clash
+\usepackage[x11names]{xcolor} % Required for specifying custom colors, load before tcolorbox
+\usepackage[version=4]{mhchem}% Formula subscripts using \ce{}
+
+% --- Color Definitions ---
+
+\definecolor{headingblue}{RGB}{23,48,191}
+\definecolor{boxtitle}{HTML}{F0F4F8}
+\definecolor{boxbody}{HTML}{FBFDFF}
+\definecolor{mainboxframe}{HTML}{F0F4F8}
+\definecolor{subboxframe}{HTML}{F0F4F8}
+
+% --- Boxes --- (WORKS!)
+
+% Define the floating environment
+\newfloat{scholarlybox}{tbp}{box}[chapter]
+\floatname{scholarlybox}{Box}
+
+% Configure counter
+\makeatletter
+\@addtoreset{scholarlybox}{chapter}
+\renewcommand{\thescholarlybox}{\thechapter.\arabic{scholarlybox}}
+\makeatother
+
+% Box construction command
+\newcommand{\boxcontent}[2]{%
+    \begin{scholarlybox}
+        \refstepcounter{scholarlybox}
+        \setlength{\fboxrule}{0.5pt}%
+        \setlength{\fboxsep}{0pt}%
+        \fbox{%
+            \setlength{\fboxsep}{10pt}%
+            \colorbox{gray!5}{%
+                \begin{minipage}{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}
+                    {\textsc{Box~\thescholarlybox\quad#1}\par}
+                    \vspace{6pt}
+                    {\RaggedRight#2}
+                \end{minipage}%
+            }%
+        }%
+        \label{box:#1}%
+    \end{scholarlybox}
+}
+
+% --- sansblock Environment ---
+
+\usepackage{sourcesanspro}    % Load Source Sans Pro
+\setsansfont{Source Sans Pro} % Set it as the sans-serif font
+\newenvironment{sansblock}[1]
+    {\small\sffamily\raggedright{\scshape #1}\ } % Ensure small caps for the title
+  {} % End environment: no special commands needed
+
+% --- Custom Column Type (using ragged2e) ---
+
+\newcolumntype{R}[1]{>{\RaggedRight}p{#1}}
+
+% ---  Margin notes ---
+
+\usepackage{marginnote}
+\renewcommand*{\marginfont}{\footnotesize\itshape} % Style for margin notes
+
+% --- Epigraph ---
+
+\usepackage{epigraph}
+\setlength\epigraphwidth{.9\textwidth}
+\newenvironment{quotepara}
+  {\setlength{\parindent}{1em}\setlength{\parskip}{0.6ex}\itshape\raggedright}
+  {}
+\renewcommand{\textflush}{quotepara}
+
+% --- Small Caps ---
+
+\newcommand{\flatcaps}[1]{\textsc{\MakeLowercase{#1}}}
+
+% --- Lists ---
+
+% General settings for all lists
+\usepackage{enumitem}
+\setlist{nosep} % Removes vertical spacing between items and lists
+
+% % Specific settings for level-1 lists
+\setlist[1]{
+  labelindent=0pt,   % Set label indent to 0
+  leftmargin=*,      % Use automatic calculation for left margin based on label width
+  itemindent=0pt,    % No extra indentation for item text
+  labelsep=0.5em,   % Space between bullet and text
+  align=left,       % Ensure label is aligned to the left
+  % label=\textbullet % Explicitly set the label to a bullet (optional, but good for clarity)
+}
+
+% --- Custom Chapter/Section Styles ---
+
+\usepackage[compact]{titlesec}  % Allows creating custom chapter styles
+\titleformat{\chapter}[display]
+  {\fontsize{60}{62}\bfseries}
+  {\thechapter}
+  {0pt}
+  {\huge\noindent}
+\titlespacing*{\chapter}{0pt}{0pt}{40pt}
+
+\titleformat{\section}
+  {\normalsize\normalfont}
+  {\thesection}
+  {0.6em}
+  {\flatcaps}
+\titlespacing*{\section}{0pt}{1\baselineskip}{1\baselineskip}
+
+\titleformat{\subsection}[block]
+  {\normalsize\normalfont} % defines the font size and style for the entire subsection heading, including both the number and the title
+  {\thesubsection} % defines the format of the subsection number
+  {1em} % the horizontal space between the subsection number and the title
+  {\itshape} % defines the format of the subsection title itself
+\titlespacing*{\subsection}{0pt}{1\baselineskip}{1\baselineskip}
+
+\titleformat{\subsubsection}[runin]
+  {\normalsize\normalfont} % defines the font size and style for the entire subsection heading, including both the number and the title
+  {\thesubsubsection} % defines the format of the subsection number
+  {1em} % the horizontal space between the subsection number and the title
+  {\itshape}[.] % defines the format of the subsection title itself
+\titlespacing*{\subsubsection}{0pt}{1\baselineskip}{1\baselineskip}
+
+\titleformat{\paragraph}[runin]
+  {\flatcaps}
+  {\theparagraph}
+  {0pt}
+  {}
+
+% --- Footnotes ---
+
+\usepackage[norule,ragged,hang]{footmisc}  % Load footmisc with ragged option
+\renewcommand{\footnotelayout}{\RaggedRight\footnotesize} % Typeset footnotes in \RaggedRight
+\setlength{\footnotemargin}{1.5em}   % Adjust space between number and text
+\makeatletter
+\renewcommand{\@makefntext}[1]{%
+    \parindent 1em%                    Set parindent for footnote text
+    \noindent
+    \hb@xt@ 1.8em{%                   Set hanging indent for footnote text
+        \hss\@thefnmark.%
+    }
+    \RaggedRight #1%                  Typeset footnote text ragged right
+}
+\makeatother
+
+% --- Captions ---
+
+\usepackage{caption}
+\captionsetup{
+  font={small},
+  labelfont={bf},
+  textfont={},
+  width=0.9\textwidth,
+  justification=justified,
+  labelformat=default,
+  labelsep=period,
+  format=plain
+}
+\renewcommand{\captionlabelfont}{\bfseries\scshape}
+
+% --- Hyperlinks ---
+
+\usepackage{hyperref}           % Load after most other packages, but before cleveref
+\hypersetup{
+  colorlinks = true,
+  linkcolor = {headingblue},
+  citecolor = {headingblue},
+  urlcolor = {headingblue}
+}
+
+% --- Miscellaneous ---
+
+\usepackage{iftex}             % Detects the engine used
+\usepackage{microtype}         % Improves typography
+\AddToHook{env/Highlighting/begin}{\small} % Set the code chunk font size globally
+\usepackage{etoolbox}
+%% Use lining fonts
+\newcommand\lining{\addfontfeatures{Numbers={Monospaced, Lining}}}
+\AtBeginEnvironment{tabular}{\lining} % In tables
+\renewcommand{\theequation}{ {\lining\arabic{equation}}} % For equation numbers
+
+% --- Index (if needed) ---
+
+\usepackage{makeidx}
+\makeindex
+
+% --- Other Typography Settings ---
+
+\frenchspacing                % Single space after periods
+\tolerance=400                % Default is 200; higher values allow more relaxed line-breaking.
+\emergencystretch=3em         % Adds additional space to help line-breaking.
+\hyphenpenalty=20             % Default is 50; lower values encourage hyphenation.
+
+% --- Microtype Settings (adjust only if needed) ---
+
+% \microtypesetup{
+%    tracking = true,
+%    factor = 1100,
+%    stretch = 15,
+%    shrink = 15
+% }
