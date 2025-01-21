@@ -147,7 +147,7 @@ Let's consider what these data requirements mean:
 
 \vspace{6pt}
 
-Before conducting a one-sample *t*-test, you must assess whether your data meet these requirements. Visual inspection of the data (e.g., using histograms or Q-Q plots), along with formal statistical tests for normality (e.g., the Shapiro-Wilk test), can help you determine if a one-sample *t*-test is appropriate, or if you'd be better served by a Wilcoxon signed-rank test. We will explore these diagnostic techniques in R later in the chapter. You can ensure that your statistical analysis is valid and that your conclusions are robust and meaningful by exploring the nature of your data before you commit to your hypothesis testing.
+Before conducting a one-sample *t*-test, you must assess whether your data meet these requirements. Visual inspection of the data (e.g., using histograms or Q-Q plots), along with formal statistical tests for normality (e.g., the Shapiro-Wilk test), can help you determine if a one-sample *t*-test is appropriate, or if you'd be better served by a Wilcoxon signed-rank test. We will explore these diagnostic techniques in R later in the chapter. You can ensure that your statistical analysis is valid and that your conclusions are robust and meaningful by exploring the nature of your data before you commit to your hypothesis testing. 
 
 ## R Function
 

@@ -18,6 +18,7 @@ Thumbs.db
 
 # Hidden from view
 /_private/*
+/_feedback/*
 /public/
 /resources/
 /_freeze/
