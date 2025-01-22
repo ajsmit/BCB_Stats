@@ -37,44 +37,6 @@ It is important to make a distinction at this point. Although we are ultimately 
 
 The process involves formulating a *null hypothesis* (often denoted as $H_0$). \marginnote{Null and alternative hypotheses.} This hypothesis represents the scenario where the population mean/median equals the hypothesised value ("is no different from," i.e., *null*), and an *alternative hypothesis* (often denoted as $H_1$ or $H_a$), which represents the scenario where the population mean/median differs from the hypothesised value (either greater than, smaller than, or either greater or smaller than) (Box \ref{box:Null and Alternative Hypotheses}). 
 
-<!-- \begin{figure}[t] -->
-<!-- \caption{Caption for your floating text box.} -->
-<!-- \label{fig:my_textbox} % Label for referencing later -->
-<!-- \centering -->
-<!-- \colorbox{gray!5}{ -->
-<!-- \begin{minipage}{1.0\textwidth} % Adjust width as needed -->
-<!-- \raggedright -->
-<!-- \vspace{0.5\baselineskip} % Optional: Add some vertical space -->
-
-<!-- In the example of the Cape Sugarbirds, we want to assess if the population mean, \(\bar{x}\), is the same or different from the hypothesised value, \(\mu_{0}=15\). The two types of hypotheses are therefore: -->
-
-<!-- \vspace{3pt} -->
-
-<!-- \begin{itemize} -->
-<!-- \item \(H_{0}: \bar{x} = \mu_{0}\), or \(H_{0}: \bar{x} = 15\) -->
-<!-- \item \(H_{a}: \bar{x} \ne \mu_{0}\), or \(H_{a}: \bar{x} \ne 15\) -->
-<!-- \end{itemize} -->
-
-<!-- \vspace{3pt} -->
-
-<!-- This is the same as saying: -->
-
-<!-- \vspace{3pt} -->
-
-<!-- \begin{itemize} -->
-<!-- \item \(H_{0}: \bar{x} - \mu_{0} = 0\) -->
-<!-- \item \(H_{a}: \bar{x} - \mu_{0} \ne 0\) -->
-<!-- \end{itemize} -->
-
-<!-- \vspace{3pt} -->
-
-<!-- Note that in this formulation of the hypotheses, we do not make a distinction between whether we expect \(\bar{x}\) to be \(<\) or \(>\) \(\mu_{0}\), calling for a two-sided one-sample \emph{t}-test. -->
-
-<!-- \vspace{0.5\baselineskip} -->
-<!-- \end{minipage} -->
-<!-- } -->
-<!-- \end{figure} -->
-
 \boxcontent{Null and Alternative Hypotheses}{
 In the example of the Cape Sugarbirds, we want to assess if the population mean, \(\bar{x}\), is the same or different from the hypothesised value, \(\mu_{0}=15\). The two types of hypotheses are therefore:
 
@@ -166,8 +128,12 @@ crabs <- c(25.8, 24.6, 26.1, 22.9, 25.1, 27.3, 24.0, 24.5, 23.9,
            26.2, 24.3, 24.6, 23.3, 25.5, 28.1, 24.8, 23.5, 26.3,
            25.4, 25.5, 23.9, 27.0, 24.8, 22.9, 25.4)
 
+# Summary statstics
 mean(crabs)
 var(crabs)
 sd(crabs)
+
+# Make a histogram
+
 ```
 
